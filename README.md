@@ -1,6 +1,8 @@
 # Deploying a Scalable Reddit Clone in a Secure Cloud-Native Ecosystem
 
-## _Quick Introduction_:-
+</br>
+
+## _Quick Introduction_
 
 This project aims at **_deploying a Reddit Clone Application_** in the AWS environment, with a prime focus on the non-functional aspects.       
 We've leveraged the flexibility of **Kubernetes for orchestration** + **Docker for containerization** + **a CI/CD pipeline for automated testing and deployment**. More on **Jenkins & ArgoCD** subsequently...
@@ -12,9 +14,7 @@ The deployment strategy is designed to **maximize uptime and efficiency**, while
 
 
 
-## _Sprinkling some Essential Concepts before we proceed_
-
-### _What benefits does DevOps bring to the table?_
+### Why DevSecOps?
 
 Setting some context...
 
@@ -51,3 +51,17 @@ Higher the speed, higher the risk of security vulnerabilities being introduced..
 Considering Security Design later in the lifecycle, means you're lagging behind. Security Analysis,especially the Static Analysis Security testing (SAST),for analysing it from inside out,--> its code, structure, misconfigurations and vulnerabilities, must be ingrained in the initial pre-commit stages of the pipeline, This helps identify potential security issues in the beginning itself.
 
 #### This ingrains an essence of Shift-Left Security, "Baking In Security" in the CI/CD Workflows itself.
+
+
+## Core Services involved:-
+
+  1 - Terraform:- Infra-As-a-Code --> Helps manage and provision Infrastructure in a predictable and consistent manner. Brings repeatability into the process of defining and deploying infrastructure
+
+  2 - AWS :- Our Infrastructure backbone wherein we've hosted our application
+
+  3 - Elastic Kubernetes Service (EKS) :- AWS' Managed Service for Kubernetes, allows for orchestration of containerized applications --> Automating the deployment, scaling and management of these containers across a cluster of hosts
+
+  4 -  Jenkins - Continuous Integration / Continuous Deployment (CI/CD) tool for automating the build, test and deployment processes.
+
+
+
