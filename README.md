@@ -2,7 +2,7 @@
 
 </br>
 
-## _Quick Introduction_
+## Quick Introduction
 
 This project aims at **_deploying a Reddit Clone Application_** in the AWS environment, with a prime focus on the non-functional aspects.       
 We've leveraged the flexibility of **Kubernetes for orchestration** + **Docker for containerization** + **a CI/CD pipeline for automated testing and deployment**. More on **Jenkins & ArgoCD** subsequently...
