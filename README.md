@@ -16,18 +16,29 @@ The deployment strategy is designed to **maximize uptime and efficiency**, while
 
 ### _What benefits does DevOps bring to the table?_
 
-Before actually diving deep into the project at hand, I'd like to quickly set the context **as to how DevSecOps emerged.**
+Setting some context...
 
---> DevOps: It's actually a set of practices, methodologies. It's absolute aim is **improvising the quality &  pace at which applications and services are delivered**, right from development to Operations. (Encompasses the Entire Software Development Cycle)
+--
 
---> **Everything's automated**, Right from **Code Integration, builds, tests, to continuous Deployment.** 
+Before actually diving deep into the project at hand, I'd like to quickly set the context as to how DevSecOps emerged.
+
+--> DevOps: It's actually a set of practices, methodologies. It's absolute aim is **improvising the quality &  pace at which applications and services are delivered**, right from development to Operations. (Encompasses the Entire Software Development Cycle).
+Faster 
+
+--> Everything's automated, Right from **Code Integration, builds, tests, to continuous Deployment. This e** 
     **Infrastructure Provisioning** too is automated, making things consistent, predictable, and reliable
 
---> Code Integration, simply means merging various code changes into the mainline. We've got tools that aid in validating those changes. The build and test phases are integrated into the CI/CD Pipelines. This enables automated tests to prevent any regressions, breaking changes, in case of modifications to the source code.
+--> Code Integration, simply means merging various code changes into the mainline. We've got tools that aid in validating those changes. The build and test phases are integrated into the CI/CD Pipelines.
 
---> Errors are detected way early. **Reducing the impact and costs incurred due to fixing errors post deployment**. Smoother Transition from Dev to Prod...!
+ This enables automated tests to prevent any regressions, breaking changes, in case of modifications to the source code. This enables th Developers to relaese new features 
 
-####  _Key Takeaway_:- More frequent & reliable deployments, reducing the time from ideation to deployment.
+**Faster Release Cycles + Increased Deployment Velocity + Faster Time-to-Market = Smoother Transition from Dev to Prod...!**
+
+
+--> Errors are detected way early. **Reducing the impact and costs incurred due to fixing errors post deployment**. 
+
+####  _Key Takeaway_:- 
+More frequent & reliable deployments, reducing the time from ideation to deployment.
 
 </br>
 
@@ -39,4 +50,4 @@ Higher the speed, higher the risk of security vulnerabilities being introduced..
 
 Considering Security Design later in the lifecycle, means you're lagging behind. Security Analysis,especially the Static Analysis Security testing (SAST),for analysing it from inside out,--> its code, structure, misconfigurations and vulnerabilities, must be ingrained in the initial pre-commit stages of the pipeline, This helps identify potential security issues in the beginning itself.
 
-#### This ingrains an essence of Shift-Left Security, "Baking In" Security in the CI/CD Workflows itself.
+#### This ingrains an essence of Shift-Left Security, "Baking In Security" in the CI/CD Workflows itself.
