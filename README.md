@@ -1,61 +1,55 @@
 # Deploying a Scalable Reddit Clone in a Secure Cloud-Native Ecosystem
 
-</br>
 
-## Quick Introduction
+## _Quick Introduction_
 
-This project aims at **_deploying a Reddit Clone Application_** in the AWS environment, with a prime focus on the non-functional aspects.       
-We've leveraged the flexibility of **Kubernetes for orchestration** + **Docker for containerization** + **a CI/CD pipeline for automated testing and deployment**. More on **Jenkins & ArgoCD** subsequently...
-
-As always, my project seeks to ensure **scalability**, **resilience**, and seamless updates. That's actually because it provides a robust foundation for the application's growth and evolution.      
-
-The deployment strategy is designed to **maximize uptime and efficiency**, while **security** measures are integrated at every step to protect against vulnerabilities and threats, 
---> making the application reliable and super-secure
-
-
-
-### Why DevSecOps?
-
-Setting some context...
+In this project, we're **_building a DevSecOps Pipeline_**, with a focus on integrating Security into the the Software Development and Deployment lifecycle. 
+   
+Through **_Terraform_** for Infrastructure as Code, AWS for cloud services and **_Elastic Kubernetes Service_**, we aim to **_automate and streamline Infrastructure Provisioning and Application Deployment._** Utilising **_Jenkins and ArgoCD_** into our CI/CD processes ensures continuous integration and delivery --> rapid & reliable software releases. SonarQube, OWASP guidelines and Trivy enable continuous security assessments. Incorporating **_Security tools like SonarQube, OWASP and Trivy_** directly into the pipeline allows for continuous Security Assessment.
 
 --
 
-Before actually diving deep into the project at hand, I'd like to quickly set the context as to how DevSecOps emerged.
-
---> DevOps: It's actually a set of practices, methodologies. It's absolute aim is **improvising the quality &  pace at which applications and services are delivered**, right from development to Operations. (Encompasses the Entire Software Development Cycle).
-Faster 
-
---> Everything's automated, Right from **Code Integration, builds, tests, to continuous Deployment. This e** 
-    **Infrastructure Provisioning** too is automated, making things consistent, predictable, and reliable
-
---> Code Integration, simply means merging various code changes into the mainline. We've got tools that aid in validating those changes. The build and test phases are integrated into the CI/CD Pipelines.
-
- This enables automated tests to prevent any regressions, breaking changes, in case of modifications to the source code. This enables th Developers to relaese new features 
-
-**Faster Release Cycles + Increased Deployment Velocity + Faster Time-to-Market = Smoother Transition from Dev to Prod...!**
+Setting some context...
 
 
---> Errors are detected way early. **Reducing the impact and costs incurred due to fixing errors post deployment**. 
+### _Transition from DevOps to DevSecOps_
 
-####  _Key Takeaway_:- 
-More frequent & reliable deployments, reducing the time from ideation to deployment.
+Before we actually dive deep into the nitty-gritties, I'd like to quickly set the context as to how DevSecOps emerged:-
+
+
+-  Why DevOps? DevOps targets _improvising the quality & pace at which applications & services are delivered throughout the development cycle._ 
+
+-  Everything's automated, _Right from Code Integration, builds, tests to continuous Deployment. Infrastructure Provisioning is no excusion._
+
+-  When you've got your build and test phases integrated into the CI/CD Pipelines, errors are detected way early, reducing the impact & costs incurred due to fixing errors post deployment. Automated prevent any regressions, or changes that might break your code.
+
+
+####  _Key Takeaway:- Faster Release Cycles + Increased Deployment Velocity + Faster Time-to-Market = Fluid Transition from Dev to Prod._
 
 </br>
 
->  _Okay, So, what spurred up DevSecOps?_
+>  _Okay; So, what spurred up DevSecOps?_
 
 </br>
 
-Higher the speed, higher the risk of security vulnerabilities being introduced...
+**Higher the speed, higher the risk of security vulnerabilities being introduced** in the process...   
+_Security is not an afterthought_, it need to be integrated in the pipeline
+   
 
-Considering Security Design later in the lifecycle, means you're lagging behind. Security Analysis,especially the Static Analysis Security testing (SAST),for analysing it from inside out,--> its code, structure, misconfigurations and vulnerabilities, must be ingrained in the initial pre-commit stages of the pipeline, This helps identify potential security issues in the beginning itself.
+Security Analysis, particularly Static Analysis Security Testing (SAST), should be embedded early on, specifically at the pre-commit phase of the development pipeline. SAST delves into the code, its architecture, and configurations from the inside out, ensuring thorough scrutiny for potential vulnerabilities.
+
+Being a member of a former CloudSec Team, I _know_ the kind of time and efforts that go into fixing Security Bugs post Deployment.
+Continuous Monitoring and Security Assessments _should_ be an intrinsic part of our workflows. This leads to increased compliance rates, better risk management. 
+
+> It's more of a premptive approach towards Security, making it a shared responsibility for both the developers and the SecOps Team. 
+
 
 #### This ingrains an essence of Shift-Left Security, "Baking In Security" in the CI/CD Workflows itself.
 
 
 ## Core Services involved:-
 
-  1 - Terraform:- Infra-As-a-Code --> Helps manage and provision Infrastructure in a predictable and consistent manner. Brings repeatability into the process of defining and deploying infrastructure
+  1 - **Terraform:-** Infra-As-a-Code --> Helps manage and provision Infrastructure in a predictable and consistent manner. Brings repeatability into the process of defining and deploying infrastructure
 
   2 - AWS :- Our Infrastructure backbone wherein we've hosted our application
 
