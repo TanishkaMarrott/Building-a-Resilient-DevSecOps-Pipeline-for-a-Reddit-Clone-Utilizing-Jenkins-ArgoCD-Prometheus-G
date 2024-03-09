@@ -5,7 +5,8 @@
 
 In this project, we're **_building a DevSecOps Pipeline_**, with a focus on integrating Security into the the Software Development and Deployment lifecycle. 
    
-Through **_Terraform_** for Infrastructure as Code, AWS for cloud services and **_Elastic Kubernetes Service_**, we aim to **_automate and streamline Infrastructure Provisioning and Application Deployment._** Utilising **_Jenkins and ArgoCD_** into our CI/CD processes ensures continuous integration and delivery --> rapid & reliable software releases. SonarQube, OWASP guidelines and Trivy enable continuous security assessments. Incorporating **_Security tools like SonarQube, OWASP and Trivy_** directly into the pipeline allows for continuous Security Assessment.
+Our goal here:- Intent is to **_automate and streamline Infrastructure Provisioning and Application Deployment._**
+**_Terraform_** for Infrastructure-as-Code +  AWS for cloud services + **_Elastic Kubernetes Service_** we  Utilising **_Jenkins and ArgoCD_** into our CI/CD processes ensures continuous integration and delivery --> rapid & reliable software releases. SonarQube, OWASP guidelines and Trivy enable continuous security assessments. Incorporating **_Security tools like SonarQube, OWASP and Trivy_** directly into the pipeline allows for continuous Security Assessment.
 
 --
 
