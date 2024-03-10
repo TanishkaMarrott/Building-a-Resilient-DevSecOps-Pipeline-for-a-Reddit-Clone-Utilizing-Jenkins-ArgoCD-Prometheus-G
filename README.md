@@ -1,12 +1,22 @@
-# Deploying a Scalable Reddit Clone in a Secure Cloud-Native Ecosystem
+# Implementing a Secure & Scalable Reddit Clone within a cloud-native Architecture
 
 
-## _Quick Introduction_
+## _Quick Introduction:-_
 
-In this project, we're **_building a DevSecOps Pipeline_**, with a focus on integrating Security into the the Software Development and Deployment lifecycle. 
-   
-Our goal here:- Intent is to **_automate and streamline Infrastructure Provisioning and Application Deployment._**
-**_Terraform_** for Infrastructure-as-Code +  AWS for cloud services + **_Elastic Kubernetes Service_** we  Utilising **_Jenkins and ArgoCD_** into our CI/CD processes ensures continuous integration and delivery --> rapid & reliable software releases. SonarQube, OWASP guidelines and Trivy enable continuous security assessments. Incorporating **_Security tools like SonarQube, OWASP and Trivy_** directly into the pipeline allows for continuous Security Assessment.
+Our project revolves around _**DevSecOps**_ that streamlines, and secures development & deployment phases of a typical SDLC.   
+> => Speeding up Time-to-Market + Having Robust Security Measures throughout = Dual Focus
+
+Intent here is to ensure high-quality, rapid software releases; _but with Security at its forefront._  
+
+
+
+> Instead of tackling Security at the very end of projects with penetration tests after deploying the code, **"DevSecOps bakes security in every stage."** Includes building, testing, and deploying software where security was often an afterthought.
+
+### How does the workflow look like?
+- We've automated _Infrastructure Deployment through Terraform._  Container Orchestration has been optimised through **_EKS - Elastic Kubernetes Service._**   
+- Incorporated **_Jenkins & Argo CD_** to _accelerate the Continuous Integration and Deployment lifecycles._    
+- Security is an intrinsic part here with  - **_SonarQube_** = for Static Analysis Security Testing, **_OWASP_** = Security Vulnerabilities ; **_Trivy_** = Container Image Scanning
+- Integration of **_Prometheus_** **_Grafana_** & **_EFK stack_** provides with comprehensive Logging, Monitoring and Data Visualisation Capabilities   
 
 --
 
@@ -15,14 +25,13 @@ Setting some context...
 
 ### _Transition from DevOps to DevSecOps_
 
-Before we actually dive deep into the nitty-gritties, I'd like to quickly set the context as to how DevSecOps emerged:-
+Before we actually dive deep, I'd like to quickly set the context as to how DevSecOps emerged:-
 
+-  ** Why DevOps? Primary target is to _improvise the quality & pace at which Applications & Services are delivered throughout._ 
 
--  Why DevOps? DevOps targets _improvising the quality & pace at which applications & services are delivered throughout the development cycle._ 
+-  _Everything's automated in the development and deployment cycle_ -->  Infrastructure Provisioning, Code Integration, Builds, Tests to Continuous Deployment
 
--  Everything's automated, _Right from Code Integration, builds, tests to continuous Deployment. Infrastructure Provisioning is no excusion._
-
--  When you've got your build and test phases integrated into the CI/CD Pipelines, errors are detected way early, reducing the impact & costs incurred due to fixing errors post deployment. Automated prevent any regressions, or changes that might break your code.
+-  When you've got your build and test phases well-integrated, errors are detected way early, reducing the impact & costs incurred due to fixing errors post deployment. Automated tests prevent any regressions, or changes that might break your code.
 
 
 ####  _Key Takeaway:- Faster Release Cycles + Increased Deployment Velocity + Faster Time-to-Market = Fluid Transition from Dev to Prod._
@@ -34,12 +43,12 @@ Before we actually dive deep into the nitty-gritties, I'd like to quickly set th
 </br>
 
 **Higher the speed, higher the risk of security vulnerabilities being introduced** in the process...   
-_Security is not an afterthought_, it need to be integrated in the pipeline
+
+
    
+Security Analysis, particularly SAST, should be embedded early on, specifically at the pre-commit phase of the development pipeline.It analyses the code from inside out its architecture, and configurations from the inside out. --> Detecting errors early, and aiding in it subsequent remediation
 
-Security Analysis, particularly Static Analysis Security Testing (SAST), should be embedded early on, specifically at the pre-commit phase of the development pipeline. SAST delves into the code, its architecture, and configurations from the inside out, ensuring thorough scrutiny for potential vulnerabilities.
-
-Being a member of a former CloudSec Team, I _know_ the kind of time and efforts that go into fixing Security Bugs post Deployment.
+Being a member of a former CloudSec Team, I _know_ the kind of time and effort that goes into fixing Security Bugs post Deployment. (Leave alone the braking production deployments!)
 Continuous Monitoring and Security Assessments _should_ be an intrinsic part of our workflows. This leads to increased compliance rates, better risk management. 
 
 > It's more of a premptive approach towards Security, making it a shared responsibility for both the developers and the SecOps Team. 
