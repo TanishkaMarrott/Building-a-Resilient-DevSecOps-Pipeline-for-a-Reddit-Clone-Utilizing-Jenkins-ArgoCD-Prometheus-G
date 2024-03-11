@@ -3,20 +3,43 @@
 
 ## _Quick Introduction:-_
 
-Our project revolves around _**DevSecOps**_ that streamlines, and secures development & deployment phases of a typical SDLC.   
-> => Speeding up Time-to-Market + Having Robust Security Measures throughout = Dual Focus
+Our project today is all about the specifics involved while configuring a  _**DevSecOps Pipeline.**_     
+Ensures **_we're not only speeding up releases, but also being security-compliant_**, from the outset itself.
 
-Intent here is to ensure high-quality, rapid software releases; _but with Security at its forefront._  
+</br> 
+
+ **_Speeding up Time-to-Market +  Robust Security measures throughout = Dual Focus_**
+
+</br>
+
+--> _What am I trying to achieve?_ <ins>**A Security-Focused continuous deployment**   </ins>   
+
+  "Embedding" Security Practices and Tools into the CI/CD processes, right from development to deployment
+
+
+</br>
+
+### Quick Note:-
+> **_From a Business standpoint, it's critical that we position ourselves in a way, that our processes align with Agile DevSecOps Practices_**
+
+
+Why? We need a robust base to work upon...  
+
+for continous improvement with DevOps Practices, while quickly adapting to changing business requirements. Ultimately, by prioritizing security within our continuous deployment framework, we are working towards minimizing vulnerabilities; Quicker Product Iterations + Security Ingrained = Trust and a better edge amongst competitors
 
 
 
-> Instead of tackling Security at the very end of projects with penetration tests after deploying the code, **"DevSecOps bakes security in every stage."** Includes building, testing, and deploying software where security was often an afterthought.
+</br>
+
+
+More on the Technical Aspects subsequently
+
 
 ### How does the workflow look like?
-- We've automated _Infrastructure Deployment through Terraform._  Container Orchestration has been optimised through **_EKS - Elastic Kubernetes Service._**   
-- Incorporated **_Jenkins & Argo CD_** to _accelerate the Continuous Integration and Deployment lifecycles._    
-- Security is an intrinsic part here with  - **_SonarQube_** = for Static Analysis Security Testing, **_OWASP_** = Security Vulnerabilities ; **_Trivy_** = Container Image Scanning
-- Integration of **_Prometheus_** **_Grafana_** & **_EFK stack_** provides with comprehensive Logging, Monitoring and Data Visualisation Capabilities   
+
+It's more like an orchestrated sequence --> That's actually important when you're aiming for scalability, resilience and security.
+
+Infrastructure Provisioning with Terraform - We're automating the infra-setup aspect --> Consistent and repeatable Environments ready for deployment.
 
 --
 
