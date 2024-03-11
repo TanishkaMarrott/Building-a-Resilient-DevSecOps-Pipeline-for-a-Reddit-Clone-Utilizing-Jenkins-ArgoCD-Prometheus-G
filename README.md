@@ -4,22 +4,38 @@
 ## _Quick Introduction:-_
 
 Our project today is all about the specifics involved while configuring a  _**DevSecOps Pipeline.**_     
-Ensures **_we're not only speeding up releases, but also being security-compliant_**, from the outset itself.
+Ensures we're not only speeding up releases, but also being security-compliant, from the get-go. Technicalities in the sections that follow.
 
-</br> 
 
- **_Speeding up Time-to-Market +  Robust Security measures throughout = Dual Focus_**
-
-</br>
-
---> _What am I trying to achieve?_ <ins>**A Security-Focused continuous deployment**   </ins>   
-
-  "Embedding" Security Practices and Tools into the CI/CD processes, right from development to deployment
-
+--> _What are we trying to achieve?_   
+**Optimized QA + Speedy Delivery + Security Ingrained = Real Business Value**
 
 </br>
 
-### Quick Note:-
+
+### _How does the workflow look like?_
+
+It's more like an orchestrated sequence --> _That's actually important when you're aiming for scalability, resilience and security._
+
+1. Infrastructure Provisioning with Terraform for automating Infrastructure Setup
+2. Container Orchestration with Elastic Kubernetes Service. For managing the application's lifecycle
+3. Jenkins & ArgoCD as our CI/CD Backbone.  
+   Changes to the codebase trigger automated builds and tests to make sure every change's verified.  
+   Argo CD would then facilitate continuous deployment of the application to the Kubernetes environment
+5. Security Integration at every phase in the pipeline.
+   -  Static Analysis Security Testing (SAST) with SonarQube
+   -  Vulnerability assessments with OWASP
+   -  Container image scanning with Trivy
+
+
+
+
+
+
+</br>
+
+### How does DevSecOps align with the Business principles?
+
 > **_From a Business standpoint, it's critical that we position ourselves in a way, that our processes align with Agile DevSecOps Practices_**
 
 
