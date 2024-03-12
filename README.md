@@ -14,110 +14,65 @@ Technicalities in the sections that follow.
 
 </br>
 
+_It's more like an iterative workflow, with continuous feedback loops..._
 
-### _How does the workflow look like?_
+</br>
 
-It's more like an iterative worflow, with continuous feedback loops...   
+### _How does the workflow actually look like?_
+</br>
 
---> _That's actually important when you're aiming for scalability, resilience and security._
+ > _That's actually important when you're aiming for scalability, resilience and security._  
 
+- **Infrastructure Provisioning** &rarr;    
+   We've used **Terraform** for automating infra-setup
 
-- **_Infrastructure Provisioning with Terraform_**    **-->** for automating Infrastructure Setup
+- **Container Orchestration &rarr;    
+  Elastic Kubernetes Service** has been used for managing application lifecycle
 
-- **_Container Orchestration with Elastic Kubernetes Service_**    **-->** For managing the application's lifecycle
-
-- **_Jenkins & ArgoCD as our CI/CD Backbone_**.     
-   **-->** Automated builds and tests to make sure every change's verified.       
+- **CI/CD &rarr; Jenkins & ArgoCD**     
+   **-->** Automated builds and tests make sure every change's verified.       
    Argo CD would then facilitate continuous deployment of the application to the Kubernetes environment
 
-- **_Security Integration_** at every phase in the pipeline.
-   -  **_Static Analysis Security Testing (SAST) --> SonarQube_**
-   -  **_Vulnerability assessments --> OWASP_**
-   -  **_Container image scanning --> Trivy_**
+- Security Integrations we've made
+   -  **Static Analysis Security Testing - SAST &rarr; SonarQube**
+   -  **Vulnerability Assessments &rarr; OWASP**
+   -  **Container Image Scanning &rarr; Trivy**
 
-- **_Deployed Prometheus, Grafana, and EFK Stack_** - (ElasticSearch, Fluentd, Kibana)      
-   **-->** For **_Comprehensive Logging, Monitoring and Data Visualisation Capabilities_**,      
-        Real-time Insights into Application's health and performance.
-
-
-
-
-
-
-
-</br>
-
-### How does DevSecOps align with the Business principles?
-
-> **_From a Business standpoint, it's critical that we position ourselves in a way, that our processes align with Agile DevSecOps Practices_**
-
-
-Why? We need a robust base to work upon...  
-
-for continous improvement with DevOps Practices, while quickly adapting to changing business requirements. Ultimately, by prioritizing security within our continuous deployment framework, we are working towards minimizing vulnerabilities; Quicker Product Iterations + Security Ingrained = Trust and a better edge amongst competitors
-
-
-
-</br>
-
-
-More on the Technical Aspects subsequently
-
-
-### How does the workflow look like?
-
-It's more like an orchestrated sequence --> That's actually important when you're aiming for scalability, resilience and security.
-
-Infrastructure Provisioning with Terraform - We're automating the infra-setup aspect --> Consistent and repeatable Environments ready for deployment.
-
---
-
-Setting some context...
-
-
-### _Transition from DevOps to DevSecOps_
-
-Before we actually dive deep, I'd like to quickly set the context as to how DevSecOps emerged:-
-
--  ** Why DevOps? Primary target is to _improvise the quality & pace at which Applications & Services are delivered throughout._ 
-
--  _Everything's automated in the development and deployment cycle_ -->  Infrastructure Provisioning, Code Integration, Builds, Tests to Continuous Deployment
-
--  When you've got your build and test phases well-integrated, errors are detected way early, reducing the impact & costs incurred due to fixing errors post deployment. Automated tests prevent any regressions, or changes that might break your code.
-
-
-####  _Key Takeaway:- Faster Release Cycles + Increased Deployment Velocity + Faster Time-to-Market = Fluid Transition from Dev to Prod._
-
-</br>
-
->  _Okay; So, what spurred up DevSecOps?_
-
-</br>
-
-**Higher the speed, higher the risk of security vulnerabilities being introduced** in the process...   
-
-
+-  Deployed **Prometheus, Grafana and EFK Stack** - (ElasticSearch, Fluentd, Kibana)      
+   --> Configured Logging, Monitoring & Data Visualization    
+   --> **Real-time Insights** into Application's health and performance.
    
-Security Analysis, particularly SAST, should be embedded early on, specifically at the pre-commit phase of the development pipeline.It analyses the code from inside out its architecture, and configurations from the inside out. --> Detecting errors early, and aiding in it subsequent remediation
+</br>
 
-Being a member of a former CloudSec Team, I _know_ the kind of time and effort that goes into fixing Security Bugs post Deployment. (Leave alone the braking production deployments!)
-Continuous Monitoring and Security Assessments _should_ be an intrinsic part of our workflows. This leads to increased compliance rates, better risk management. 
+> _Okay, so how does DevSecOps augment Business Processes?_
 
-> It's more of a premptive approach towards Security, making it a shared responsibility for both the developers and the SecOps Team. 
+</br>
 
-
-#### This ingrains an essence of Shift-Left Security, "Baking In Security" in the CI/CD Workflows itself.
+## _How does DevSecOps align with Business Objectives?_
 
 
-## Core Services involved:-
+_Simple Answer:-_   
+Solid Foundation to quickly realign with changing business requirements
 
-  1 - **Terraform:-** Infra-As-a-Code --> Helps manage and provision Infrastructure in a predictable and consistent manner. Brings repeatability into the process of defining and deploying infrastructure
+_It's more like a ***Strategic Enabler,*** to boost efficiency, streamline processes._    
 
-  2 - AWS :- Our Infrastructure backbone wherein we've hosted our application
+**_Quicker Product Iterations & feedback loops_** through continuous integration and deployment --> means we're _**market-agile**_
 
-  3 - Elastic Kubernetes Service (EKS) :- AWS' Managed Service for Kubernetes, allows for orchestration of containerized applications --> Automating the deployment, scaling and management of these containers across a cluster of hosts
+</br>
 
-  4 -  Jenkins - Continuous Integration / Continuous Deployment (CI/CD) tool for automating the build, test and deployment processes.
+> **<ins>Agile DevSecOps = Swiftly adapting to the fast-evolving business requirements.**  
+
+</br>
+
+Helps in both **Quality Assurance (due to Automated Testing)** &  **reducing costs due to post-deployment fixes.**  
+
+=> Mitigating Security risks early means **averting Data Security incidents / breaches due to security lapses.**
+
+
+
+
+
+
 
 
 
