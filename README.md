@@ -4,7 +4,9 @@
 ## _Quick Introduction:-_
 
 Our project today is all about the specifics involved while configuring a  _**DevSecOps Pipeline.**_     
-Ensures we're not only speeding up releases, but also being security-compliant, from the get-go. Technicalities in the sections that follow.
+Ensures we're not only speeding up releases, but also being security-compliant, from the get-go.    
+
+Technicalities in the sections that follow.
 
 
 --> _What are we trying to achieve?_   
@@ -15,17 +17,30 @@ Ensures we're not only speeding up releases, but also being security-compliant, 
 
 ### _How does the workflow look like?_
 
-It's more like an orchestrated sequence --> _That's actually important when you're aiming for scalability, resilience and security._
+It's more like an iterative worflow, with continuous feedback loops...   
 
-1. Infrastructure Provisioning with Terraform for automating Infrastructure Setup
-2. Container Orchestration with Elastic Kubernetes Service. For managing the application's lifecycle
-3. Jenkins & ArgoCD as our CI/CD Backbone.  
-   Changes to the codebase trigger automated builds and tests to make sure every change's verified.  
+--> _That's actually important when you're aiming for scalability, resilience and security._
+
+
+- **_Infrastructure Provisioning with Terraform_**   
+  **-->** for automating Infrastructure Setup
+
+- **_Container Orchestration with Elastic Kubernetes Service_**   
+ **-->** For managing the application's lifecycle
+
+- **_Jenkins & ArgoCD as our CI/CD Backbone_**.     
+   **-->** Automated builds and tests to make sure every change's verified.       
    Argo CD would then facilitate continuous deployment of the application to the Kubernetes environment
-5. Security Integration at every phase in the pipeline.
-   -  Static Analysis Security Testing (SAST) with SonarQube
-   -  Vulnerability assessments with OWASP
-   -  Container image scanning with Trivy
+
+- **_Security Integration_** at every phase in the pipeline.
+   -  **_Static Analysis Security Testing (SAST) --> SonarQube_**
+   -  **_Vulnerability assessments --> OWASP_**
+   -  **_Container image scanning --> Trivy_**
+
+- **_Deployed Prometheus, Grafana, and EFK Stack_** - (ElasticSearch, Fluentd, Kibana)      
+   **-->** For **_Comprehensive Logging, Monitoring and Data Visualisation Capabilities_**,      
+        Real-time Insights into Application's health and performance.
+
 
 
 
