@@ -22,11 +22,9 @@ It's more like an iterative worflow, with continuous feedback loops...
 --> _That's actually important when you're aiming for scalability, resilience and security._
 
 
-- **_Infrastructure Provisioning with Terraform_**   
-  **-->** for automating Infrastructure Setup
+- **_Infrastructure Provisioning with Terraform_**    **-->** for automating Infrastructure Setup
 
-- **_Container Orchestration with Elastic Kubernetes Service_**   
- **-->** For managing the application's lifecycle
+- **_Container Orchestration with Elastic Kubernetes Service_**    **-->** For managing the application's lifecycle
 
 - **_Jenkins & ArgoCD as our CI/CD Backbone_**.     
    **-->** Automated builds and tests to make sure every change's verified.       
