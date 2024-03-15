@@ -1,4 +1,4 @@
-# DevSecOps Pipeline for a Secure & Scalable Reddit Clone on Cloud-Native Architecture
+# DevSecOps Pipeline for a secure & scalable Reddit Clone on Cloud-Native Architecture
 
 
 ## _Quick Introduction_:-
