@@ -1,4 +1,4 @@
-# DevSecOps Pipeline for a secure & scalable Reddit Clone on Cloud-Native Architecture
+# Orchestrating a DevSecOps Pipeline for Cloud-Native Reddit Clone
 
 
 ## _Quick Introduction_:-
@@ -14,11 +14,7 @@ Technicalities in the sections that follow.
 &nbsp;
 
 ## _So, how does the workflow actually look like?_
-</br>
 
- > **_It's more like an iterative workflow, with continuous feedback loops._ _That's important when you're aiming for scalability & security..._**  
-
-</br>
 
 **_Infrastructure Provisioning_** (Terraform)  
                   ↓     
@@ -35,9 +31,8 @@ Technicalities in the sections that follow.
 
    
 </br>
----
 
- _Okay, so how does DevSecOps augment Business Processes?_
+>  _**Okay, so how does DevSecOps augment Business Processes?**_
 
 </br>
 
@@ -49,10 +44,10 @@ _Simple Answer:-_
 
 </br>
 
-_It's more like a ***Strategic Enabler,*** to boost efficiency, streamline processes._    
+_It's more like a ***Strategic Enabler,***_ to boost efficiency, streamline processes.    
 
-**_Quicker Product Iterations & feedback loops_** through continuous integration and deployment   
---> means we're **_market-agile_**
+-->_Quicker Product Iterations & feedback loops_ through continuous integration and deployment   
+ means we're **_market-agile_**
 
 </br>
 
@@ -60,72 +55,31 @@ _It's more like a ***Strategic Enabler,*** to boost efficiency, streamline proce
 
 </br>
 
- **_Quality Assurance (due to Automated Testing) + Reducing costs due to post-deployment fixes._**  
-
+ _Quality Assurance (due to Automated Testing) + Reducing costs due to post-deployment fixes._    
 => Mitigating Security risks early means **_averting Data Security incidents / breaches due to security lapses._**
 
 </br>
 
-## _Phase 1 --> Infrastructure Setup and Tool Configuration_
+## _Phase 1 --> Infrastructure Setup & Tool Configuration_
 
-</br>
+<ins>**Purpose:-**</ins> _Establishing the foundation for our DevSecOps Pipeline here --> Setting up the necessary infrastructure and configuring essential tools...._
 
-> _Establishing the foundation for our DevSecOps Pipeline here --> Setting up the necessary infrastructure and configuring essential tools...._
+### Configuring Jenkins Plugins
 
+We've provisioned an EC2 instance using Terraform, incorporating the necessary user data, and on this VM, we've **_installed Jenkins, SonarQube, and Trivy,_** --> establishing the base for our CI/CD pipeline and security assessments.       
 
-**_---> VM Setup & Terraform Provisioning:_-**  
+Next, we've **_configured Jenkins Plugin Installations_**, --> Aid in integrating Jenkins with other CI/CD tools in our pipeline   
 
+--
 
- - The EC2 instance hosting our tools has been initialized with necessary EC2 User Data.    
-(Please check files above)
+In our project's DevSecOps pipeline, we've integrated a selection of Jenkins plugins.    
 
-**--->  Tool Setup:-**      
-
-- We've installed Jenkins, SonarQube and Trivy on the provisioned VM.   
-
-**---> Plugin Installation + Configuration:-**   
-
-<ins>**Purpose:-**</ins> It's essentially something that enhances the functionality of Jenkins, while allowing for seamless integration with some other tools in the Ci/CD Pipeline.   
-
-Not going too deep into the nitty-gritties, but giving an holistic overview,   
-
-**Source Code Management:**
-- Git: Integrates Jenkins with Git version control.
-- GitHub Branch Source: Allows Jenkins to build branches from a GitHub repository.
-
-**Build Enhancements:**
-- Ant: Ant + Jenkins.
-- Gradle: Gradle + Jenkins.
-- Build Timeout: Allows Jenkins to terminate a build if it takes too long.
-- Credentials Binding: Allows jobs to authenticate with external systems using secured credentials.
-- OWASP Markup Formatter: Escapes the output of console logs to prevent cross-site scripting vulnerabilities.
-
-**Security and User Management:**
-- LDAP: Integrates Jenkins with LDAP for user authentication and authorization.
-- SSH Build Agents: Enables Jenkins to launch build agents over SSH.
-- PAM Authentication: Integrates Pluggable Authentication Module (PAM) authentication with Jenkins.
-- Matrix Authorization Strategy: Provides a fine-grained access control mechanism to manage user permissions.
-
-**Notifications and Reporting:**
-- Mailer: Allows Jenkins to send notification emails upon build completion or other configured events.
-- Email Extension: Extends the mail capabilities of Jenkins with additional features like triggering emails on build statuses.
-
-**General Utilities and Enhancements:**
-- Timestamper: Adds timestamps to the console output of Jenkins jobs.
-- Workspace Cleanup: Deletes the workspace before the build starts or when a build finishes, to maintain a clean build environment.
-- Folders: Allows Jenkins jobs to be organized into folders.
-
-**Pipeline Management and Orchestration:**
-- Pipeline: Provides the fundamental Pipeline functionalities in Jenkins to support continuous delivery pipeline processes.
-- Pipeline: GitHub Groovy Libraries: Enables the use of shared Groovy libraries from GitHub within Pipeline jobs.
-- Pipeline: Stage View: Provides a visualization of Pipeline build stages in Jenkins.
-
-**Testing Frameworks:**
-- JUnit (likely, though not explicitly listed): Integrates JUnit test reports with Jenkins, a common plugin used for unit test reporting in Java projects.
-
-Each plugin is selected for its ability to enhance Jenkins' functionality in the areas of project management, building, testing, deploying, and automating various aspects of the software development lifecycle.
+Not going too deep, but giving an holistic overview of the kind of plugins we've used:
 
 
+**i) _Foundational Plugins for Jenkins Setup:-_**     
 
+The first set of plugins are revolving around the ones that are generic and implicit, meaning they _need_ to be insalled, for ensuring a fully functional setup (Something that Jenkins calls as "Suggested"). These include the SCM Plugins, the ones used for integrating build tools with Jenkins; Notification & reporting, General Utilities. the ones around User management, plugins for testing Frameworks or for orchestrating pipeline workflows (the pipeline plugin)
 
+> _These plugins are essential for a fully functional, comprehensive Jenkins environment, covering all the necessary aspects from source code management to pipeline orchestration and user management._
 
