@@ -35,9 +35,9 @@ Technicalities in the sections that follow.
 | Dependency Check       |             | ✓         |          |
 | Container Image Scanning |             |           | ✓        |
 
--  _Deployed **Prometheus, Grafana and EFK Stack**_:- - (ElasticSearch, Fluentd, Kibana)      
-  &nbsp; &nbsp; &nbsp; - Configured Logging, Monitoring & Data Visualization    
- &nbsp; &nbsp; &nbsp;  - **Real-time Insights** into Application's health and performance.
+-  _Deployed **Prometheus, Grafana and EFK Stack**_ (ElasticSearch, Fluentd, Kibana):-     
+  &nbsp; &nbsp; &nbsp; - Configured _**Logging, Monitoring & Data Visualization**_    
+ &nbsp; &nbsp; &nbsp;  - **_Real-time Insights_** into Application's health and performance.
    
 </br>
 
