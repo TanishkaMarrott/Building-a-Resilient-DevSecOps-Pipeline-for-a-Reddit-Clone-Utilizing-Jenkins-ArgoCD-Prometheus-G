@@ -1,4 +1,4 @@
-# DevSecOps Pipeline for Secure & Scalable Reddit Clone on Cloud-Native Architecture
+# DevSecOps Pipeline for a Secure & Scalable Reddit Clone on Cloud-Native Architecture
 
 
 ## Quick Introduction:-
@@ -8,41 +8,36 @@ Ensures we're not only speeding up releases, but also being security-compliant, 
 
 Technicalities in the sections that follow.
 
-</br>
+--> _What are we trying to achieve?_    
+&nbsp; &nbsp; &nbsp; **Optimized QA + Speedy Delivery + Security Ingrained = Real Business Value** 
 
---> _What are we trying to achieve?_   
-
-**Optimized QA + Speedy Delivery + Security Ingrained = Real Business Value**
-
-</br>
-
-_It's more like an iterative workflow, with continuous feedback loops..._
-
-</br>
+&nbsp;
 
 ### _How does the workflow actually look like?_
 </br>
 
- > _That's actually important when you're aiming for scalability, resilience and security._  
+ > _It's more like an iterative workflow, with continuous feedback loops..._ _That's actually important when you're aiming for scalability, resilience and security._  
 
-- **Infrastructure Provisioning** &rarr;    
-   We've used **Terraform** for automating infra-setup
 
-- **Container Orchestration &rarr;    
-  Elastic Kubernetes Service** has been used for managing application lifecycle
+-  Infrastructure Provisioning through **_Terraform_**
+ 
+- **_Elastic Kubernetes Service_** for orchestrating Containerised Applications
 
-- **CI/CD &rarr; Jenkins & ArgoCD**     
-   **-->** Automated builds and tests make sure every change's verified.       
-   **-->** Argo CD would then facilitate continuous deployment of the application to the Kubernetes environment
+- **_CI/CD - Jenkins and ArgoCD_** :-    
+  &nbsp; &nbsp; &nbsp; - **_Automated builds and tests_** make sure every change's verified.       
+  &nbsp; &nbsp; &nbsp; - Argo CD would then facilitate **_continuous deployment_** of the application to the Kubernetes environment
 
-- Security Integrations we've made
-   -  **Static Analysis Security Testing - SAST &rarr; SonarQube**
-   -  **Vulnerability Assessments &rarr; OWASP**
-   -  **Container Image Scanning &rarr; Trivy**
+- _**Security Integrations** we've made:-_       
 
--  Deployed **Prometheus, Grafana and EFK Stack** - (ElasticSearch, Fluentd, Kibana)      
-   --> Configured Logging, Monitoring & Data Visualization    
-   --> **Real-time Insights** into Application's health and performance.
+|               | SonarQube   | Owasp     | Trivy    |
+|---------------|-------------|-----------|----------|
+| Static Analysis (SAST)  | ✓           | ✓         |          |
+| Dependency Check       |             | ✓         |          |
+| Container Image Scanning |             |           | ✓        |
+
+-  _Deployed **Prometheus, Grafana and EFK Stack**_:- - (ElasticSearch, Fluentd, Kibana)      
+  &nbsp; &nbsp; &nbsp; - Configured Logging, Monitoring & Data Visualization    
+ &nbsp; &nbsp; &nbsp;  - **Real-time Insights** into Application's health and performance.
    
 </br>
 
