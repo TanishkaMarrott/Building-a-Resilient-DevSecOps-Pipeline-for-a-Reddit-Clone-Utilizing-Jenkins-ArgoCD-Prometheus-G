@@ -1,43 +1,46 @@
 # DevSecOps Pipeline for a Secure & Scalable Reddit Clone on Cloud-Native Architecture
 
 
-## Quick Introduction:-
+## _Quick Introduction_:-
 
-Our project today is all about the specifics involved while configuring a  **DevSecOps Pipeline.**   
+Our project today is all about the specifics involved while configuring a  **_DevSecOps Pipeline._**   
 Ensures we're not only speeding up releases, but also being security-compliant, from the get-go.    
 
 Technicalities in the sections that follow.
 
 --> _What are we trying to achieve?_    
-&nbsp; &nbsp; &nbsp; **Optimized QA + Speedy Delivery + Security Ingrained = Real Business Value** 
+&nbsp; &nbsp; &nbsp; <>**Optimized QA + Speedy Delivery + Security Ingrained = Real Business Value** 
 
 &nbsp;
 
-### _How does the workflow actually look like?_
+## _So, how does the workflow actually look like?_
 </br>
 
- > _It's more like an iterative workflow, with continuous feedback loops..._ _That's actually important when you're aiming for scalability, resilience and security._  
+ > _It's more like an iterative workflow, with continuous feedback loops._ _That's important when you're aiming for scalability, resilience and security..._  
 
-
--  Infrastructure Provisioning through **_Terraform_**
+-  Step one, as always - **_Infrastructure Provisioning_**.  --> Automating through **_Terraform_**
  
-- **_Elastic Kubernetes Service_** for orchestrating Containerised Applications
+- **_Elastic Kubernetes Service_** for orchestrating **_containerised applications_**.      
+     --> Managing the application lifecycle.
 
-- **_CI/CD - Jenkins and ArgoCD_** :-    
-  &nbsp; &nbsp; &nbsp; - **_Automated builds and tests_** make sure every change's verified.       
-  &nbsp; &nbsp; &nbsp; - Argo CD would then facilitate **_continuous deployment_** of the application to the Kubernetes environment
+- **_CI/CD --> Jenkins & ArgoCD_**     
+  &nbsp; &nbsp; &nbsp; - Making sure every change's verified --> **_automated builds and tests_**      
+  &nbsp; &nbsp; &nbsp; - Argo CD --> **_continuous deployment_** of the application to the Kubernetes environment
 
-- _**Security Integrations** we've made:-_       
 
-|               | SonarQube   | Owasp     | Trivy    |
+- _**Security Integrations**_
+  
+
+|               | _SonarQube_   | _OWASP_     | _Trivy_    |
 |---------------|-------------|-----------|----------|
 | Static Analysis (SAST)  | ✓           | ✓         |          |
 | Dependency Check       |             | ✓         |          |
 | Container Image Scanning |             |           | ✓        |
 
--  _Deployed **Prometheus, Grafana and EFK Stack**_ (ElasticSearch, Fluentd, Kibana):-     
-  &nbsp; &nbsp; &nbsp; - Configured _**Logging, Monitoring & Data Visualization**_    
- &nbsp; &nbsp; &nbsp;  - **_Real-time Insights_** into Application's health and performance.
+
+-  _**Prometheus + Grafana + EFK Stack**_:-     
+  &nbsp; &nbsp; &nbsp; --> **Logging, monitoring & Data Visualization**_    
+ &nbsp; &nbsp; &nbsp;  --> Real-time Insights into application's health and performance.
    
 </br>
 
@@ -45,16 +48,18 @@ Technicalities in the sections that follow.
 
 </br>
 
-## _How does DevSecOps align with Business Objectives?_
+## _How does DevSecOps align with my Business Goals?_
 
 
 _Simple Answer:-_   
-Solid Foundation to quickly realign with changing business requirements
+**Solid Foundation to quickly realign with changing business requirements**
+
+</br>
 
 _It's more like a ***Strategic Enabler,*** to boost efficiency, streamline processes._    
 
-**Quicker Product Iterations & feedback loops** through continuous integration and deployment   
---> means we're **market-agile**
+**_Quicker Product Iterations & feedback loops_** through continuous integration and deployment   
+--> means we're **_market-agile_**
 
 </br>
 
@@ -62,27 +67,28 @@ _It's more like a ***Strategic Enabler,*** to boost efficiency, streamline proce
 
 </br>
 
-Helps in both **Quality Assurance (due to Automated Testing)** &  **reducing costs due to post-deployment fixes.**  
+ **_Quality Assurance (due to Automated Testing) + Reducing costs due to post-deployment fixes._**  
 
-=> Mitigating Security risks early means **averting Data Security incidents / breaches due to security lapses.**
+=> Mitigating Security risks early means **_averting Data Security incidents / breaches due to security lapses._**
 
 </br>
 
-## _Phase I : Infrastructure Setup and Tool Configuration_
+## _Phase 1 --> Infrastructure Setup and Tool Configuration_
 
-> We've established the foundation for our DevSecOps Pipeline here...  
+</br>
 
-By setting up the necessary infrastructure and configuring essential tools.
+> _Establishing the foundation for our DevSecOps Pipeline here --> Setting up the necessary infrastructure and configuring essential tools...._
+
 
 **_---> VM Setup & Terraform Provisioning:_-**  
 
-&nbsp; &nbsp; &nbsp; &nbsp; - Post provisioning a VM, we've utilized **_Terraform to automate the infrastructure setup_**.    
+&nbsp; &nbsp; &nbsp; &nbsp; - Post provisioning a VM, we've utilized Terraform to automate the infrastructure setup.    
 Terraform Files have been shared above. The EC2 instance hosting our tools has been initialized with necessary EC2 User Data.    
 (Please check files above)
 
 **--->  Tool Setup:-**      
 
-We've installed **_Jenkins, SonarQube and Trivy_** on the provisioned VM.   
+We've installed Jenkins, SonarQube and Trivy on the provisioned VM.   
 Additionally, we've configured Jenkins with the required plugins to enable seamless integration with other tools in our pipeline. 
 
 **---> Plugin Installation + Configuration:-**   
