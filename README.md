@@ -16,17 +16,17 @@ Technicalities in the sections that follow.
 ## _So, how does the workflow actually look like?_
 
 
-**_Infrastructure Provisioning_** (Terraform)  
-                  ↓     
-**_Container Orchestration_** (EKS)     
-                  ↓      
-**_CI/CD_** (Jenkins + ArgoCD)   
-                  ↓     
-**_Security Integrations_** (SonarQube + OWASP + Trivy)   
-                  ↓       
-**_Logging, Monitoring & Data Visualization_** (Prometheus + Grafana + EFK Stack)   
-                  ↓     
-**_Real-time Insights_** into Application Health & Performance   
+**_Infrastructure Provisioning_** - Terraform   
+   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;     ↓     
+**_Container Orchestration_** - Elastic Kubernetes Service       
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;    ↓      
+**_CI/CD_** - Jenkins & ArgoCD      
+     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;   ↓     
+**_Security Integrations_** - SonarQube, OWASP & Trivy      
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;  ↓       
+**_Logging, Monitoring & Data Visualization_** - Prometheus, Grafana & EFK Stack      
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;   ↓     
+**_Real-time Insights_** into application health & performance       
 
 
    
@@ -46,40 +46,42 @@ _Simple Answer:-_
 
 _It's more like a ***Strategic Enabler,***_ to boost efficiency, streamline processes.    
 
--->_Quicker Product Iterations & feedback loops_ through continuous integration and deployment   
- means we're **_market-agile_**
-
+--> _Quicker product iterations & feedback loops_ through continuous integration and deployment   
+ means we're **_market-agile._**     
 </br>
 
-> **<ins>Agile DevSecOps = Swiftly adapting to the fast-evolving business requirements.**  
+> **<ins>Agile DevSecOps = Swiftly adapting to the fast-evolving business requirements.**
 
 </br>
+   
+--> _Quality Assurance_ (due to Automated Testing) + _Reducing costs_ due to post-deployment fixes.   
+ Mitigating Security risks early means **_averting Data Security incidents / breaches due to security lapses._**
+</br>
 
- _Quality Assurance (due to Automated Testing) + Reducing costs due to post-deployment fixes._    
-=> Mitigating Security risks early means **_averting Data Security incidents / breaches due to security lapses._**
+
 
 </br>
 
 ## _Phase 1 --> Infrastructure Setup & Tool Configuration_
 
-<ins>**Purpose:-**</ins> _Establishing the foundation for our DevSecOps Pipeline here --> Setting up the necessary infrastructure and configuring essential tools...._
-
-### Configuring Jenkins Plugins
+<ins>**Purpose of this phase:-**</ins> _Establishing the foundation for our DevSecOps Pipeline here --> Setting up the necessary infrastructure and configuring essential tools...._
 
 We've provisioned an EC2 instance using Terraform, incorporating the necessary user data, and on this VM, we've **_installed Jenkins, SonarQube, and Trivy,_** --> establishing the base for our CI/CD pipeline and security assessments.       
 
 Next, we've **_configured Jenkins Plugin Installations_**, --> Aid in integrating Jenkins with other CI/CD tools in our pipeline   
 
---
+</br>
+
+### _Plugins we've utilised:-_
 
 In our project's DevSecOps pipeline, we've integrated a selection of Jenkins plugins.    
 
 Not going too deep, but giving an holistic overview of the kind of plugins we've used:
 
 
-**i) _Foundational Plugins for Jenkins Setup:-_**     
+**i --> _Foundational Plugins for Jenkins Setup:-_**     
 
-The first set of plugins are revolving around the ones that are generic and implicit, meaning they _need_ to be insalled, for ensuring a fully functional setup (Something that Jenkins calls as "Suggested"). These include the SCM Plugins, the ones used for integrating build tools with Jenkins; Notification & reporting, General Utilities. the ones around User management, plugins for testing Frameworks or for orchestrating pipeline workflows (the pipeline plugin)
+These include the SCM Plugins, the ones used for integrating build tools with Jenkins; Notification & reporting, General Utilities. the ones around User management, plugins for testing Frameworks or for orchestrating pipeline workflows (the pipeline plugin)
 
 > _These plugins are essential for a fully functional, comprehensive Jenkins environment, covering all the necessary aspects from source code management to pipeline orchestration and user management._
 
