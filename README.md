@@ -28,8 +28,7 @@ Technicalities in the sections that follow.
       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;   ↓     
 **_Real-time Insights_** into application health & performance       
 
-
-   
+--
 </br>
 
 >  _**Okay, so how does DevSecOps augment Business Processes?**_
@@ -50,38 +49,49 @@ _It's more like a ***Strategic Enabler,***_ to boost efficiency, streamline proc
  means we're **_market-agile._**     
 </br>
 
-> **<ins>Agile DevSecOps = Swiftly adapting to the fast-evolving business requirements.**
+> #### **<ins>Agile DevSecOps = Swiftly adapting to evolving Business Requirements.**
 
 </br>
-   
+
 --> _Quality Assurance_ (due to Automated Testing) + _Reducing costs_ due to post-deployment fixes.   
  Mitigating Security risks early means **_averting Data Security incidents / breaches due to security lapses._**
 </br>
 
-
-
 </br>
+
+
 
 ## _Phase 1 --> Infrastructure Setup & Tool Configuration_
 
-<ins>**Purpose of this phase:-**</ins> _Establishing the foundation for our DevSecOps Pipeline here --> Setting up the necessary infrastructure and configuring essential tools...._
+We'll be setting up the necessary infrastructure and configuring essential tools in this phase
 
-We've provisioned an EC2 instance using Terraform, incorporating the necessary user data, and on this VM, we've **_installed Jenkins, SonarQube, and Trivy,_** --> establishing the base for our CI/CD pipeline and security assessments.       
+We've provisioned an EC2 instance using Terraform, incorporating the necessary user data, and on this VM, we've **_installed Jenkins, SonarQube, and Trivy,_** --> establishing the base for our CI/CD pipeline and security assessments. Next, we've **_configured Jenkins Plugin Installations_**, --> Aid in integrating Jenkins with other CI/CD tools in our pipeline   
 
-Next, we've **_configured Jenkins Plugin Installations_**, --> Aid in integrating Jenkins with other CI/CD tools in our pipeline   
-
-</br>
-
-### _Plugins we've utilised:-_
-
-In our project's DevSecOps pipeline, we've integrated a selection of Jenkins plugins.    
-
-Not going too deep, but giving an holistic overview of the kind of plugins we've used:
+### _Plugins we've utilised_
 
 
-**i --> _Foundational Plugins for Jenkins Setup:-_**     
+**_&rarr; Foundational Plugins for setting up Jenkins:-_**     
 
 These include the SCM Plugins, the ones used for integrating build tools with Jenkins; Notification & reporting, General Utilities. the ones around User management, plugins for testing Frameworks or for orchestrating pipeline workflows (the pipeline plugin)
 
-> _These plugins are essential for a fully functional, comprehensive Jenkins environment, covering all the necessary aspects from source code management to pipeline orchestration and user management._
+</br>
+
+> Long story short, it's for a fully functional Jenkins environment, covering all the necessary aspects from Source Code Management to Pipeline Orchestration
+
+</br>
+
+**_Plus some specialised ones..._**   
+
+Quick Segregation:-
+
+
+| Category                | Plugin                 | Purpose                                                                                   |
+|-------------------------|------------------------|-------------------------------------------------------------------------------------------|
+| Runtime & Environment   | **Eclipse Temurin Installer** | Automates the installation of the JDK           |
+|                         | **Nodejs**                | Enables Jenkins to set up Node.js environments, crucial for projects requiring Node.       |
+| Code Quality & Analysis | **SonarQube Scanner**     | Integrates SonarQube analysis into Jenkins --> SAST        |
+|                         | **Sonar Quality Gates**    | Breaks the build based on SonarQube quality gates --> code meets quality standards.  |
+
+
+
 
