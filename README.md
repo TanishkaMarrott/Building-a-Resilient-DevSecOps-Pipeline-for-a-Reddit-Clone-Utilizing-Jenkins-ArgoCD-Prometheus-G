@@ -61,18 +61,18 @@ _It's more like a ***Strategic Enabler,***_ to boost efficiency, streamline proc
 
 
 
-## _Phase 1 --> Infrastructure Setup & Tool Configuration_
+## _Phase 1 &rarr; Infrastructure Setup & Tool Configuration_
 
-We'll be setting up the necessary infrastructure and configuring essential tools in this phase
+-->We'll be setting up the necessary infrastructure and configuring essential tools in this phase
 
 We've provisioned an EC2 instance using Terraform, incorporating the necessary user data, and on this VM, we've **_installed Jenkins, SonarQube, and Trivy,_** --> establishing the base for our CI/CD pipeline and security assessments. Next, we've **_configured Jenkins Plugin Installations_**, --> Aid in integrating Jenkins with other CI/CD tools in our pipeline   
 
 ### _Quick Segregation on the kind of plugins we've used:-_
 
 
-**_--> Foundational Plugins - The Core for setting up Jenkins:-_**     
+**_✔️ Foundational Plugins - The Core for setting up Jenkins:-_**     
 
-These include the SCM Plugins, the ones used for integrating build tools with Jenkins; Notification & reporting, General Utilities. the ones around User management, plugins for testing Frameworks or for orchestrating pipeline workflows (the pipeline plugin)
+--> These include the SCM Plugins, the ones used for integrating build tools with Jenkins; Notification & reporting, General Utilities. the ones around User management, plugins for testing Frameworks or for orchestrating pipeline workflows (the pipeline plugin)
 
 </br>
 
@@ -80,7 +80,7 @@ These include the SCM Plugins, the ones used for integrating build tools with Je
 
 </br>
 
-**_--> Specialised Plugins:-_**   
+**_✔️ The Specialised Ones:-_**   
 
 
 | Category                | Plugin                 | Purpose                                                                                   |
