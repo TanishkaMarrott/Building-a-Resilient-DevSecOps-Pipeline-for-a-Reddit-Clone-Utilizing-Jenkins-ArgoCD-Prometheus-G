@@ -65,7 +65,7 @@ _It's more like a ***Strategic Enabler,***_ to boost efficiency, streamline proc
 
 -->We'll be setting up the necessary infrastructure and configuring essential tools in this phase
 
-We've provisioned an EC2 instance using Terraform, incorporating the necessary user data, and on this VM, we've **_installed Jenkins, SonarQube, and Trivy,_** --> establishing the base for our CI/CD pipeline and security assessments. Next, we've **_configured Jenkins Plugin Installations_**, --> Aid in integrating Jenkins with other CI/CD tools in our pipeline   
+We've provisioned an EC2 instance using Terraform (`updated_main.tf`), incorporating the necessary user data --> `install.sh` , and on this VM, we've **_installed Jenkins, SonarQube, and Trivy,_** --> establishing the base for our CI/CD pipeline and security assessments. Next, we've **_configured Jenkins Plugin Installations_**, --> Aid in integrating Jenkins with other CI/CD tools in our pipeline   
 
 ### _Quick Segregation on the kind of plugins we've used:-_
 
