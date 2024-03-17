@@ -83,11 +83,17 @@ We've provisioned an EC2 instance using Terraform (`updated_main.tf`), incorpora
 **_✔️ The Specialised Ones:-_**   
 
 
-| Category                | Plugin                 | Purpose                                                                                   |
-|-------------------------|------------------------|-------------------------------------------------------------------------------------------|
-| Code Quality & Analysis | **SonarQube Scanner**     | Integrates SonarQube analysis into Jenkins --> SAST        |
-|                         | **Sonar Quality Gates**    | Breaks the build based on SonarQube quality gates --> code meets quality standards.  |
-|                         | **OWASP Dependency Check** | Detects vulnerabilities within Project's dependencies
+
+| Category                | Plugin/Tool                 | Purpose                                                                                   |
+|-------------------------|-----------------------------|-------------------------------------------------------------------------------------------|
+| **Code Quality & Analysis** | **SonarQube Scanner**       | Integrates SonarQube  into Jenkins for static application security testing (SAST).|
+|                         | **Sonar Quality Gates**     | Breaks the build based on SonarQube quality gates --> ensures the code meets quality standards. |
+|                         | **OWASP Dependency Check**  | Detects vulnerabilities within the project's dependencies.                                |
+| **Infrastructure as Code (IaC) Scanning** | **Zscaler (IaC scanning)**  | Scans infrastructure as code (IaC) configurations for security issues and misconfigurations. |
+| **Dynamic Application Security Testing (DAST)** | **OWASP ZAP**              | Performs dynamic analysis of running web applications to identify security vulnerabilities. |
+| **Secrets Detection**  | **truffleHog**              | Scans the project repository for secrets like passwords, tokens and private keys that might have been accidentally committed. |
+| **Performance Testing** | **JMeter**                  | Conducts performance testing to evaluate the application’s behavior under load.            |
+
 
 ### _Specialised Plugins v/s Global Tool Configurations:-_
 
