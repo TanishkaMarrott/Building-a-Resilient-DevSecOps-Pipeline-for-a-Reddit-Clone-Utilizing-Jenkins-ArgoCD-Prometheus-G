@@ -87,6 +87,7 @@ We've provisioned an EC2 instance using Terraform, incorporating the necessary u
 |-------------------------|------------------------|-------------------------------------------------------------------------------------------|
 | Code Quality & Analysis | **SonarQube Scanner**     | Integrates SonarQube analysis into Jenkins --> SAST        |
 |                         | **Sonar Quality Gates**    | Breaks the build based on SonarQube quality gates --> code meets quality standards.  |
+|                         | **OWASP Dependency Check** | Detects vulnerabilities within Project's dependencies
 
 ### _Specialised Plugins v/s Global Tool Configurations:-_
 
@@ -113,4 +114,6 @@ So, they're _automatically installed & available to all jobs_
 |-------------------------|------------------------|-------------------------------------------------------------------------------------------|
 | Runtime & Environment   | **Eclipse Temurin Installer** | Automates the JDK's installation => Means a specific version of the JDK is available for all jobs. |
 |                         | **Nodejs**                 | Ensures the necessary runtime version is available for JavaScript-based applications. |
+
+
 
