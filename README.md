@@ -76,7 +76,7 @@ These include the SCM Plugins, the ones used for integrating build tools with Je
 
 </br>
 
-> Long story short, it's for a fully functional Jenkins environment, covering all the necessary aspects from Source Code Management to Pipeline Orchestration
+> In short, it's for a fully functional Jenkins environment, covering all the necessary aspects from Source Code Management to Pipeline Orchestration
 
 </br>
 
