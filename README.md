@@ -67,31 +67,50 @@ We'll be setting up the necessary infrastructure and configuring essential tools
 
 We've provisioned an EC2 instance using Terraform, incorporating the necessary user data, and on this VM, we've **_installed Jenkins, SonarQube, and Trivy,_** --> establishing the base for our CI/CD pipeline and security assessments. Next, we've **_configured Jenkins Plugin Installations_**, --> Aid in integrating Jenkins with other CI/CD tools in our pipeline   
 
-### _Plugins we've utilised_
+### _Quick Segregation on the kind of plugins we've used:-_
 
 
-**_&rarr; Foundational Plugins for setting up Jenkins:-_**     
+**_--> Foundational Plugins - The Core for setting up Jenkins:-_**     
 
 These include the SCM Plugins, the ones used for integrating build tools with Jenkins; Notification & reporting, General Utilities. the ones around User management, plugins for testing Frameworks or for orchestrating pipeline workflows (the pipeline plugin)
 
 </br>
 
-> In short, it's for a fully functional Jenkins environment, covering all the necessary aspects from Source Code Management to Pipeline Orchestration
+> In short, it's for a **fully functional Jenkins environment**, covering all the necessary aspects from Source Code Management to Pipeline Orchestration
 
 </br>
 
-**_Plus some specialised ones..._**   
-
-Quick Segregation:-
+**_--> Specialised Plugins:-_**   
 
 
 | Category                | Plugin                 | Purpose                                                                                   |
 |-------------------------|------------------------|-------------------------------------------------------------------------------------------|
-| Runtime & Environment   | **Eclipse Temurin Installer** | Automates the installation of the JDK           |
-|                         | **Nodejs**                | Enables Jenkins to set up Node.js environments, crucial for projects requiring Node.       |
 | Code Quality & Analysis | **SonarQube Scanner**     | Integrates SonarQube analysis into Jenkins --> SAST        |
 |                         | **Sonar Quality Gates**    | Breaks the build based on SonarQube quality gates --> code meets quality standards.  |
 
+### _Specialised Plugins v/s Global Tool Configurations:-_
 
+Specialised plugins are like  _add-ons to enhance the functionality of Jenkins..._                
+--> Allow for _**integration of Jenkins with other tools in the pipeline**_                                   
 
+</br>
+
+Global tool configurations are slightly different....   
+_It's all about defining development tools at a global scope_     
+
+So, they're _automatically installed & available to all jobs_                   
+ <ins>**--> In a way, it standardises the environment across all builds, and projects.**</ins>        
+
+</br>
+
+ >  _Once setup, they **eliminate the need of manually configuring specific versions** of these runtimes/environments for each of them separately._
+
+</br>
+
+### **_Global Tool Configurations we've utilised:-_**   
+
+| Category                | Tool                   | Purpose                                                                                   |
+|-------------------------|------------------------|-------------------------------------------------------------------------------------------|
+| Runtime & Environment   | **Eclipse Temurin Installer** | Automates the JDK's installation => Means a specific version of the JDK is available for all jobs. |
+|                         | **Nodejs**                 | Ensures the necessary runtime version is available for JavaScript-based applications. |
 
