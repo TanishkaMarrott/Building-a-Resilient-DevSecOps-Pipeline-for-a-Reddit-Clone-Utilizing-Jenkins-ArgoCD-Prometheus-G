@@ -61,16 +61,21 @@ _It's more like a ***Strategic Enabler,***_ to boost efficiency, streamline proc
 
 
 
-## _Phase 1 &rarr; Infrastructure Setup & Tool Configuration_
+## _Phase 1 &rarr; Infra-Setup & Tool Configuration_
 
--->We'll be setting up the necessary infrastructure and configuring essential tools in this phase
+-->Setting up the necessary infrastructure and configuring essential tools in this phase
+         
+--> Establishing the base for our CI/CD pipeline and security assessments. Next, we've **_configured Jenkins Plugin Installations_**, --> Aid in integrating Jenkins with other CI/CD tools in our pipeline. 
 
-We've provisioned an EC2 instance using Terraform (`updated_main.tf`), incorporating the necessary user data --> `install.sh` , and on this VM, we've **_installed Jenkins, SonarQube, and Trivy,_** --> establishing the base for our CI/CD pipeline and security assessments. Next, we've **_configured Jenkins Plugin Installations_**, --> Aid in integrating Jenkins with other CI/CD tools in our pipeline   
+Please check `updated_main.tf` & `install.sh`
 
-### _Quick Segregation on the kind of plugins we've used:-_
+</br>
 
+### _Segregating the kind of plugins we've used:-_
 
-**_✔️ Foundational Plugins - The Core for setting up Jenkins:-_**     
+--
+
+### **_✔️ Foundational Plugins - The Core for setting up Jenkins:-_**     
 
 --> These include the SCM Plugins, the ones used for integrating build tools with Jenkins; Notification & reporting, General Utilities. the ones around User management, plugins for testing Frameworks or for orchestrating pipeline workflows (the pipeline plugin)
 
@@ -80,22 +85,31 @@ We've provisioned an EC2 instance using Terraform (`updated_main.tf`), incorpora
 
 </br>
 
-**_✔️ The Specialised Ones:-_**   
+### **_✔️ The Specialised Ones:-_**   
 
 
 
 | Category                | Plugin/Tool                 | Purpose                                                                                   |
 |-------------------------|-----------------------------|-------------------------------------------------------------------------------------------|
-| **Code Quality & Analysis** | **SonarQube Scanner**       | Integrates SonarQube  into Jenkins for static application security testing (SAST).|
-|                         | **Sonar Quality Gates**     | Breaks the build based on SonarQube quality gates --> ensures the code meets quality standards. |
-|                         | **OWASP Dependency Check**  | Detects vulnerabilities within the project's dependencies.                                |
-| **Infrastructure as Code (IaC) Scanning** | **Zscaler (IaC scanning)**  | Scans infrastructure as code (IaC) configurations for security issues and misconfigurations. |
-| **Dynamic Application Security Testing (DAST)** | **OWASP ZAP**              | Performs dynamic analysis of running web applications to identify security vulnerabilities. |
-| **Secrets Detection**  | **truffleHog**              | Scans the project repository for secrets like passwords, tokens and private keys that might have been accidentally committed. |
-| **Performance Testing** | **JMeter**                  | Conducts performance testing to evaluate the application’s behavior under load.            |
+| **Code Quality & Analysis** | **SonarQube Scanner**       | Integrates SQ into Jenkins --> SAST|
+|                         | **Sonar Quality Gates**     | Breaks the build based on SonarQube quality gates --> code quality  |
+|                         | **OWASP Dependency Check**  | --> Vulnerabilities within the project's dependencies.                                |
+| **IaC Scanning** | **TfSec**  | Scans the IaC for security misconfigurations. |
+| **Dynamic Application Security Testing - DAST** | **OWASP ZAP**              | Dynamic analysis of running web applications |
+| **Secrets Detection**  | **truffleHog**              | Scans the repository for accidentally committed secrets |
+| **Performance Testing** | **JMeter**                  | Load testing - Application's resilience            |
 
+--
 
-### _Specialised Plugins v/s Global Tool Configurations:-_
+_**Quick Steps on SQ + Jenkins:-**_       
+            
+We've integrated SonarQube with our Jenkins pipeline using a security authentication token. By configuring SonarScanner in Jenkins and securely managing credentials, we've enabled automated code inspections.        
+
+--> Quality gates in SQ ensures that code must meet specific quality standards before it can proceed through the pipeline. Additionally, the webhook feature provides immediate feedback within our CI/CD process --> Quick identification & resolution of issues. 
+
+--
+
+## _Why global tool configurations?_
 
 Specialised plugins are like  _add-ons to enhance the functionality of Jenkins..._                
 --> Allow for _**integration of Jenkins with other tools in the pipeline**_                                   
@@ -116,10 +130,9 @@ So, they're _automatically installed & available to all jobs_
 
 ### **_Global Tool Configurations we've utilised:-_**   
 
-| Category                | Tool                   | Purpose                                                                                   |
+| Category                | Tools                   | Purpose                                                                                   |
 |-------------------------|------------------------|-------------------------------------------------------------------------------------------|
 | Runtime & Environment   | **Eclipse Temurin Installer** | Automates the JDK's installation => Means a specific version of the JDK is available for all jobs. |
 |                         | **Nodejs**                 | Ensures the necessary runtime version is available for JavaScript-based applications. |
-
 
 
