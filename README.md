@@ -139,14 +139,15 @@ So, they're _automatically installed & available to all jobs_
 
 ## _Phase 2 --> Pipeline Configuration_
 
-In Phase 2 of our project, we've focused on pipeline configuration to automate our build and deployment processes. 
+In Phase 2 of our project, we've focused on pipeline configuration to automate our build and deployment processes.             
+The pipeline, scripted in a Jenkinsfile, (Please check `Jenkinsfile` above) utilises both JDK 17 and Node.js 16 tools for a build environment suitable for our Reddit Clone App. 
 
 </br>
 
 <img width="946" alt="Reddit-Clone-App-Jenkins-Pipeline" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/430d0863-09e9-4064-bfc6-4ec2d101d5b0">
 
 
-The pipeline, scripted in a Jenkinsfile, (Please check above) utilises both JDK 17 and Node.js 16 tools for a build environment suitable for our Reddit Clone App. 
+
 
 
 
@@ -155,7 +156,7 @@ The pipeline, scripted in a Jenkinsfile, (Please check above) utilises both JDK 
 ### _CI/CD Pipeline - Key Stages_
 
 1 --> _**<ins>Workspace Preparation:</ins>**_       
-Ensures a **clean workspace** --> no any interference from previous builds.
+Ensures a **clean workspace** --> no interference from previous builds.
 
 2 --> _**<ins>Code Checkout:</ins>**_             
 We fetch the latest code from the **main** branch of our Git repository to maintain up-to-date integration.
@@ -167,12 +168,16 @@ Through **SonarQube**, we've scrutinized the code for potential **bugs**, **vuln
 Crucial checkpoint - aligns with our quality criteria --> Decides if changes can be promoted.
 
 5 --> _**<ins>Dependency Installation:</ins>**_          
-We then install the necessary **dependencies** for our Node.js-based application to ensure all components are present for a successful build.
+We then install the necessary **dependencies** / components for our application
 
-6 --> _**<ins>Security Scans:</ins>**_ The pipeline integrates comprehensive security scanning with **OWASP's Dependency-Check** and **Trivy**, scanning both our file system and Docker images.
+6 --> _**<ins>Security Scans:</ins>**_                
+We've integrated security scanning with **OWASP's Dependency-Check** and **Trivy**, scanning both our file system and Docker images.
 
-7 --> _**<ins>Containerization:</ins>**_ The application is **containerized** using **Docker**, facilitating consistent deployment and scalability.
+7 --> _**<ins>Containerization:</ins>**_          
+The application is **containerized** using **Docker** --> consistent deployment and scalability.
 
-8 --> _**<ins>Secrets Detection:</ins>**_ We employ **TruffleHog** to detect any unintentional secret exposures, enhancing our security measures.
+8 --> _**<ins>Secrets Detection:</ins>**_             
+We employ **TruffleHog** to detect any unintentional secret exposures
 
-9 --> _**<ins>Infrastructure as Code Analysis:</ins>**_ Lastly, we analyze our **Terraform configurations** with **tfsec** to ensure our infrastructure is defined securely.
+9 --> _**<ins>Infrastructure as Code Analysis:</ins>**_                         
+Lastly, we analyze our **Terraform configurations** with **tfsec** to ensure our infrastructure is defined securely.
