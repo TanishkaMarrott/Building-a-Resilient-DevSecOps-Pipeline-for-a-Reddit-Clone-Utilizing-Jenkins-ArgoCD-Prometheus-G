@@ -136,3 +136,21 @@ So, they're _automatically installed & available to all jobs_
 |                         | **Nodejs**                 | Ensures the necessary runtime version is available for JavaScript-based applications. |
 
 
+
+## _Phase 2 --> Pipeline Configuration_
+
+In Phase 2 of our project, we focused on meticulous pipeline configuration to automate and fortify our build and deployment processes. The pipeline, scripted in a Jenkinsfile, leverages both JDK 17 and Node.js 16 tools for a versatile build environment suitable for our Reddit Clone App. Key stages were implemented for rigorous code quality and security assessment:
+
+Workspace Preparation: The initial stage ensures a clean workspace, preventing any interference from previous builds.         
+Code Checkout: We fetch the latest code from the main branch of our Git repository to maintain up-to-date integration.         
+Static Code Analysis: Employing SonarQube, we scrutinize the code for potential bugs, vulnerabilities, and maintainability concerns.         
+Quality Gate: This crucial checkpoint aligns with our stringent quality criteria, using SonarQube's Quality Gate to decide if changes can be promoted.
+Dependency Installation: We then install the necessary dependencies for our Node.js-based application to ensure all components are present for a successful build.
+Security Scans: The pipeline integrates comprehensive security scanning with OWASP's Dependency-Check and Trivy, scanning both our file system and Docker images.
+Containerization: The application is containerized using Docker, facilitating consistent deployment and scalability.
+Secrets Detection: We employ TruffleHog to detect any unintentional secret exposures, enhancing our security measures.
+Infrastructure as Code Analysis: Lastly, we analyze our Terraform configurations with tfsec to ensure our infrastructure is defined securely.
+
+
+
+
