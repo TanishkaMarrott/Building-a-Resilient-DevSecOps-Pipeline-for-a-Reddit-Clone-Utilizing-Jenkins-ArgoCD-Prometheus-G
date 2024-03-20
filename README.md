@@ -147,10 +147,6 @@ The pipeline, scripted in a Jenkinsfile, (Please check `Jenkinsfile` above) util
 <img width="946" alt="Reddit-Clone-App-Jenkins-Pipeline" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/430d0863-09e9-4064-bfc6-4ec2d101d5b0">
 
 
-
-
-
-
 </br>
 
 ### _CI/CD Pipeline - Key Stages_
@@ -207,5 +203,8 @@ _**SonarQube Dashboard**_ - This screenshot shows a successful Quality Gate with
 _**Docker Hub Repository: 'tanishkamarrott/reddit'**_ – The third screenshot shows the Docker Hub repository page for the 'reddit' image, ready for Image pushes
 
 ![image](https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/395f374d-9dbd-4436-9f73-c18848d40ccf)
+
+
+
 
 
