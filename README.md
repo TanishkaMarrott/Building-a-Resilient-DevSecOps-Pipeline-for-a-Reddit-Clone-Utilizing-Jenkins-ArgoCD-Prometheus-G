@@ -180,6 +180,8 @@ Lastly, we analyze our **Terraform configurations** with **tfsec** to ensure our
 
 </br>
 
+You can find the application code here :- https://github.com/TanishkaMarrott/Reddit-Clone-App
+
 _**Dependency-Check Results**_ – This screenshot from Jenkins displays the results of the Dependency Check, showcasing the distribution and severity of discovered vulnerabilities in the Reddit Clone App.
 
 
