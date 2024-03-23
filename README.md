@@ -211,15 +211,16 @@ _**Docker Hub Repository: 'tanishkamarrott/reddit'**_ – The third screenshot s
 
 Please check :- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/main
 
-### Quick Overview
+### _Quick Overview_
 
-In this Terraform configuration, we have two modules: eks and vpc.                
-These modules work together to provision a Kubernetes cluster on AWS using Elastic Kubernetes Service, for running our containerised application
+In this Terraform configuration, we have two modules:-  `eks` and `vpc`.                         
+These modules work together to **_provision a Kubernetes cluster on AWS using Elastic Kubernetes Service_**, for running our containerised application
 
-#### VPC Module
-The vpc module is responsible for setting up the Virtual Private Cloud (VPC) environment where our EKS cluster will live. This includes creating the VPC itself with a specified CIDR block, provisioning public subnets within the VPC, and setting up an Internet Gateway to allow external access to and from the EKS cluster. The module also handles the creation of route tables and associates them with the subnets to ensure proper routing of traffic. Importantly, it configures the network infrastructure to support high availability by deploying resources across multiple Availability Zones (AZs) when possible.
+#### _VPC Module_
+--> Setting up the VPC environment where our EKS cluster will live.          
+This includes creating the VPC itself with a specified CIDR block, provisioning public subnets within the VPC, and setting up an Internet Gateway to allow external access to and from the EKS cluster. The module also handles the creation of route tables and associates them with the subnets to ensure proper routing of traffic. Importantly, it configures the network infrastructure to support high availability by deploying resources across multiple Availability Zones (AZs) when possible.
 
-EKS Module
+#### _EKS Module_
 The eks module takes care of creating the EKS cluster within the VPC created by the vpc module. This includes specifying the cluster name, associating an IAM role that EKS can assume for creating AWS resources on your behalf, and configuring the VPC settings like subnet IDs and access controls for the Kubernetes API server. Furthermore, it creates a managed node group, which is a group of EC2 instances that serve as worker nodes for the Kubernetes cluster. The node group configuration includes specifying the instance type, the desired number of nodes, and scaling settings to automatically adjust the number of nodes based on load.
 
 Security and Access
