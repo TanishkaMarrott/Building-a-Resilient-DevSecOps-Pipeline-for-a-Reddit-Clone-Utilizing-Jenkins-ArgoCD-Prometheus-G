@@ -207,6 +207,23 @@ _**Docker Hub Repository: 'tanishkamarrott/reddit'**_ – The third screenshot s
 ![image](https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/395f374d-9dbd-4436-9f73-c18848d40ccf)
 
 
+Now that we're done with the continuous integration part, we'd move to the deployment part. Continuous deployment is geared towards automating the deployment of code from dev to prod, post a successful build. that's post passing the necessary code quality and security tests. 
+
+--> Means a faster deployment velocity, accelearted software releases = Faster time-to-market 
+
+### Is Testing a part of both CI and CD?
+
+Yes.             
+But the kind and the emphasis of testing differs.....
+
+What does this mean? Testing in CI is primarily about running tests against the code to ensure the codebase is stable and functional throughout. Integrating multiple code changes into th main-stream, won't break production. It mostly revolves around Unit testing & Integration testing.          
+The goal here is frequent, incremental updates - (Immediate feedback = Quicker Iterative loops)
+
+When I talk about CD, it's not only about a "bug-free" code. You need some other types of testing too, Security testing, Performance Testing, UAT testing. Making my software production-ready, considering all non-functional aspects as well. 
+
+Is my software production ready? Can this be delivered to my users? Does it meet the overall high quality standards? This answers all such questions.
+
+
 ## _Phase 3 ---> Creation of EKS Cluster with Terraform and ArgoCD Setup_
 
 Please check :- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/main
