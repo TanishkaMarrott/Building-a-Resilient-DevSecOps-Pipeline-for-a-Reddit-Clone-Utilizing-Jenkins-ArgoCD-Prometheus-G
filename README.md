@@ -207,6 +207,34 @@ _**Docker Hub Repository: 'tanishkamarrott/reddit'**_ – The third screenshot s
 ![image](https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/395f374d-9dbd-4436-9f73-c18848d40ccf)
 
 
+## _Phase 3 ---> Creation of EKS Cluster with Terraform and ArgoCD Setup_
+
+Please check :- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/main
+
+### Quick Overview
+
+In this Terraform configuration, we have two modules: eks and vpc.                
+These modules work together to provision a Kubernetes cluster on AWS using Elastic Kubernetes Service, for running our containerised application
+
+#### VPC Module
+The vpc module is responsible for setting up the Virtual Private Cloud (VPC) environment where our EKS cluster will live. This includes creating the VPC itself with a specified CIDR block, provisioning public subnets within the VPC, and setting up an Internet Gateway to allow external access to and from the EKS cluster. The module also handles the creation of route tables and associates them with the subnets to ensure proper routing of traffic. Importantly, it configures the network infrastructure to support high availability by deploying resources across multiple Availability Zones (AZs) when possible.
+
+EKS Module
+The eks module takes care of creating the EKS cluster within the VPC created by the vpc module. This includes specifying the cluster name, associating an IAM role that EKS can assume for creating AWS resources on your behalf, and configuring the VPC settings like subnet IDs and access controls for the Kubernetes API server. Furthermore, it creates a managed node group, which is a group of EC2 instances that serve as worker nodes for the Kubernetes cluster. The node group configuration includes specifying the instance type, the desired number of nodes, and scaling settings to automatically adjust the number of nodes based on load.
+
+Security and Access
+Security groups are defined to control inbound and outbound traffic to the nodes in the cluster. IAM roles and policies are attached to grant the necessary permissions for the EKS cluster and its nodes to interact with other AWS services securely.
+
+Outputs
+The configuration defines several outputs, such as the EKS cluster endpoint, cluster ID, and certificate authority data required for configuring kubectl to communicate with the cluster. These outputs are essential for integrating the EKS cluster with external tools and services or for providing information needed for manual configuration steps.
+
+Workflow Summary
+The entire development workflow revolves around provisioning a robust, scalable, and secure Kubernetes environment on AWS. By modularizing the setup into VPC and EKS components, it offers flexibility, reusability, and clearer separation of concerns. The VPC module sets the foundation with a well-configured network, while the EKS module leverages that network to run Kubernetes workloads effectively. Together, these modules automate the creation of a Kubernetes cluster that's ready to deploy containerized applications, providing a scalable and highly available platform that adheres to AWS best practices.
+
+
+
+
+
 
 
 
