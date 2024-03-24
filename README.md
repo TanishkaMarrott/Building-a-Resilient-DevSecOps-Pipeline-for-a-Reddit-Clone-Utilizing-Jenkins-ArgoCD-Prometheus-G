@@ -258,8 +258,10 @@ Workflow Summary
 The entire development workflow revolves around provisioning a robust, scalable, and secure Kubernetes environment on AWS. By modularizing the setup into VPC and EKS components, it offers flexibility, reusability, and clearer separation of concerns. The VPC module sets the foundation with a well-configured network, while the EKS module leverages that network to run Kubernetes workloads effectively. Together, these modules automate the creation of a Kubernetes cluster that's ready to deploy containerized applications, providing a scalable and highly available platform that adheres to AWS best practices.
 
 
+<img width="949" alt="image" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/77c0230f-4b32-4b7f-8c20-e44f7035f58d">
 
 
+<img width="515" alt="image" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/78b7dab5-93ac-42a3-8677-ee20420b0e46">
 
 
 
