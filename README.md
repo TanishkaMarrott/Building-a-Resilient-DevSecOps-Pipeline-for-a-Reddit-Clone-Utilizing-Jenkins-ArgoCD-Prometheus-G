@@ -150,33 +150,30 @@ The pipeline, scripted in a Jenkinsfile, (Please check `Jenkinsfile` above) util
 </br>
 
 ### _CI/CD Pipeline - Key Stages_
+1 --> _<ins>Workspace Preparation</ins>_: Ensures a clean workspace               
+ --> No interference from previous builds.
 
-1 --> _**<ins>Workspace Preparation:</ins>**_       
-Ensures a **clean workspace** --> no interference from previous builds.
+2 --> _<ins>Code Checkout</ins>_: We fetch the latest code from the main branch of our Git repository to maintain up-to-date integration.
 
-2 --> _**<ins>Code Checkout:</ins>**_             
-We fetch the latest code from the **main** branch of our Git repository to maintain up-to-date integration.
+3 --> _<ins>Static Code Analysis</ins>_:            
+Through SonarQube, we've scrutinized the code for potential bugs, vulnerabilities, and maintainability concerns.
 
-3 --> _**<ins>Static Code Analysis:</ins>**_            
-Through **SonarQube**, we've scrutinized the code for potential **bugs**, **vulnerabilities**, and **maintainability** concerns.
+4 --> _<ins>Quality Gate</ins>_: Crucial checkpoint - aligns with our quality criteria             
+--> Decides if changes can be promoted.
 
-4 --> _**<ins>Quality Gate:</ins>**_             
-Crucial checkpoint - aligns with our quality criteria --> Decides if changes can be promoted.
+5 --> _<ins>Dependency Installation</ins>_:          
+We then install the necessary dependencies / components for our application.
 
-5 --> _**<ins>Dependency Installation:</ins>**_          
-We then install the necessary **dependencies** / components for our application
+6 --> _<ins>Security Scans</ins>_:  OWASP's Dependency-Check and Trivy, scanning both our file system and Docker images.
 
-6 --> _**<ins>Security Scans:</ins>**_                
-We've integrated security scanning with **OWASP's Dependency-Check** and **Trivy**, scanning both our file system and Docker images.
+7 --> _<ins>Containerization</ins>_:          
+The application is containerized using Docker --> consistent deployment and scalability.
 
-7 --> _**<ins>Containerization:</ins>**_          
-The application is **containerized** using **Docker** --> consistent deployment and scalability.
+8 --> _<ins>Secrets Detection</ins>_:             
+We employ TruffleHog to detect any unintentional secret exposures.
 
-8 --> _**<ins>Secrets Detection:</ins>**_             
-We employ **TruffleHog** to detect any unintentional secret exposures
-
-9 --> _**<ins>Infrastructure as Code Analysis:</ins>**_                         
-Lastly, we analyze our **Terraform configurations** with **tfsec** to ensure our infrastructure is defined securely.
+9 --> _<ins>Infrastructure as Code Analysis</ins>_:                         
+Lastly, we analyze our Terraform configurations with tfsec to ensure our infrastructure is defined securely.
 
 </br>
 
@@ -206,22 +203,29 @@ _**Docker Hub Repository: 'tanishkamarrott/reddit'**_ – The third screenshot s
 
 ![image](https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/395f374d-9dbd-4436-9f73-c18848d40ccf)
 
+</br>
 
-Now that we're done with the continuous integration part, we'd move to the deployment part. Continuous deployment is geared towards automating the deployment of code from dev to prod, post a successful build. that's post passing the necessary code quality and security tests. 
+Now that we're done with the continuous integration part, we'd move to the deployment part.  Continuous deployment is geared towards automating the deployment of code from dev to prod, post a successful build, that's post passing the necessary code quality and security tests. 
 
---> Means a faster deployment velocity, accelearted software releases = Faster time-to-market 
+</br>
 
-### Is Testing a part of both CI and CD?
+--> Means a faster deployment velocity, accelerated software releases = Faster time-to-market 
 
-Yes.             
+### _Is Testing a part of both CI and CD?_
+
+**Yes.**             
 But the kind and the emphasis of testing differs.....
 
-What does this mean? Testing in CI is primarily about running tests against the code to ensure the codebase is stable and functional throughout. Integrating multiple code changes into th main-stream, won't break production. It mostly revolves around Unit testing & Integration testing.          
-The goal here is frequent, incremental updates - (Immediate feedback = Quicker Iterative loops)
+What does this mean? Testing in CI is primarily about running tests against the code to ensure the codebase is stable and functional throughout. Integrating multiple code changes into the main-stream, won't break production. It mostly revolves around **Unit testing** & **Integration testing**.          
+The goal here is frequent, incremental updates - (**Immediate feedback** = **Quicker Iterative loops**)
 
-When I talk about CD, it's not only about a "bug-free" code. You need some other types of testing too, Security testing, Performance Testing, UAT testing. Making my software production-ready, considering all non-functional aspects as well. 
+When I talk about CD, it's not only about a "bug-free" code. You need some other types of testing too, **Security testing**, **Performance Testing**, **UAT testing**. Making my software production-ready, considering all non-functional aspects as well. 
 
-Is my software production ready? Can this be delivered to my users? Does it meet the overall high quality standards? This answers all such questions.
+*Is my software production ready? Can this be delivered to my users? Does it meet the overall high quality standards?* This answers all such questions.
+
+</br>
+
+Let's start with the Terrform Configurations involved...
 
 
 ## _Phase 3 ---> Creation of EKS Cluster with Terraform and ArgoCD Setup_
@@ -231,14 +235,18 @@ Please check :- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/main
 ### _Quick Overview_
 
 In this Terraform configuration, we have two modules:-  `eks` and `vpc`.                         
-These modules work together to **_provision a Kubernetes cluster on AWS using Elastic Kubernetes Service_**, for running our containerised application
+Purpose:- **_Provision a Kubernetes cluster using Elastic Kubernetes Service_**, for running our containerised application.
 
 #### _VPC Module_
 --> Setting up the VPC environment where our EKS cluster will live.          
-This includes creating the VPC itself with a specified CIDR block, provisioning public subnets within the VPC, and setting up an Internet Gateway to allow external access to and from the EKS cluster. The module also handles the creation of route tables and associates them with the subnets to ensure proper routing of traffic. Importantly, it configures the network infrastructure to support high availability by deploying resources across multiple Availability Zones (AZs) when possible.
+Creation of VPC + Public Subnets within it + IG for the cluster's connectivity externally. The module also handles the creation of route tables and associates them with the subnets for routing of traffic.
+
+> Importantly, it configures the network infrastructure to support high availability by deploying resources across multiple AZs when possible.
 
 #### _EKS Module_
-The eks module takes care of creating the EKS cluster within the VPC created by the vpc module. This includes specifying the cluster name, associating an IAM role that EKS can assume for creating AWS resources on your behalf, and configuring the VPC settings like subnet IDs and access controls for the Kubernetes API server. Furthermore, it creates a managed node group, which is a group of EC2 instances that serve as worker nodes for the Kubernetes cluster. The node group configuration includes specifying the instance type, the desired number of nodes, and scaling settings to automatically adjust the number of nodes based on load.
+The `eks` module takes care of creating the EKS cluster within the VPC created by the `vpc` module. This includes specifying the cluster name, associating an IAM role that EKS can assume for creating AWS resources on our behalf and configuring the VPC settings like subnet IDs and access controls for the Kubernetes API server.
+
+Furthermore, it creates a managed node group, which is a group of EC2 instances that serve as worker nodes for the Kubernetes cluster. The node group configuration includes specifying the instance type, the desired number of nodes and scaling settings to automatically adjust the number of nodes based on load.
 
 Security and Access
 Security groups are defined to control inbound and outbound traffic to the nodes in the cluster. IAM roles and policies are attached to grant the necessary permissions for the EKS cluster and its nodes to interact with other AWS services securely.
