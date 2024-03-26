@@ -211,37 +211,42 @@ Now that we're done with the continuous integration part, we'd move to the deplo
 
 --> Means a faster deployment velocity, accelerated software releases = Faster time-to-market 
 
+</br>
+
 ### _Is Testing a part of both CI and CD?_
 
 **Yes.**             
 But the kind and the emphasis of testing differs.....
 
 What does this mean? Testing in CI is primarily about running tests against the code to ensure the codebase is stable and functional throughout. Integrating multiple code changes into the main-stream, won't break production. It mostly revolves around **Unit testing** & **Integration testing**.          
+
 The goal here is frequent, incremental updates - (**Immediate feedback** = **Quicker Iterative loops**)
 
 When I talk about CD, it's not only about a "bug-free" code. You need some other types of testing too, **Security testing**, **Performance Testing**, **UAT testing**. Making my software production-ready, considering all non-functional aspects as well. 
 
-*Is my software production ready? Can this be delivered to my users? Does it meet the overall high quality standards?* This answers all such questions.
+> *Is my software production ready? Can this be delivered to my users? Does it meet the overall high quality standards?* CD answers such questions.
 
 </br>
 
 Let's start with the Terrform Configurations involved...
 
+</br>
 
 ## _Phase 3 ---> Creation of EKS Cluster with Terraform and ArgoCD Setup_
 
-Please check :- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/main
+Please check my code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/main
 
 ### _Quick Overview_
 
 In this Terraform configuration, we have two modules:-  `eks` and `vpc`.                         
-Purpose:- **_Provision a Kubernetes cluster using Elastic Kubernetes Service_**, for running our containerised application.
+Here we're **_provisioning a Kubernetes cluster using Elastic Kubernetes Service_**, for running our containerised application.
 
 #### _VPC Module_
---> Setting up the VPC environment where our EKS cluster will live.          
-Creation of VPC + Public Subnets within it + IG for the cluster's connectivity externally. The module also handles the creation of route tables and associates them with the subnets for routing of traffic.
+Setting up the VPC environment where our EKS cluster will live.   
+                
+Public Subnets + IG for the cluster's connectivity externally + creation of route tables + its associates them with the subnets for routing of traffic.
 
-> Importantly, it configures the network infrastructure to support high availability by deploying resources across multiple AZs when possible.
+> Importantly, it configures the network infrastructure to **_support high availability by deploying resources across multiple AZs_** when possible.
 
 #### _EKS Module_
 The `eks` module takes care of creating the EKS cluster within the VPC created by the `vpc` module. This includes specifying the cluster name, associating an IAM role that EKS can assume for creating AWS resources on our behalf and configuring the VPC settings like subnet IDs and access controls for the Kubernetes API server.
