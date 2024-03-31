@@ -232,23 +232,26 @@ Let's start with the Terrform Configurations involved...
 
 </br>
 
-## _Phase 3 ---> Creation of EKS Cluster with Terraform and ArgoCD Setup_
+## _Phase 3 ---> Provisioning the EKS Cluster through Terraform_
 
-Please check my code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/main
+Please check my code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/main'
 
-### _Quick Overview_
 
-In this Terraform configuration, we have two modules:-  `eks` and `vpc`.                         
-Here we're **_provisioning a Kubernetes cluster using Elastic Kubernetes Service_**, for running our containerised application.
+### _What're we doing here?_
 
-#### _VPC Module_
-Setting up the VPC environment where our EKS cluster will live.   
-                
-Public Subnets + IG for the cluster's connectivity externally + creation of route tables + its associates them with the subnets for routing of traffic.
+We've got two modules here:- `vpc` and `eks`
+
+Here **_we're provisioning a Kubernetes cluster using Elastic Kubernetes Service, for running our containerised application._**
+
+#### _A --> The VPC Module_
+
+Generic requisistes here, --> Setting up the VPC environment where our EKS cluster will live. Public Subnets + IG for the cluster's connectivity externally + creation of route tables + association with the subnets for routing the traffic.
+
 
 > Importantly, it configures the network infrastructure to **_support high availability by deploying resources across multiple AZs_** when possible.
 
-#### _EKS Module_
+#### _B --> The EKS Module_
+
 The `eks` module takes care of creating the EKS cluster within the VPC created by the `vpc` module. This includes specifying the cluster name, associating an IAM role that EKS can assume for creating AWS resources on our behalf and configuring the VPC settings like subnet IDs and access controls for the Kubernetes API server.
 
 Furthermore, it creates a managed node group, which is a group of EC2 instances that serve as worker nodes for the Kubernetes cluster. The node group configuration includes specifying the instance type, the desired number of nodes and scaling settings to automatically adjust the number of nodes based on load.
