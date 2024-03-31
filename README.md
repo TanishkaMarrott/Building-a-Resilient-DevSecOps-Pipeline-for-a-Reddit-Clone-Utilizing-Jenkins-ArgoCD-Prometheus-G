@@ -237,18 +237,22 @@ Let's start with the Terrform Configurations involved...
 Please check my code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/main'
 
 
-### _What're we doing here?_
+### _Non-functional aspects - Key Design Considerations_
 
-We've got two modules here:- `vpc` and `eks`
+#### _Multi-AZ NAT Gateway Setup:-_ 
 
-Here **_we're provisioning a Kubernetes cluster using Elastic Kubernetes Service, for running our containerised application._**
+In this architecture, we've deployed three NATs each with its own Elastic IP, to ensure high availability and fault tolerance.
 
-#### _A --> The VPC Module_
+We can thus ensure that our architecture can withstand an AZ Failure, If one NAT gateway would become unavailable due to some issue in an AZ, we can still route outbound traffic to the internet, ensuring contoinuous access to our resources.
 
-Generic requisistes here, --> Setting up the VPC environment where our EKS cluster will live. Public Subnets + IG for the cluster's connectivity externally + creation of route tables + association with the subnets for routing the traffic.
+▶ High Availability + Fault Tolerance =👍
 
+There's one more advantage to it, Performance Optimisation. How? By optimising network paths, traffic from the instances do not necessarily need to cross inter-az for reaching the internet. = reducing Latency 👍
 
-> Importantly, it configures the network infrastructure to **_support high availability by deploying resources across multiple AZs_** when possible.
+It does help in the scalability aspect as well, since resources in each AZ can scale out independently. We can add new subnets, and add new instances in each AZ, without worrying NAT Gateway being a potential bottleneck.
+
+➡ However, this is a cost vs fault tolerance tradeoff. The decision to implement this architecture is based on prioritizing the application's availability and performance over the cost considerations.
+
 
 #### _B --> The EKS Module_
 
