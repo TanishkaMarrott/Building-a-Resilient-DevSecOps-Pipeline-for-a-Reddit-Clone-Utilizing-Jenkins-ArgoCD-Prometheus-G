@@ -234,15 +234,15 @@ Let's start with the Terrform Configurations involved...
 
 Please check my code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/main'
 
-## _Non-functional aspects - Key Design Considerations - TF Configurations_
+## _Key Design Considerations - TF Configurations_
 
 For the `vpc` module:-
 
-### _Multi-AZ NAT Gateway Setup:-_ 
+### _Multi-AZ NAT Gateway Setup + Multi-AZ Workere Node Deployment:-_ 
 
 In this architecture, we've deployed three NATs each with its own Elastic IP, to ensure high availability and fault tolerance.
 
-We can thus ensure that our architecture can withstand an AZ Failure, If one NAT gateway would become unavailable due to some issue in an AZ, we can still route outbound traffic to the internet, ensuring contoinuous access to our resources.             
+We can thus ensure that our architecture can withstand an AZ Failure, If one NAT gateway would become unavailable due to some issue in an AZ, we can still route outbound traffic to the internet, ensuring contoinuous access to our resources.  Also, failure/otage of an AZ does not impact the availability of our application, hence fault-tolerant.    
 
 
 ▶ High Availability + Fault Tolerance =👍
@@ -252,7 +252,7 @@ There's one more advantage to it, Performance Optimisation. How? By optimising n
 
 ➡ However, this is a cost vs fault tolerance tradeoff. The decision to implement this architecture is based on prioritizing the application's availability and performance over the cost considerations. 
 
-### Strategic mix of Public and Private Subnets 
+### _Strategic mix of Public and Private Subnets_ 
 We've got a strategic mix of public and private subnets in our VPC. The public subnets host the Load Balancers and NAT Gateways, (the resources which are intended to be public), so, they'll distribute incoming internet traffic to the pods running the application. This setup simpilifies and centralises traffic management, while keeping our backend pods secure. Also, in case the applications in the private subnet wish to connect to the internet, for example for updates, APIs etc, it can be done via the NAT deployed in each public subnet = secure outbound-only internet access 👍 
 
 
@@ -267,7 +267,15 @@ I'd advise to tighten up security to the Corporate IP Address Range as ingress r
 I've made sure the IAM Policies attached to the cluster and the node group are tied down - in lines with PLP. So, even in case of a compromise, chances of privilege escalation will be low. 
 
 Plus, we have endpoint access restrictions, and secured SSH Access - limited SSH access to worker nodes by specifying source security group IDs and SSH keys.
- 
+
+ ### _Terraform State Backend - S3 + DynamoDB - Concurrency + State Locking_
+
+Eliminating potential chances of State Corruption that might happen during multiple Terraform applies. Terraform locks the state, preventing multiple concurrent terraform runs from multiple users, + DynamoDB is a secure and durable storage for State Locking as well.
+
+Enabling S3 Versioning on your backend S3 bucket to keep a history of your state files,▶️ for recovery from unintended changes.
+
+Using S3 Bucket Encryption for added security. While your state files are encrypted due to the encrypt attribute, ensuring the bucket itself is also encrypted. ▶ Additional Security Layer
+
 
    
 ### __
