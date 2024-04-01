@@ -232,26 +232,47 @@ Let's start with the Terrform Configurations involved...
 
 </br>
 
-## _Phase 3 ---> Provisioning the EKS Cluster through Terraform_
-
 Please check my code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/main'
 
+## _Non-functional aspects - Key Design Considerations - TF Configurations_
 
-### _Non-functional aspects - Key Design Considerations_
+For the `vpc` module:-
 
-#### _Multi-AZ NAT Gateway Setup:-_ 
+### _Multi-AZ NAT Gateway Setup:-_ 
 
 In this architecture, we've deployed three NATs each with its own Elastic IP, to ensure high availability and fault tolerance.
 
-We can thus ensure that our architecture can withstand an AZ Failure, If one NAT gateway would become unavailable due to some issue in an AZ, we can still route outbound traffic to the internet, ensuring contoinuous access to our resources.
+We can thus ensure that our architecture can withstand an AZ Failure, If one NAT gateway would become unavailable due to some issue in an AZ, we can still route outbound traffic to the internet, ensuring contoinuous access to our resources.             
+
 
 ▶ High Availability + Fault Tolerance =👍
 
-There's one more advantage to it, Performance Optimisation. How? By optimising network paths, traffic from the instances do not necessarily need to cross inter-az for reaching the internet. = reducing Latency 👍
+There's one more advantage to it, Performance Optimisation. How? By optimising network paths, traffic from the instances do not necessarily need to cross inter-az for reaching the internet. = reducing Latency 👍. It does help in the scalability aspect as well, since resources in each AZ can scale out independently. We can add new subnets, and add new instances in each AZ, without worrying NAT Gateway being a potential bottleneck. 
 
-It does help in the scalability aspect as well, since resources in each AZ can scale out independently. We can add new subnets, and add new instances in each AZ, without worrying NAT Gateway being a potential bottleneck.
 
-➡ However, this is a cost vs fault tolerance tradeoff. The decision to implement this architecture is based on prioritizing the application's availability and performance over the cost considerations.
+➡ However, this is a cost vs fault tolerance tradeoff. The decision to implement this architecture is based on prioritizing the application's availability and performance over the cost considerations. 
+
+### Strategic mix of Public and Private Subnets 
+We've got a strategic mix of public and private subnets in our VPC. The public subnets host the Load Balancers and NAT Gateways, (the resources which are intended to be public), so, they'll distribute incoming internet traffic to the pods running the application. This setup simpilifies and centralises traffic management, while keeping our backend pods secure. Also, in case the applications in the private subnet wish to connect to the internet, for example for updates, APIs etc, it can be done via the NAT deployed in each public subnet = secure outbound-only internet access 👍 
+
+
+### _Granular Access Control for the EKS Cluster_
+
+We've pruned down the public access CIDR. They're crucial for defining which IP Addresses are allowed to access the Kubernetes API Server. Having centralised control over access and management. = Security and resilence 👍
+
+By doing so, we're adopting a principle of least privilege, ensuring that only necessary access is granted and reducing the surface area for potential cyber threats. We've ensured flexibility and automation, as the list of EC2 Instance Connect IPs can change, and fetching them dynamically ensures our access controls are always up-to-date without manual intervention.
+
+I'd advise to tighten up security to the Corporate IP Address Range as ingress rule for the node group, that's something we might need for troubleshooting or administrative access - (We might need to SSH into the VMs to check if everything's alright) 
+
+I've made sure the IAM Policies attached to the cluster and the node group are tied down - in lines with PLP. So, even in case of a compromise, chances of privilege escalation will be low. 
+
+Plus, we have endpoint access restrictions, and secured SSH Access - limited SSH access to worker nodes by specifying source security group IDs and SSH keys.
+ 
+
+   
+### __
+
+
 
 
 #### _B --> The EKS Module_
