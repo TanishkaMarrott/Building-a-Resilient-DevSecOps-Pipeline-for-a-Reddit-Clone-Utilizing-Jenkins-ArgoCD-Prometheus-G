@@ -236,30 +236,46 @@ Please check my code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/m
 
 ## _Key Design Considerations:-_
 
-For the `vpc` module:-
 
 ### _Multi-AZ NAT Gateway Setup + Multi-AZ Worker Node Deployment:-_ 
 
 In this architecture, we've deployed **three NATs each with its own Elastic IP**, to ensure **high availability** and **fault tolerance**.
 
-> We can thus ensure that our architecture can withstand an AZ Failure. If one NAT gateway becomes unavailable due to some issue in an AZ, we can still route outbound traffic to the internet, ensuring continuous access to our resources. Also, failure/outage of an AZ does not impact the availability of our application, hence **fault-tolerant**.    
+</br>
+
+> We can thus ensure that our architecture can withstand an AZ Failure. If one NAT gateway becomes unavailable due to some issue in an AZ, we can still route outbound traffic to the internet, ensuring continuous access to our resources. Also, failure/outage of an AZ does not impact the availability of our application, hence **fault-tolerant**.   
+
+</br> 
 
 ▶ **High Availability** + **Fault Tolerance** = 👍
 
-There's one more advantage to it, **Performance Optimization**.               
+There's one more advantage to it, **Performance Optimization**.  
+
+</br>   
+
 >  By optimizing network paths, traffic from the instances do not necessarily need to cross inter-AZ for reaching the internet, = reducing **Latency** 👍. It does help in the scalability aspect as well since resources in each AZ can scale out independently. We can add new subnets and add new instances in each AZ, without worrying NAT Gateway being a potential bottleneck.
+
+</br>
 
 ➡ However, this is a **cost vs. fault tolerance trade-off**. The decision to implement this architecture is based on prioritizing the application's availability and performance over the cost considerations.
 
 ### _Strategic Mix of Public and Private Subnets_
 
+</br>
+
 > We've got a strategic mix of public and private subnets in our VPC. The public subnets host the Load Balancers and NAT Gateways (the resources which are intended to be public), so, they'll distribute incoming internet traffic to the pods running the application. This setup simplifies and centralizes traffic management while keeping our backend pods secure. Also, in case the applications in the private subnet wish to connect to the internet, for example for updates, APIs etc., it can be done via the NAT deployed in each public subnet = **secure outbound-only internet access** 👍.
+
+</br>
 
 ### _Granular Access Control for the EKS Cluster_
 
 We've pruned down the **public access CIDR**. They're crucial for defining which IP Addresses are allowed to access the Kubernetes API Server. Having centralized control over access and management. = **Security** and **resilience** 👍
 
+</br>
+
 > By doing so, we're adopting a **principle of least privilege**, ensuring that only necessary access is granted and reducing the surface area for potential cyber threats. We've ensured flexibility and automation, as the list of EC2 Instance Connect IPs can change, and fetching them dynamically ensures our access controls are always up-to-date without manual intervention.
+
+</br>
 
 I'd advise to **tighten up security** to the **Corporate IP Address Range** as an ingress rule for the node group, that's something we might need for troubleshooting or administrative access - (We might need to SSH into the VMs to check if everything's alright)
 
@@ -271,21 +287,31 @@ Plus, we have **endpoint access restrictions**, and **secured SSH Access** - lim
 
 > Eliminating potential chances of State Corruption that might happen during multiple Terraform applies. Terraform locks the state, preventing multiple concurrent Terraform runs from multiple users, + DynamoDB is a secure and durable storage for State Locking as well.
 
+</br>
+
 **Enabling S3 Versioning** on your backend S3 bucket to keep a history of your state files,▶️ for recovery from unintended changes.
 
 **Using S3 Bucket Encryption** for added security. While your state files are encrypted due to the encrypt attribute, ensuring the bucket itself is also encrypted. ▶ **Additional Security Layer**
 
 ### _Cost Optimization through a Mix of On-Demand Instances and Spot Instances_
 
+</br>
+
 > We wanted to achieve a certain level of cost optimization as well while still retaining our fault tolerance capabilities. Hence, I've decided to go in for:-
 Two separate node groups: one for critical workloads (on-demand), and Spot for cost optimization.          
 **Multiple Instance groups** specified to increase chances of Spot Instances fulfillment.
+
+</br>
 
 This means we have an **On-Demand capacity** to handle **Baseline Application Performance** + a **Spot Allocation strategy** as a **Cost Optimization strategy**. 👍 ☑️
 
 ### _Scaling via Cluster Auto-Scaler and Horizontal Pod Scaler_
 
+</br>
+
 > We wanted something that could adapt both at the pod and the node level. Something that can help us scale effectively in Kubernetes and manage workload fluctuations as well.
+
+</br>
 
 Hence, we've used both **Cluster Auto-scaler** and **Horizontal Pod Autoscaler**, And how're they different? **Cluster auto-scaler** scales the
 
