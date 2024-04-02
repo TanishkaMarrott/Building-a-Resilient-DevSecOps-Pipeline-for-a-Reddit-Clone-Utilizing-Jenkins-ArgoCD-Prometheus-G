@@ -238,61 +238,59 @@ Please check my code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/m
 
 For the `vpc` module:-
 
-### _Multi-AZ NAT Gateway Setup + Multi-AZ Workere Node Deployment:-_ 
+### _Multi-AZ NAT Gateway Setup + Multi-AZ Worker Node Deployment:-_ 
 
-In this architecture, we've deployed three NATs each with its own Elastic IP, to ensure high availability and fault tolerance.
+In this architecture, we've deployed **three NATs each with its own Elastic IP**, to ensure **high availability** and **fault tolerance**.
 
-We can thus ensure that our architecture can withstand an AZ Failure, If one NAT gateway would become unavailable due to some issue in an AZ, we can still route outbound traffic to the internet, ensuring contoinuous access to our resources.  Also, failure/otage of an AZ does not impact the availability of our application, hence fault-tolerant.    
+> We can thus ensure that our architecture can withstand an AZ Failure. If one NAT gateway becomes unavailable due to some issue in an AZ, we can still route outbound traffic to the internet, ensuring continuous access to our resources. Also, failure/outage of an AZ does not impact the availability of our application, hence **fault-tolerant**.    
 
+▶ **High Availability** + **Fault Tolerance** = 👍
 
-▶ High Availability + Fault Tolerance =👍
+There's one more advantage to it, **Performance Optimization**.               
+>  By optimizing network paths, traffic from the instances do not necessarily need to cross inter-AZ for reaching the internet, = reducing **Latency** 👍. It does help in the scalability aspect as well since resources in each AZ can scale out independently. We can add new subnets and add new instances in each AZ, without worrying NAT Gateway being a potential bottleneck.
 
-There's one more advantage to it, Performance Optimisation. How? By optimising network paths, traffic from the instances do not necessarily need to cross inter-az for reaching the internet. = reducing Latency 👍. It does help in the scalability aspect as well, since resources in each AZ can scale out independently. We can add new subnets, and add new instances in each AZ, without worrying NAT Gateway being a potential bottleneck. 
+➡ However, this is a **cost vs. fault tolerance trade-off**. The decision to implement this architecture is based on prioritizing the application's availability and performance over the cost considerations.
 
+### _Strategic Mix of Public and Private Subnets_
 
-➡ However, this is a cost vs fault tolerance tradeoff. The decision to implement this architecture is based on prioritizing the application's availability and performance over the cost considerations. 
-
-### _Strategic mix of Public and Private Subnets_ 
-We've got a strategic mix of public and private subnets in our VPC. The public subnets host the Load Balancers and NAT Gateways, (the resources which are intended to be public), so, they'll distribute incoming internet traffic to the pods running the application. This setup simpilifies and centralises traffic management, while keeping our backend pods secure. Also, in case the applications in the private subnet wish to connect to the internet, for example for updates, APIs etc, it can be done via the NAT deployed in each public subnet = secure outbound-only internet access 👍 
-
+> We've got a strategic mix of public and private subnets in our VPC. The public subnets host the Load Balancers and NAT Gateways (the resources which are intended to be public), so, they'll distribute incoming internet traffic to the pods running the application. This setup simplifies and centralizes traffic management while keeping our backend pods secure. Also, in case the applications in the private subnet wish to connect to the internet, for example for updates, APIs etc., it can be done via the NAT deployed in each public subnet = **secure outbound-only internet access** 👍.
 
 ### _Granular Access Control for the EKS Cluster_
 
-We've pruned down the public access CIDR. They're crucial for defining which IP Addresses are allowed to access the Kubernetes API Server. Having centralised control over access and management. = Security and resilence 👍
+We've pruned down the **public access CIDR**. They're crucial for defining which IP Addresses are allowed to access the Kubernetes API Server. Having centralized control over access and management. = **Security** and **resilience** 👍
 
-By doing so, we're adopting a principle of least privilege, ensuring that only necessary access is granted and reducing the surface area for potential cyber threats. We've ensured flexibility and automation, as the list of EC2 Instance Connect IPs can change, and fetching them dynamically ensures our access controls are always up-to-date without manual intervention.
+> By doing so, we're adopting a **principle of least privilege**, ensuring that only necessary access is granted and reducing the surface area for potential cyber threats. We've ensured flexibility and automation, as the list of EC2 Instance Connect IPs can change, and fetching them dynamically ensures our access controls are always up-to-date without manual intervention.
 
-I'd advise to tighten up security to the Corporate IP Address Range as ingress rule for the node group, that's something we might need for troubleshooting or administrative access - (We might need to SSH into the VMs to check if everything's alright) 
+I'd advise to **tighten up security** to the **Corporate IP Address Range** as an ingress rule for the node group, that's something we might need for troubleshooting or administrative access - (We might need to SSH into the VMs to check if everything's alright)
 
-I've made sure the IAM Policies attached to the cluster and the node group are tied down - in lines with PLP. So, even in case of a compromise, chances of privilege escalation will be low. 
+I've made sure the **IAM Policies** attached to the cluster and the node group are tied down - in lines with **PLP**. So, even in case of a compromise, chances of privilege escalation will be low.
 
-Plus, we have endpoint access restrictions, and secured SSH Access - limited SSH access to worker nodes by specifying source security group IDs and SSH keys.
+Plus, we have **endpoint access restrictions**, and **secured SSH Access** - limited SSH access to worker nodes by specifying source security group IDs and SSH keys.
 
- ### _Terraform State Backend - S3 + DynamoDB - Concurrency + State Locking_
+### _Terraform State Backend - S3 + DynamoDB - Concurrency + State Locking_
 
-Eliminating potential chances of State Corruption that might happen during multiple Terraform applies. Terraform locks the state, preventing multiple concurrent terraform runs from multiple users, + DynamoDB is a secure and durable storage for State Locking as well.
+> Eliminating potential chances of State Corruption that might happen during multiple Terraform applies. Terraform locks the state, preventing multiple concurrent Terraform runs from multiple users, + DynamoDB is a secure and durable storage for State Locking as well.
 
-Enabling S3 Versioning on your backend S3 bucket to keep a history of your state files,▶️ for recovery from unintended changes.
+**Enabling S3 Versioning** on your backend S3 bucket to keep a history of your state files,▶️ for recovery from unintended changes.
 
-Using S3 Bucket Encryption for added security. While your state files are encrypted due to the encrypt attribute, ensuring the bucket itself is also encrypted. ▶ Additional Security Layer
+**Using S3 Bucket Encryption** for added security. While your state files are encrypted due to the encrypt attribute, ensuring the bucket itself is also encrypted. ▶ **Additional Security Layer**
 
-### _Cost Optimization through a mix of On-demand Instances and Spot Instances_
+### _Cost Optimization through a Mix of On-Demand Instances and Spot Instances_
 
-We wanted to achieve a certain level of cost optimisation as well, while still retaining our fault tolernce capabilities, Hence, I've decided to go in for:-
-Two separate node groups:- one for critical workloads (on-demand), and Spot for cost optimisation.          
-Multiple Instance groups specified to increase chances of Spot Instances fulfillment
+> We wanted to achieve a certain level of cost optimization as well while still retaining our fault tolerance capabilities. Hence, I've decided to go in for:-
+Two separate node groups: one for critical workloads (on-demand), and Spot for cost optimization.          
+**Multiple Instance groups** specified to increase chances of Spot Instances fulfillment.
 
-This means we have an On-Demand capacity to handle Baseline Application Performance + a Spot Allocation strategy as a Cost Optimisation strategy.  👍 ☑️
+This means we have an **On-Demand capacity** to handle **Baseline Application Performance** + a **Spot Allocation strategy** as a **Cost Optimization strategy**. 👍 ☑️
 
-### _Scaling via Cluster Auti-Scaler and Horizontal Pod Scaler_
+### _Scaling via Cluster Auto-Scaler and Horizontal Pod Scaler_
 
-We wanted something that could adapt both at the pod and the node level. Something that can help us scale effectively in Kubernetes, and managing workload fluctuations as well.
+> We wanted something that could adapt both at the pod and the node level. Something that can help us scale effectively in Kubernetes and manage workload fluctuations as well.
 
-Hence, we've used both Cluster Auto-scaler and Horizontal Pod Autoscaler, And how're they different? Cluster auto-scaler scales the nodes up and down, in the event of lack of sufficient resources to schedule pods or due to node utilisation.              
-Horizontal Pod AUtoscaler is about adjusting the number of pod replicas in a deployment, based on current demand, (We're considering CPu Utilisation as our target metric here). This helps maintain an optimal application performance level, as the workload changes.
+Hence, we've used both **Cluster Auto-scaler** and **Horizontal Pod Autoscaler**, And how're they different? **Cluster auto-scaler** scales the
 
-
-
+ nodes up and down in the event of a lack of sufficient resources to schedule pods or due to node utilization.              
+**Horizontal Pod Autoscaler** is about adjusting the number of pod replicas in a deployment, based on current demand, (We're considering **CPU Utilization** as our target metric here). This helps maintain an optimal application performance level as the workload changes.
 
 <img width="949" alt="image" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/77c0230f-4b32-4b7f-8c20-e44f7035f58d">
 
