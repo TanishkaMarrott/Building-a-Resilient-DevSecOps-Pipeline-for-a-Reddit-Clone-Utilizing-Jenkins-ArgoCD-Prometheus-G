@@ -278,8 +278,14 @@ Using S3 Bucket Encryption for added security. While your state files are encryp
 
 
    
-### __
+### _Cost Optimization through a mix of On-demand Instances and Spot Instances_
 
+We wanted to achieve a certain level of cost optimisation as well, while still retaining our fault tolernce capabilities, Hence, I've decided to go in for two worker node groups, one on-demand and the other spot instances
+
+Two separate node groups:- one for critical workloads (on-demand), and Spot for cost optimisation
+Multiple Instance groups specified to increase chances of Spot Instances fulfillment
+
+This means we have an On-Demand capacity to handle Baseline Application Performance + a Spot Allocation strategy as a Cost Optimisation strategy.
 
 
 
