@@ -234,7 +234,7 @@ Let's start with the Terrform Configurations involved...
 
 Please check my code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/main'
 
-## _Key Design Considerations - TF Configurations_
+## _Key Design Considerations:-_
 
 For the `vpc` module:-
 
@@ -276,33 +276,22 @@ Enabling S3 Versioning on your backend S3 bucket to keep a history of your state
 
 Using S3 Bucket Encryption for added security. While your state files are encrypted due to the encrypt attribute, ensuring the bucket itself is also encrypted. ▶ Additional Security Layer
 
-
-   
 ### _Cost Optimization through a mix of On-demand Instances and Spot Instances_
 
-We wanted to achieve a certain level of cost optimisation as well, while still retaining our fault tolernce capabilities, Hence, I've decided to go in for two worker node groups, one on-demand and the other spot instances
-
-Two separate node groups:- one for critical workloads (on-demand), and Spot for cost optimisation
+We wanted to achieve a certain level of cost optimisation as well, while still retaining our fault tolernce capabilities, Hence, I've decided to go in for:-
+Two separate node groups:- one for critical workloads (on-demand), and Spot for cost optimisation.          
 Multiple Instance groups specified to increase chances of Spot Instances fulfillment
 
-This means we have an On-Demand capacity to handle Baseline Application Performance + a Spot Allocation strategy as a Cost Optimisation strategy.
+This means we have an On-Demand capacity to handle Baseline Application Performance + a Spot Allocation strategy as a Cost Optimisation strategy.  👍 ☑️
+
+### _Scaling via Cluster Auti-Scaler and Horizontal Pod Scaler_
+
+We wanted something that could adapt both at the pod and the node level. Something that can help us scale effectively in Kubernetes, and managing workload fluctuations as well.
+
+Hence, we've used both Cluster Auto-scaler and Horizontal Pod Autoscaler, And how're they different? Cluster auto-scaler scales the nodes up and down, in the event of lack of sufficient resources to schedule pods or due to node utilisation.              
+Horizontal Pod AUtoscaler is about adjusting the number of pod replicas in a deployment, based on current demand, (We're considering CPu Utilisation as our target metric here). This helps maintain an optimal application performance level, as the workload changes.
 
 
-
-#### _B --> The EKS Module_
-
-The `eks` module takes care of creating the EKS cluster within the VPC created by the `vpc` module. This includes specifying the cluster name, associating an IAM role that EKS can assume for creating AWS resources on our behalf and configuring the VPC settings like subnet IDs and access controls for the Kubernetes API server.
-
-Furthermore, it creates a managed node group, which is a group of EC2 instances that serve as worker nodes for the Kubernetes cluster. The node group configuration includes specifying the instance type, the desired number of nodes and scaling settings to automatically adjust the number of nodes based on load.
-
-Security and Access
-Security groups are defined to control inbound and outbound traffic to the nodes in the cluster. IAM roles and policies are attached to grant the necessary permissions for the EKS cluster and its nodes to interact with other AWS services securely.
-
-Outputs
-The configuration defines several outputs, such as the EKS cluster endpoint, cluster ID, and certificate authority data required for configuring kubectl to communicate with the cluster. These outputs are essential for integrating the EKS cluster with external tools and services or for providing information needed for manual configuration steps.
-
-Workflow Summary
-The entire development workflow revolves around provisioning a robust, scalable, and secure Kubernetes environment on AWS. By modularizing the setup into VPC and EKS components, it offers flexibility, reusability, and clearer separation of concerns. The VPC module sets the foundation with a well-configured network, while the EKS module leverages that network to run Kubernetes workloads effectively. Together, these modules automate the creation of a Kubernetes cluster that's ready to deploy containerized applications, providing a scalable and highly available platform that adheres to AWS best practices.
 
 
 <img width="949" alt="image" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/77c0230f-4b32-4b7f-8c20-e44f7035f58d">
