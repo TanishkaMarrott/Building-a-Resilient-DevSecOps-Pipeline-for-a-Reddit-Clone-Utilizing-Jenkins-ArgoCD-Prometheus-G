@@ -320,6 +320,21 @@ Hence, we've used both **Cluster Auto-scaler** and **Horizontal Pod Autoscaler**
 
 <img width="949" alt="image" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/77c0230f-4b32-4b7f-8c20-e44f7035f58d">
 
+## _Why ArgoCD?_
+
+Why Argo? It's a brilliant declarative , GitOps CD Tool.             
+We've used Argo for its capability to automate deployments across various environments. It ensures that my actual state of the kubernetes matches the configuration manifests in the Git repo, (That's the desired state of the cluster)
+
+= Automated, Repeatable and most importantly Reliable Deployments 🙂 👍
+
+So, that's something I like. ArgoCD automatically checks for differences between your current state of k8s cluster and what's in the manifest files, means that my changes are automatically deployed and reflected in the live environment, as soon as they're pushed.
+
+The Best Part:- Every change's versiones, just in case changes don't go as planned, you can always rollback to a previous stae, --> Reliable!
+
+Here's the link to my K8s manifest files:- https://github.com/TanishkaMarrott/Reddit-Clone-K8s-Manifests
+
+
+
 
 <img width="515" alt="image" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/78b7dab5-93ac-42a3-8677-ee20420b0e46">
 
