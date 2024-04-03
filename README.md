@@ -234,7 +234,7 @@ Let's start with the Terrform Configurations involved...
 
 Please check my code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/main'
 
-## _Key Design Considerations:-_
+## _Tf Configurations - Non functional Aspects:-_
 
 
 ### _Multi-AZ NAT Gateway Setup + Multi-AZ Worker Node Deployment:-_ 
@@ -259,6 +259,8 @@ There's one more advantage to it, **Performance Optimization**.
 
 ➡ However, this is a **cost vs. fault tolerance trade-off**. The decision to implement this architecture is based on prioritizing the application's availability and performance over the cost considerations.
 
+</br>
+
 ### _Strategic Mix of Public and Private Subnets_
 
 </br>
@@ -279,9 +281,11 @@ We've pruned down the **public access CIDR**. They're crucial for defining which
 
 I'd advise to **tighten up security** to the **Corporate IP Address Range** as an ingress rule for the node group, that's something we might need for troubleshooting or administrative access - (We might need to SSH into the VMs to check if everything's alright)
 
-I've made sure the **IAM Policies** attached to the cluster and the node group are tied down - in lines with **PLP**. So, even in case of a compromise, chances of privilege escalation will be low.
+I've made sure the **IAM Policies** attached to the cluster and the node group are tied down - in lines with **Principle of Least Privilege**. So, even in case of a compromise, chances of privilege escalation will be low.
 
 Plus, we have **endpoint access restrictions**, and **secured SSH Access** - limited SSH access to worker nodes by specifying source security group IDs and SSH keys.
+
+</br>
 
 ### _Terraform State Backend - S3 + DynamoDB - Concurrency + State Locking_
 
@@ -292,6 +296,9 @@ Plus, we have **endpoint access restrictions**, and **secured SSH Access** - lim
 **Enabling S3 Versioning** on your backend S3 bucket to keep a history of your state files,▶️ for recovery from unintended changes.
 
 **Using S3 Bucket Encryption** for added security. While your state files are encrypted due to the encrypt attribute, ensuring the bucket itself is also encrypted. ▶ **Additional Security Layer**
+
+
+</br>
 
 ### _Cost Optimization through a Mix of On-Demand Instances and Spot Instances_
 
@@ -304,6 +311,8 @@ Two separate node groups: one for critical workloads (on-demand), and Spot for c
 </br>
 
 This means we have an **On-Demand capacity** to handle **Baseline Application Performance** + a **Spot Allocation strategy** as a **Cost Optimization strategy**. 👍 ☑️
+
+</br>
 
 ### _Scaling via Cluster Auto-Scaler and Horizontal Pod Scaler_
 
@@ -318,25 +327,61 @@ Hence, we've used both **Cluster Auto-scaler** and **Horizontal Pod Autoscaler**
  nodes up and down in the event of a lack of sufficient resources to schedule pods or due to node utilization.              
 **Horizontal Pod Autoscaler** is about adjusting the number of pod replicas in a deployment, based on current demand, (We're considering **CPU Utilization** as our target metric here). This helps maintain an optimal application performance level as the workload changes.
 
-<img width="949" alt="image" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/77c0230f-4b32-4b7f-8c20-e44f7035f58d">
+</br>
 
 ## _Why ArgoCD?_
 
-Why Argo? It's a brilliant declarative , GitOps CD Tool.             
-We've used Argo for its capability to automate deployments across various environments. It ensures that my actual state of the kubernetes matches the configuration manifests in the Git repo, (That's the desired state of the cluster)
+_Why Argo?_ It's a brilliant declarative, GitOps CD Tool. We've used Argo for its capability to **automate deployments** across various environments. _**It ensures that my actual state of the Kubernetes matches the configuration manifests in the Git repo**_, (That's the **desired state** of the cluster).
 
-= Automated, Repeatable and most importantly Reliable Deployments 🙂 👍
+=>> _Automated, Repeatable and most importantly Reliable Deployments_ 🙂 👍
 
-So, that's something I like. ArgoCD automatically checks for differences between your current state of k8s cluster and what's in the manifest files, means that my changes are automatically deployed and reflected in the live environment, as soon as they're pushed.
+So, that's something I like. ArgoCD automatically checks for differences between your current state of K8s cluster and what's in the manifest files, means that my changes are **automatically deployed** and reflected in the live environment, as soon as they're pushed.
 
-The Best Part:- Every change's versiones, just in case changes don't go as planned, you can always rollback to a previous stae, --> Reliable!
+_The Best Part:-_ **Every change's versioned**, just in case changes don't go as planned, you can always **rollback to a previous state**, --> _Reliable!_
 
 Here's the link to my K8s manifest files:- https://github.com/TanishkaMarrott/Reddit-Clone-K8s-Manifests
 
 
+Quick Dive into the k8 manifests:-
+
+1- deployment.yaml - We've defined a Deployment here for our Reddit-Clone application. Contains a blueprint fro the pods it'll create 
+
+How did we improvise the code to be scalable, available and fault tolerant?
+
+I've increased the number of Pod Replicas, K8s would then ensure that we'll have 2 instances of our application running at any given time. -> Availability, Load Distribution                
+I've also specified the CPU and Memory Requests and Limits for the container. Requests would be guranteed by the kuberenets scheduler, while limits would ensure that none of our pods is inadvertently consuming excessive resources --> Effiient resourec Utilisation and High Avaialability               
+I'd been observing that there was an uneven scheduling of pods across the nodes. Hence, I had to utilise the topologySpreadConstraint parameter, to ensure we're utilising our resources evenly. And a maxSkew parameter, this means resilient scheduling of pods across Nodes.
 
 
-<img width="515" alt="image" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/78b7dab5-93ac-42a3-8677-ee20420b0e46">
+2- service.yaml - Service is actually a way to expose underlying pods, helps expose the set of pods running the containerised application, either to others ervices in the application or to the internet traffic. That's through a LoadBalancer 
+
+
+3- ingress.yaml -
+
+4 - cluster-autoscaler.yaml -
+
+5 - hpa-manifest.yaml
+
+
+<img width="949" alt="image" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/77c0230f-4b32-4b7f-8c20-e44f7035f58d">
+
+
+<img width="949" alt="image" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/78b7dab5-93ac-42a3-8677-ee20420b0e46">
+
+ArgoCD has been exposed via a Loadbalancer Endpoint. Here are a couple of snapshots:-
+
+ArgoCD Pods:-
+<img width="923" alt="Reddit-App-Clone-ArgoCD-pods-running" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/b108c6f0-3bce-499d-a556-ca6fc3dd8d67">
+
+<img width="929" alt="reddit-clone-argocd-pods" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/70767d77-bc23-4181-bda5-11819b265d11">
+
+</br>
+
+My Application's frontend:-
+
+<img width="952" alt="Reddit-App-Clone-App-FrontEnd" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/bc4d8f79-1ce2-48c2-ae37-b878796d528a">
+
+
 
 
 
