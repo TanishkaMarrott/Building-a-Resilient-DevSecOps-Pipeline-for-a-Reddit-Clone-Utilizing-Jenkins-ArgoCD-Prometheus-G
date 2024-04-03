@@ -71,25 +71,22 @@ Please check `updated_main.tf` & `install.sh`
 
 </br>
 
-### _Segregating the kind of plugins we've used:-_
 
 > We've already installed the foundational plugins --> In short, it's for a **fully functional Jenkins environment**, covering all the necessary aspects from Source Code Management to Pipeline Orchestration
 
 </br>
 
-### **_The Specialised Plugins we've used:-_**   
+### **_Plugins we've used:-_**   
 
 
 
 | Category               | Plugin/Tool                 | Purpose                                                                                   |
 |-------------------------|-----------------------------|-------------------------------------------------------------------------------------------|
-| **Code Quality & Analysis** | **SonarQube Scanner**       | Integrates SQ into Jenkins --> SAST|
+| Code Quality & Analysis | **SonarQube Scanner**       | Integrates SQ into Jenkins --> SAST|
 |                         | **Sonar Quality Gates**     | Breaks the build based on SonarQube quality gates --> code quality  |
 |                         | **OWASP Dependency Check**  | --> Vulnerabilities within the project's dependencies.                                |
-| **IaC Scanning** | **TfSec**  | Scans the IaC for security misconfigurations. |
-| **Dynamic Application Security Testing - DAST** | **OWASP ZAP**              | Dynamic analysis of running web applications |
-| **Secrets Detection**  | **truffleHog**              | Scans the repository for accidentally committed secrets |
-| **Performance Testing** | **JMeter**                  | Load testing - Application's resilience            |
+| IaC Scanning | **TfSec**  | Scans the IaC for security misconfigurations. |
+| Secrets Detection  | **truffleHog**              | Scans the repository for accidentally committed secrets |
 
 --
 
