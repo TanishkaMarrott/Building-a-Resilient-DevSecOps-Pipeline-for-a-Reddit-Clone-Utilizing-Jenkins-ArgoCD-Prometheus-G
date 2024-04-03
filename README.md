@@ -348,6 +348,7 @@ Network Load Balancer naturally does ensure scalability - ➡️ NLB means Super
 
 In my case, I'd be utilising an ingress controller for its advanced traffic management + SSL termination capabilities. A standard way for exposing Services with a single external access point Provides scope, to maybe use some ACLs for IP Whitelisting, Geo-restrictions in conjunction with an AWS API Gateway/ WAF for an eve better security posture. 👍
 
+☑️ I've limited the connections and requests per second, helps prevent resource exhaustion and overwhelming of backend services 🏁 ✔
 </br>
 
 4 - `cluster-autoscaler.yaml` and `hpa-manifest.yaml` :- _Scaling via Cluster Auto-Scaler and Horizontal Pod Scaler_
