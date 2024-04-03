@@ -351,7 +351,7 @@ Here's the link to my K8s manifest files:- https://github.com/TanishkaMarrott/Re
 I've increased the number of Pod Replicas, K8s would then ensure that we'll have 2 instances of our application running at any given time. -> Availability, Load Distribution                
 I've also specified the CPU and Memory Requests and Limits for the container. Requests would be guranteed by the kuberenetes scheduler, while limits would ensure that none of our pods is inadvertently consuming excessive resources ▶️ Effiient resource Utilisation and High Availability 🏁 👍
 
-I'd been observing that there was an uneven scheduling of pods across the nodes. Hence, I had to utilise the `topologySpreadConstraint` parameter, to ensure we're utilising our resources evenly. And a `maxSkew` parameter, this means resilient scheduling of pods across Nodes.
+> I'd been observing that there was an uneven scheduling of pods across the nodes. Hence, I had to utilise the `topologySpreadConstraint` parameter, to ensure we're utilising our resources evenly. And a `maxSkew` parameter, this means resilient scheduling of pods across Nodes.
 
 
 2- `service.yaml` - Service is actually a way to expose underlying pods, helps expose the set of pods running the containerised application, either to others ervices in the application or to the internet traffic. That's through creating a LB, and listens for traffic on port 80 and forwards it to port 3000 - the port the application listens on within the container
@@ -361,7 +361,7 @@ I'd been observing that there was an uneven scheduling of pods across the nodes.
 I've made use of K8s annotations for Cross-Zone Load Balancing = High Availability - Distributes Traffic evenly across pods in multiple Availability Zones 
 Network Load Balancer naturally does ensure scalability - ➡️ NLB means Super-low Latency + Super High Performance 👍
 
-
+Also, client source ips are preserved to ensure a better security, --> this will later help us in implementing WAF NACls that could be associated with the API Gateway fronting the LB --> Enhanced Security ☑️ 
 
  
 
