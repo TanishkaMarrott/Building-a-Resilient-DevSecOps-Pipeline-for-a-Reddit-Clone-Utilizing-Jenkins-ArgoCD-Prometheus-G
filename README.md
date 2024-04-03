@@ -337,23 +337,34 @@ _Why Argo?_ It's a brilliant declarative, GitOps CD Tool. We've used Argo for it
 
 So, that's something I like. ArgoCD automatically checks for differences between your current state of K8s cluster and what's in the manifest files, means that my changes are **automatically deployed** and reflected in the live environment, as soon as they're pushed.
 
-_The Best Part:-_ **Every change's versioned**, just in case changes don't go as planned, you can always **rollback to a previous state**, --> _Reliable!_
+> _The Best Part:-_ **Every change's versioned**, just in case changes don't go as planned, you can always **rollback to a previous state**, --> _Truly Reliable!_
 
 Here's the link to my K8s manifest files:- https://github.com/TanishkaMarrott/Reddit-Clone-K8s-Manifests
 
 
-Quick Dive into the k8 manifests:-
+## _Quick Dive into the k8 manifests + Key Design Considerations_
 
-1- deployment.yaml - We've defined a Deployment here for our Reddit-Clone application. Contains a blueprint fro the pods it'll create 
+1- `deployment.yaml` - We've defined a Deployment here for our Reddit-Clone application. Contains a blueprint fro the pods it'll create 
 
-How did we improvise the code to be scalable, available and fault tolerant?
+### _How did we improvise the deployment to be scalable, available and fault tolerant?_
 
 I've increased the number of Pod Replicas, K8s would then ensure that we'll have 2 instances of our application running at any given time. -> Availability, Load Distribution                
-I've also specified the CPU and Memory Requests and Limits for the container. Requests would be guranteed by the kuberenets scheduler, while limits would ensure that none of our pods is inadvertently consuming excessive resources --> Effiient resourec Utilisation and High Avaialability               
-I'd been observing that there was an uneven scheduling of pods across the nodes. Hence, I had to utilise the topologySpreadConstraint parameter, to ensure we're utilising our resources evenly. And a maxSkew parameter, this means resilient scheduling of pods across Nodes.
+I've also specified the CPU and Memory Requests and Limits for the container. Requests would be guranteed by the kuberenetes scheduler, while limits would ensure that none of our pods is inadvertently consuming excessive resources ▶️ Effiient resource Utilisation and High Availability 🏁 👍
+
+I'd been observing that there was an uneven scheduling of pods across the nodes. Hence, I had to utilise the `topologySpreadConstraint` parameter, to ensure we're utilising our resources evenly. And a `maxSkew` parameter, this means resilient scheduling of pods across Nodes.
 
 
-2- service.yaml - Service is actually a way to expose underlying pods, helps expose the set of pods running the containerised application, either to others ervices in the application or to the internet traffic. That's through a LoadBalancer 
+2- `service.yaml` - Service is actually a way to expose underlying pods, helps expose the set of pods running the containerised application, either to others ervices in the application or to the internet traffic. That's through creating a LB, and listens for traffic on port 80 and forwards it to port 3000 - the port the application listens on within the container
+
+### The non-functional aspects I've included:-
+
+I've made use of K8s annotations for Cross-Zone Load Balancing = High Availability - Distributes Traffic evenly across pods in multiple Availability Zones 
+Network Load Balancer naturally does ensure scalability - ➡️ NLB means Super-low Latency + Super High Performance 👍
+
+
+
+ 
+
 
 
 3- ingress.yaml -
