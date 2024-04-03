@@ -312,20 +312,6 @@ Two separate node groups: one for critical workloads (on-demand), and Spot for c
 
 This means we have an **On-Demand capacity** to handle **Baseline Application Performance** + a **Spot Allocation strategy** as a **Cost Optimization strategy**. 👍 ☑️
 
-</br>
-
-### _Scaling via Cluster Auto-Scaler and Horizontal Pod Scaler_
-
-</br>
-
-> We wanted something that could adapt both at the pod and the node level. Something that can help us scale effectively in Kubernetes and manage workload fluctuations as well.
-
-</br>
-
-Hence, we've used both **Cluster Auto-scaler** and **Horizontal Pod Autoscaler**, And how're they different? **Cluster auto-scaler** scales the
-
- nodes up and down in the event of a lack of sufficient resources to schedule pods or due to node utilization.              
-**Horizontal Pod Autoscaler** is about adjusting the number of pod replicas in a deployment, based on current demand, (We're considering **CPU Utilization** as our target metric here). This helps maintain an optimal application performance level as the workload changes.
 
 </br>
 
@@ -346,32 +332,48 @@ Here's the link to my K8s manifest files:- https://github.com/TanishkaMarrott/Re
 
 1- `deployment.yaml` - We've defined a Deployment here for our Reddit-Clone application. Contains a blueprint fro the pods it'll create 
 
-### _How did we improvise the deployment to be scalable, available and fault tolerant?_
+_How did I improvise the deployment to be available and fault tolerant?_
 
-I've increased the number of Pod Replicas, K8s would then ensure that we'll have 2 instances of our application running at any given time. -> Availability, Load Distribution                
-I've also specified the CPU and Memory Requests and Limits for the container. Requests would be guranteed by the kuberenetes scheduler, while limits would ensure that none of our pods is inadvertently consuming excessive resources ▶️ Effiient resource Utilisation and High Availability 🏁 👍
+☑ I've increased the number of Pod Replicas, K8s would then ensure that we'll have 2 instances of our application running at any given time. -> Availability, Load Distribution                  
+
+☑ I've also specified the CPU and Memory Requests and Limits for the container. Requests would be guranteed by the kuberenetes scheduler, while limits would ensure that none of our pods is inadvertently consuming excessive resources ▶️ Efficient resource Utilisation and High Availability 🏁 👍
 
 > I'd been observing that there was an uneven scheduling of pods across the nodes. Hence, I had to utilise the `topologySpreadConstraint` parameter, to ensure we're utilising our resources evenly. And a `maxSkew` parameter, this means resilient scheduling of pods across Nodes.
 
+</br>
 
 2- `service.yaml` - Service is actually a way to expose underlying pods, helps expose the set of pods running the containerised application, either to others ervices in the application or to the internet traffic. That's through creating a LB, and listens for traffic on port 80 and forwards it to port 3000 - the port the application listens on within the container
 
-### The non-functional aspects I've included:-
+_The non-functional aspects I've included:-_
 
-I've made use of K8s annotations for Cross-Zone Load Balancing = High Availability - Distributes Traffic evenly across pods in multiple Availability Zones 
+☑ I've made use of K8s annotations for Cross-Zone Load Balancing = High Availability - Distributes Traffic evenly across pods in multiple Availability Zones 
 Network Load Balancer naturally does ensure scalability - ➡️ NLB means Super-low Latency + Super High Performance 👍
 
-Also, client source ips are preserved to ensure a better security, --> this will later help us in implementing WAF NACls that could be associated with the API Gateway fronting the LB --> Enhanced Security ☑️ 
+☑ Also, client source ips are preserved to ensure a better security, --> this will later help us in implementing WAF NACls that could be associated with the API Gateway fronting the LB --> Enhanced Security ☑️ 
 
- 
+</br>
 
+3- `ingress.yaml` - I'm using this alongside Load Balancer. In general, an Ingress would be used for its path-routing capabilities, -- you could actually host multiple applications on just a single IP, and route traffic to different backend service based on the path.
 
+> At times, when you're having multiple services, I'd not advise creating multiple services of type `LoadBalancer` , That wouldn't be a wise decision, Use an Ingress Controller to distribute / route the traffic based on the path in the URL. You'll simplify your network setup, while saving on extra infra costs.
 
-3- ingress.yaml -
+In my case, I'd be utilising an ingress controller for its advanced traffic management + SSL termination capabilities. A standard way for exposing Services with a single external access point Provides scope, to maybe use some ACLs for IP Whitelisting, Geo-restrictions in conjunction with an AWS API Gateway/ WAF for an eve better security posture. 👍
 
-4 - cluster-autoscaler.yaml -
+</br>
 
-5 - hpa-manifest.yaml
+4 - `cluster-autoscaler.yaml` and `hpa-manifest.yaml` :- _Scaling via Cluster Auto-Scaler and Horizontal Pod Scaler_
+
+</br>
+
+> We wanted something that could adapt both at the pod and the node level. Something that can help us scale effectively in Kubernetes and manage workload fluctuations as well. Hence we added cluster-autoscaler.yaml and hpa-manifest.yaml
+
+</br>
+
+Hence, we've used both **Cluster Auto-scaler** and **Horizontal Pod Autoscaler**, And how're they different? **Cluster auto-scaler** scales the
+
+ nodes up and down in the event of a lack of sufficient resources to schedule pods or due to node utilization.              
+**Horizontal Pod Autoscaler** is about adjusting the number of pod replicas in a deployment, based on current demand, (We're considering **CPU Utilization** as our target metric here). This helps maintain an optimal application performance level as the workload changes.
+
 
 
 <img width="949" alt="image" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/77c0230f-4b32-4b7f-8c20-e44f7035f58d">
