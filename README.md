@@ -61,7 +61,7 @@ _It's more like a ***Strategic Enabler,***_ to boost efficiency, streamline proc
 
 
 
-## _Phase 1 &rarr; Infra-Setup & Tool Configuration_
+## _&rarr; Infra-Setup & Tool Configuration_
 
 -->Setting up the necessary infrastructure and configuring essential tools in this phase
          
@@ -73,23 +73,15 @@ Please check `updated_main.tf` & `install.sh`
 
 ### _Segregating the kind of plugins we've used:-_
 
---
-
-### **_✔️ Foundational Plugins - The Core for setting up Jenkins:-_**     
-
---> These include the SCM Plugins, the ones used for integrating build tools with Jenkins; Notification & reporting, General Utilities. the ones around User management, plugins for testing Frameworks or for orchestrating pipeline workflows (the pipeline plugin)
+> We've already installed the foundational plugins --> In short, it's for a **fully functional Jenkins environment**, covering all the necessary aspects from Source Code Management to Pipeline Orchestration
 
 </br>
 
-> In short, it's for a **fully functional Jenkins environment**, covering all the necessary aspects from Source Code Management to Pipeline Orchestration
-
-</br>
-
-### **_✔️ The Specialised Ones:-_**   
+### **_The Specialised Plugins we've used:-_**   
 
 
 
-| Category                | Plugin/Tool                 | Purpose                                                                                   |
+| Category               | Plugin/Tool                 | Purpose                                                                                   |
 |-------------------------|-----------------------------|-------------------------------------------------------------------------------------------|
 | **Code Quality & Analysis** | **SonarQube Scanner**       | Integrates SQ into Jenkins --> SAST|
 |                         | **Sonar Quality Gates**     | Breaks the build based on SonarQube quality gates --> code quality  |
@@ -137,7 +129,7 @@ So, they're _automatically installed & available to all jobs_
 
 
 
-## _Phase 2 --> Pipeline Configuration_
+## _--> Pipeline Configuration_
 
 In Phase 2 of our project, we've focused on pipeline configuration to automate our build and deployment processes.             
 The pipeline, scripted in a Jenkinsfile, (Please check `Jenkinsfile` above) utilises both JDK 17 and Node.js 16 tools for a build environment suitable for our Reddit Clone App. 
