@@ -25,7 +25,9 @@ Our project today is all about the specifics involved while configuring a  **_De
 **_Security Integrations_** (SonarQube, OWASP & Trivy)      
       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;  ⬇️        
 **_Logging, Monitoring & Data Visualization_** (Prometheus, Grafana & EFK Stack)      
-      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;   =   
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; 
+      =   
+      
 **_Real-time Insights_** into application health & performance  
 
 
@@ -89,10 +91,7 @@ Please check `updated_main.tf` & `install.sh`
 | Secrets Detection  | **truffleHog**              | Scans the repository for accidentally committed secrets |
 
 --
-
-_**Quick Steps on SQ + Jenkins:-**_       
-            
-We've integrated SonarQube with our Jenkins pipeline using a security authentication token. By configuring SonarScanner in Jenkins and securely managing credentials, we've enabled automated code inspections.        
+   
 
 >  Quality gates in SQ ensures that code must meet specific quality standards before it can proceed through the pipeline. Additionally, the webhook feature provides immediate feedback within our CI/CD process --> Quick identification & resolution of issues. 
 
@@ -131,31 +130,17 @@ The pipeline, scripted in a Jenkinsfile, (Please check `Jenkinsfile` above) util
 </br>
 
 ### _CI/CD Pipeline - Key Stages_
-1 --> _<ins>Workspace Preparation</ins>_: A clean workspace               
- --> No interference from previous builds.
 
-2 --> _<ins>Code Checkout</ins>_: We fetch the latest code from the main branch of our Git repository to maintain up-to-date integration.
 
-3 --> _<ins>Static Code Analysis</ins>_:            
-Through SonarQube, we've scrutinized the code for potential bugs, vulnerabilities, and maintainability concerns.
-
-4 --> _<ins>Quality Gate</ins>_: Crucial checkpoint - aligns with our quality criteria             
---> Decides if changes can be promoted.
-
-5 --> _<ins>Dependency Installation</ins>_:          
-We then install the necessary dependencies / components for our application.
-
-6 --> _<ins>Security Scans</ins>_:  OWASP's Dependency-Check and Trivy, scanning both our file system and Docker images.
-
-7 --> _<ins>Containerization</ins>_:          
-The application is containerized using Docker --> consistent deployment and scalability.
-
-8 --> _<ins>Secrets Detection</ins>_:             
-We employ TruffleHog to detect any unintentional secret exposures.
-
-9 --> _<ins>Infrastructure as Code Analysis</ins>_:                         
-Lastly, we analyze our Terraform configurations with tfsec to ensure our infrastructure is defined securely.
-
+1 → Workspace Preparation          
+2 →  Fetch the latest code from the repo's main branch         
+3 → Static Code Analysis for potential bugs & vulnerabilities.         
+4 → Quality Gate → Crucial checkpoint to align with our quality criteria, Decides if changes can be promoted.         
+5 → Installing Dependencies         
+6 → Scanning both our File system and Docker images.         
+7 → Containerization          
+8 → Detecting unwanted secrets (checking if they've been exposed)      
+9 → IaC Analysis - Securing Tf Configurations
 </br>
 
 You can find the application code here :- https://github.com/TanishkaMarrott/Reddit-Clone-App
@@ -199,17 +184,23 @@ Now that we're done with the continuous integration part, we'd move to the deplo
 **Yes.**             
 But the kind and the emphasis of testing differs.....
 
-What does this mean...? Testing in CI is primarily about running tests against the code to ensure the codebase is stable and functional throughout. Integrating multiple code changes into the main-stream, won't break production. It mostly revolves around **Unit testing** & **Integration testing**.          
+What does this mean...? Testing in CI is primarily about running tests against the code to ensure the codebase is stable and functional throughout. Integrating multiple code changes into the main-stream, won't break production. It mostly revolves around **Unit testing** & **Integration testing**.   
 
-The goal here is frequent, incremental updates - (**Immediate feedback** = **Quicker Iterative loops**)
+</br>
+
+> The goal here is frequent, incremental updates - (**Immediate feedback** = **Quicker Iterative loops**)
+
+</br>
 
 When I talk about CD, it's not only about a "bug-free" code. You need some other types of testing too, **Security testing**, **Performance Testing**, **UAT testing**. Making my software production-ready, considering all non-functional aspects as well. 
+
+</br>
 
 > *Is my software production ready? Can this be delivered to my users? Does it meet the overall high quality standards?* CD answers such questions.
 
 </br>
 
-Let's start with the Terrform Configurations involved...
+Let's start with the Terrform Configurations...
 
 </br>
 
@@ -218,7 +209,7 @@ Please check my code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/m
 ## _Tf Configurations - Non functional Aspects:-_
 
 
-### _Multi-AZ NAT Gateway Setup + Multi-AZ Worker Node Deployment configuration:-_ 
+### _Multi-AZ NAT Gateway Setup + Multi-AZ Worker node deployment configuration:-_ 
 
 In this architecture, we've deployed **three NATs each with its own Elastic IP**, to ensure **high availability** and **fault tolerance**.
 
@@ -229,6 +220,8 @@ In this architecture, we've deployed **three NATs each with its own Elastic IP**
 </br> 
 
 ▶ **High Availability** + **Fault Tolerance** = 👍
+
+</br>
 
 There's one more advantage to it, **Performance Optimization**.  
 
@@ -242,7 +235,7 @@ There's one more advantage to it, **Performance Optimization**.
 
 </br>
 
-### _Strategic Mix of Public and Private Subnets_
+### _Strategic Use of both, Public & Private Subnets_
 
 </br>
 
@@ -268,15 +261,17 @@ Plus, we have **endpoint access restrictions**, and **secured SSH Access** - lim
 
 </br>
 
-### _Terraform State Backend - S3 + DynamoDB - Concurrency + State Locking_
+### _Terraform State Backend - S3 + DynamoDB -> Concurrency + State Locking_
+
+</br>
 
 > Eliminating potential chances of State Corruption that might happen during multiple Terraform applies. Terraform locks the state, preventing multiple concurrent Terraform runs from multiple users, + DynamoDB is a secure and durable storage for State Locking as well.
 
 </br>
 
-**Enabling S3 Versioning** on your backend S3 bucket to keep a history of your state files,▶️ for recovery from unintended changes.
+Enabling **S3 Versioning** on your backend S3 bucket to keep a history of your state files,▶️ for recovery from unintended changes.
 
-**Using S3 Bucket Encryption** for added security. While your state files are encrypted due to the encrypt attribute, ensuring the bucket itself is also encrypted. ▶ **Additional Security Layer**
+Using **S3 Bucket Encryption** for added security. While your state files are encrypted due to the encrypt attribute, ensuring the bucket itself is also encrypted. ▶ **Additional Security Layer** 👍👍
 
 
 </br>
@@ -300,11 +295,11 @@ This means we have an **On-Demand capacity** to handle **Baseline Application Pe
 
 _Why Argo?_ It's a brilliant declarative, GitOps CD Tool. We've used Argo for its capability to **automate deployments** across various environments. _**It ensures that my actual state of the Kubernetes matches the configuration manifests in the Git repo**_, (That's the **desired state** of the cluster).
 
-=>> _Automated, Repeatable and most importantly Reliable Deployments_ 🙂 👍
+>   _Automated, Repeatable and most importantly Reliable Deployments_ 👍
 
 So, that's something I like. ArgoCD automatically checks for differences between your current state of K8s cluster and what's in the manifest files, means that my changes are **automatically deployed** and reflected in the live environment, as soon as they're pushed.
 
-> _The Best Part:-_ **Every change's versioned**, just in case changes don't go as planned, you can always **rollback to a previous state**, --> _Truly Reliable!_
+>  **Every change's versioned**, just in case changes don't go as planned, you can always **rollback to a previous state**
 
 Here's the link to my K8s manifest files:- https://github.com/TanishkaMarrott/Reddit-Clone-K8s-Manifests
 
@@ -312,6 +307,8 @@ Here's the link to my K8s manifest files:- https://github.com/TanishkaMarrott/Re
 ## _Quick Dive into the k8 manifests + Key Design Considerations_
 
 1- `deployment.yaml` - We've defined a Deployment here for our Reddit-Clone application. Contains a blueprint fro the pods it'll create 
+
+</br>
 
 _How did I improvise the deployment to be available and fault tolerant?_
 
@@ -324,6 +321,8 @@ _How did I improvise the deployment to be available and fault tolerant?_
 </br>
 
 2- `service.yaml` - Service is actually a way to expose underlying pods, helps expose the set of pods running the containerised application, either to others ervices in the application or to the internet traffic. That's through creating a LB, and listens for traffic on port 80 and forwards it to port 3000 - the port the application listens on within the container
+
+</br>
 
 _The non-functional aspects I've included:-_
 
