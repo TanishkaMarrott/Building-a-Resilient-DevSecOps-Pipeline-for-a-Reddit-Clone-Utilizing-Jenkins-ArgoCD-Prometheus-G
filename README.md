@@ -327,10 +327,14 @@ Here's the link to my K8s manifest files:- https://github.com/TanishkaMarrott/Re
 
 ---
 
+</br>
+
 ## _Quick Dive into the k8 manifests + Key Design Considerations_
 
 
-1- `deployment.yaml` - My Deployment for the Reddit-Clone application. Contains a blueprint for the pods it'll create 
+1- **`deployment.yaml`** 
+
+My Deployment for the Reddit-Clone application. Contains a blueprint for the pods it'll create 
 
 </br>
 
@@ -349,7 +353,11 @@ _How did I improvise the deployment to be available and fault tolerant?_
 
 ---
 
-2- `service.yaml` - Service is actually a way to expose underlying pods, helps expose the set of pods running the containerised application, either to others ervices in the application or to the internet traffic. That's through creating a LB, and listens for traffic on port 80 and forwards it to port 3000 - the port the application listens on within the container
+</br>
+
+2- **`service.yaml`** 
+
+We're exposing the set of pods running the containerised application through the Service of type loadBalancer. It listens for traffic on port 80 and forwards it to port 3000 - the port the application listens on within the container.
 
 </br>
 
@@ -364,11 +372,17 @@ Network Load Balancer naturally does ensure scalability - ➡️ NLB means Super
 
 ---
 
-3- `ingress.yaml` - I'm using this alongside the Service of type Load Balancer. In general, an Ingress would be used for its path-routing capabilities, -- you could actually host multiple applications on just a single IP, and route traffic to different backend service based on the path.
+</br>
+
+3- **`ingress.yaml`**
+
+I'm using this alongside the service object. In general, an Ingress would be used for its path-routing capabilities, -- you could actually host multiple applications on just a single IP, and route traffic to different backend service based on the path.
 
 </br>
 
 > At times, when you're having multiple services, I'd not advise creating multiple services of type `LoadBalancer` , That wouldn't be a wise decision, Use an Ingress Controller to distribute / route the traffic based on the path in the URL. You'll simplify your network setup, while saving on extra infra costs.
+
+</br>
 
 In my case, I'd be utilising an ingress controller for its advanced traffic management + SSL termination capabilities. A standard way for exposing Services with a single external access point Provides scope, to maybe use some ACLs for IP Whitelisting, Geo-restrictions in conjunction with an AWS API Gateway/ WAF for an eve better security posture. 👍
 
@@ -378,7 +392,11 @@ In my case, I'd be utilising an ingress controller for its advanced traffic mana
 
 ---
 
-4 - `cluster-autoscaler.yaml` and 5. `hpa-manifest.yaml` :- _Scaling via Cluster Auto-Scaler and Horizontal Pod Scaler_
+</br>
+
+4 - **`cluster-autoscaler.yaml`** & 5. **`hpa-manifest.yaml`** 
+
+_Scaling via Cluster Auto-Scaler and Horizontal Pod Scaler_
 
 </br>
 
@@ -392,18 +410,47 @@ Hence, I've used both **Cluster Auto-scaler** and **Horizontal Pod Autoscaler**,
 
 </br>
 
+---
+
+</br>
+
+6. **`rbac-config.yaml`**
+
+I've also included a template for `rbac-config.yaml`. Why? That's Kubernetes native way of Role Based Access Control. Finetuning Access Control to Kubernetes resources, either through User Accounts or Service Accounts
+
+> Usually, pods make use of a Default Service Account, for performing all Kuberenetes API Operation. But, that's way too broad. If we're looking for a much more auditable, and secure K8s environment wherein permissions are scoped, we must create a specific SA, bind necessary permissions to the role -- (the one's I need for the application's proper functioning). This Role would then be attached to the SA... 
+
+There's one more advantage to it. I'm not only adhering to the principle of Least privilege, We can also _scope_ permissions to a specific namespace, if we're looking for granular access control. User Accounts too can be granted specific permissions for the resources they need to access (pods etc.)
+
+> Even in case of a compromise, chances of Privilege Escalation are minimized greatly
+
+In our case, I've created a specific SA -> `app-service-account` and attached the `app-role` to it, comprising the `get` , `watch` , and `list` permissions inherited the pods running the application.
+
+---
+
+</br>
+
+7. **K8s Network Policies** - A side note
+
+I haven't created a manifest specifically for network-policies, my current use-case doesn't require a policy restricting communication between pods running multiple applications.
+
+> Basically, we make use of Network Policies in K8s for controlling the ingress, and egress at a pod level. You can have a `deny-all` policy`, restricting any ingress to all the pods (as specified by the selector) within a namespace. Or maybe have a specific Network Policy allowing inbound traffic from pods of a certain application within the same namespace. = Controlling Ingress/Egress , but at the pod level!
+
+</br>
+
+
+ArgoCD has been exposed via the LoadBalancer Endpoint. Here are a couple of snapshots:-
+
+</br>
 
 <img width="949" alt="image" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/77c0230f-4b32-4b7f-8c20-e44f7035f58d">
 
-
 </br>
+
+--
 
 <img width="949" alt="image" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/78b7dab5-93ac-42a3-8677-ee20420b0e46">
 
-
-</br>
-
-ArgoCD has been exposed via a LoadBalancer Endpoint. Here are a couple of snapshots:-
 
 </br>
 
@@ -415,11 +462,17 @@ ArgoCD Pods:-
 
 </br>
 
+--
+
 <img width="929" alt="reddit-clone-argocd-pods" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/70767d77-bc23-4181-bda5-11819b265d11">
 
 </br>
 
+--
+
 My Application's frontend:-
+
+--
 
 </br>
 
