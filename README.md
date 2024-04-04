@@ -115,7 +115,7 @@ They're _automatically installed & available to all jobs, it's defined at a glob
 | Runtime & Environment   | **Eclipse Temurin Installer** | Automates the installation => Means a specific version of the JDK is available for all jobs. |
 |                         | **Nodejs**                 | Ensures the necessary runtime version is available for JavaScript-based applications. |
 
-
+---
 
 ## _Pipeline Configuration_
 
@@ -216,6 +216,7 @@ Please check my code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/m
 
 </br>
 
+---
 
 ## _Tf Configurations - Non functional Aspects:-_
 
@@ -300,6 +301,8 @@ This means we have an **On-Demand capacity** to handle **Baseline Application Pe
 
 </br>
 
+---
+
 ## _Why ArgoCD?_
 
 It's actually a brilliant declarative, GitOps CD Tool. 
@@ -322,8 +325,10 @@ Here's the link to my K8s manifest files:- https://github.com/TanishkaMarrott/Re
 
 </br>
 
+---
 
 ## _Quick Dive into the k8 manifests + Key Design Considerations_
+
 
 1- `deployment.yaml` - My Deployment for the Reddit-Clone application. Contains a blueprint for the pods it'll create 
 
@@ -339,7 +344,10 @@ _How did I improvise the deployment to be available and fault tolerant?_
 
 > I'd been observing that there was an uneven scheduling of pods across the nodes. Hence, I had to utilise the `topologySpreadConstraint` parameter, to ensure we're utilising our resources evenly. And a `maxSkew` parameter, this means resilient scheduling of pods across Nodes.
 
+
 </br>
+
+---
 
 2- `service.yaml` - Service is actually a way to expose underlying pods, helps expose the set of pods running the containerised application, either to others ervices in the application or to the internet traffic. That's through creating a LB, and listens for traffic on port 80 and forwards it to port 3000 - the port the application listens on within the container
 
@@ -354,6 +362,8 @@ Network Load Balancer naturally does ensure scalability - ➡️ NLB means Super
 
 </br>
 
+---
+
 3- `ingress.yaml` - I'm using this alongside the Service of type Load Balancer. In general, an Ingress would be used for its path-routing capabilities, -- you could actually host multiple applications on just a single IP, and route traffic to different backend service based on the path.
 
 </br>
@@ -366,7 +376,9 @@ In my case, I'd be utilising an ingress controller for its advanced traffic mana
 
 </br>
 
-4 - `cluster-autoscaler.yaml` and `hpa-manifest.yaml` :- _Scaling via Cluster Auto-Scaler and Horizontal Pod Scaler_
+---
+
+4 - `cluster-autoscaler.yaml` and 5. `hpa-manifest.yaml` :- _Scaling via Cluster Auto-Scaler and Horizontal Pod Scaler_
 
 </br>
 
