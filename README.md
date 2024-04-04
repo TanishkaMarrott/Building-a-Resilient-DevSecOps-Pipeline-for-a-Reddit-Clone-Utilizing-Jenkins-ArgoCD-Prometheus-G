@@ -67,18 +67,18 @@ _It's more like a ***Strategic Enabler,***_ to boost efficiency & streamline pro
 ## _&rarr; Infra-Setup & Tool Configuration_
 
          
---> Establishing the base for our CI/CD pipeline and security assessments. Next, we've **_configured Jenkins Plugin Installations_**, for integrating Jenkins with other CI/CD tools in our pipeline. 
+--> Establishing the base for our CI/CD pipeline and security assessments. Next, I've **_configured Jenkins Plugin Installations_**, for integrating Jenkins with other CI/CD tools in our pipeline. 
 
 Please check `updated_main.tf` & `install.sh`
 
 </br>
 
 
-> We've already installed the foundational plugins --> In short, it's for a **fully functional Jenkins environment**, covering all the necessary aspects from Source Code Management to Pipeline Orchestration
+> I've already installed the foundational plugins --> In short, it's for a **fully functional Jenkins environment**, covering all the necessary aspects from Source Code Management to Pipeline Orchestration
 
 </br>
 
-### **_Plugins we've used:-_**   
+### **_Plugins I've used:-_**   
 
 
 
@@ -117,9 +117,9 @@ They're _automatically installed & available to all jobs, it's defined at a glob
 
 
 
-## _--> Pipeline Configuration_
+## _Pipeline Configuration_
 
-In Phase 2 of our project, we've focused on pipeline configuration to automate our build and deployment processes.             
+In Phase 2 of our project, I've focused on pipeline configuration to automate our build and deployment processes.             
 The pipeline, scripted in a Jenkinsfile, (Please check `Jenkinsfile` above) utilises both JDK 17 and Node.js 16 tools for a build environment suitable for our Reddit Clone App. 
 
 </br>
@@ -147,6 +147,8 @@ You can find the application code here :- https://github.com/TanishkaMarrott/Red
 
 _**Dependency-Check Results**_ – This screenshot from Jenkins displays the results of the Dependency Check, showcasing the distribution and severity of discovered vulnerabilities in the Reddit Clone App.
 
+</br>
+
 
 ![image](https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/0e9a27ca-158a-4fa4-bfd7-4f82c5f6d30e)
 
@@ -155,17 +157,23 @@ _**Dependency-Check Results**_ – This screenshot from Jenkins displays the res
 
 _**Console Output**_ - This image captures the console output in Jenkins, --> Verbose Logs for execution of the pipeline stages for the Reddit Clone App.
 
+</br>
+
 ![image](https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/cc0a6fbd-245c-49c4-9144-b0a6c41e7c80)
 
 </br>
 
 _**SonarQube Dashboard**_ - This screenshot shows a successful Quality Gate with overview of code analysis for the Reddit project
 
+</br>
+
 <img width="958" alt="Reddit-Clone-App-SonarQubeServer" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/698eaff4-1db7-4938-b711-2a3141543b88">
 
 
 
 _**Docker Hub Repository: 'tanishkamarrott/reddit'**_ – The third screenshot shows the Docker Hub repository page for the 'reddit' image, ready for Image pushes
+
+</br>
 
 ![image](https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/395f374d-9dbd-4436-9f73-c18848d40ccf)
 
@@ -214,7 +222,7 @@ Please check my code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/m
 
 ### _Multi-AZ NAT Gateway Setup + Multi-AZ Worker node deployment configuration:-_ 
 
-In this architecture, we've deployed **three NATs each with its own Elastic IP**, to ensure **high availability** and **fault tolerance**.
+In this architecture, I've deployed **three NATs each with its own Elastic IP**, to ensure **high availability** and **fault tolerance**.
 
 </br>
 
@@ -238,7 +246,7 @@ There's one more advantage to it, **Performance Optimization**.
 
 </br>
 
-### _Strategic Use of both, Public & Private Subnets_
+### _Utilising bith public and private subnets. Why?_
 
 </br>
 
@@ -246,13 +254,13 @@ There's one more advantage to it, **Performance Optimization**.
 
 </br>
 
-### _Granular Access Control for the EKS Cluster_
+### _Granular Access Control for my EKS Cluster_
 
-We've pruned down the **public access CIDR**. They're crucial for defining which IP Addresses are allowed to access the Kubernetes API Server. Having centralized control over access and management. = **Security** and **resilience** 👍
+I've pruned down the **public access CIDR**. They're crucial for defining which IP Addresses are allowed to access the Kubernetes API Server. Having centralized control over access and management. = **Security** and **resilience** 👍
 
 </br>
 
-> By doing so, we're adopting a **principle of least privilege**, ensuring that only necessary access is granted and reducing the surface area for potential cyber threats. We've ensured flexibility and automation, as the list of EC2 Instance Connect IPs can change, and fetching them dynamically ensures our access controls are always up-to-date without manual intervention.
+> By doing so, we're adopting a **principle of least privilege**, ensuring that only necessary access is granted and reducing the surface area for potential cyber threats. I've ensured flexibility and automation, as the list of EC2 Instance Connect IPs can change, and fetching them dynamically ensures our access controls are always up-to-date without manual intervention.
 
 </br>
 
@@ -278,8 +286,9 @@ Using **S3 Bucket Encryption** for added security. While your state files are en
 
 </br>
 
-### _Cost Optimization through a Mix of On-Demand Instances and Spot Instances_
+### _Optimising costs while still maintaining a level of fault-tolerance?_
 
+Mix of both On-demand and Spot Instances 👍🏁
 </br>
 
 > We wanted to achieve a certain level of cost optimization as well while still retaining our fault tolerance capabilities. Hence, I've decided to go in for:-
@@ -294,17 +303,21 @@ This means we have an **On-Demand capacity** to handle **Baseline Application Pe
 
 ## _Why ArgoCD?_
 
-_Why Argo?_ It's a brilliant declarative, GitOps CD Tool. We've used Argo for its capability to **automate deployments** across various environments. _**It ensures that my actual state of the Kubernetes matches the configuration manifests in the Git repo**_, (That's the **desired state** of the cluster).
+It's actually a brilliant declarative, GitOps CD Tool. 
+
+I've used Argo for its capability to **automate deployments** across various environments. _**It ensures that my actual state of the Kubernetes matches the configuration manifests in the Git repo**_, (That's the **desired state** of the cluster).
 
 >   _Automated, Repeatable and most importantly Reliable Deployments_ 👍
 
 </br>
 
-So, that's something I like. ArgoCD automatically checks for differences between your current state of K8s cluster and what's in the manifest files, means that my changes are **automatically deployed** and reflected in the live environment, as soon as they're pushed.
+So, that's something I like.... ArgoCD automatically checks for differences between your current state of K8s cluster and what's in the manifest files, means that my changes are **automatically deployed** and reflected in the live environment, as soon as they're pushed.
 
 </br>
 
 >  **Every change's versioned**, just in case changes don't go as planned, you can always **rollback to a previous state**
+
+</br>
 
 Here's the link to my K8s manifest files:- https://github.com/TanishkaMarrott/Reddit-Clone-K8s-Manifests
 
@@ -313,7 +326,7 @@ Here's the link to my K8s manifest files:- https://github.com/TanishkaMarrott/Re
 
 ## _Quick Dive into the k8 manifests + Key Design Considerations_
 
-1- `deployment.yaml` - We've defined a Deployment here for our Reddit-Clone application. Contains a blueprint fro the pods it'll create 
+1- `deployment.yaml` - My Deployment for the Reddit-Clone application. Contains a blueprint for the pods it'll create 
 
 </br>
 
@@ -358,7 +371,7 @@ In my case, I'd be utilising an ingress controller for its advanced traffic mana
 
 </br>
 
-Hence, we've used both **Cluster Auto-scaler** and **Horizontal Pod Autoscaler**, And how're they different? **Cluster auto-scaler** scales the nodes up and down in the event of a lack of sufficient resources to schedule pods or due to node utilization.              
+Hence, I've used both **Cluster Auto-scaler** and **Horizontal Pod Autoscaler**, And how're they different? **Cluster auto-scaler** scales the nodes up and down in the event of a lack of sufficient resources to schedule pods or due to node utilization.              
 **Horizontal Pod Autoscaler** is about adjusting the number of pod replicas in a deployment, based on current demand, (We're considering **CPU Utilization** as our target metric here). This helps maintain an optimal application performance level as the workload changes.
 
 
