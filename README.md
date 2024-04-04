@@ -4,9 +4,9 @@
 ## _Quick Introduction_:-
 
 Our project today is all about the specifics involved while configuring a  **_DevSecOps Pipeline._**   
-Ensures we're not only speeding up releases, but also being security-compliant, from the get-go.    
+--> we're not only speeding up releases, but also being security-compliant, from the get-go.    
 
-Technicalities in the sections that follow.
+****Technicalities in the sections that follow.****
 
 --> _What are we trying to achieve?_    
 &nbsp; &nbsp; &nbsp; **Optimized QA + Speedy Delivery + Security Ingrained = Real Business Value** 
@@ -16,19 +16,19 @@ Technicalities in the sections that follow.
 ## _So, how does the workflow actually look like?_
 
 
-**_Infrastructure Provisioning_** - Terraform   
-   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;     ↓     
-**_Container Orchestration_** - Elastic Kubernetes Service       
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;    ↓      
-**_CI/CD_** - Jenkins & ArgoCD      
-     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;   ↓     
-**_Security Integrations_** - SonarQube, OWASP & Trivy      
-      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;  ↓       
-**_Logging, Monitoring & Data Visualization_** - Prometheus, Grafana & EFK Stack      
-      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;   ↓     
-**_Real-time Insights_** into application health & performance       
+**_Infrastructure Provisioning_** (Terraform)            
+   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;     ⬇️             
+**_Container Orchestration_** (Elastic Kubernetes Service)       
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;    ⬇️       
+**_CI/CD_**  (Jenkins & ArgoCD)      
+     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;    ⬇️      
+**_Security Integrations_** (SonarQube, OWASP & Trivy)      
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;  ⬇️        
+**_Logging, Monitoring & Data Visualization_** (Prometheus, Grafana & EFK Stack)      
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;   =   
+**_Real-time Insights_** into application health & performance  
 
---
+
 </br>
 
 >  _**Okay, so how does DevSecOps augment Business Processes?**_
@@ -43,29 +43,29 @@ _Simple Answer:-_
 
 </br>
 
-_It's more like a ***Strategic Enabler,***_ to boost efficiency, streamline processes.    
+_It's more like a ***Strategic Enabler,***_ to boost efficiency & streamline processes.    
 
---> _Quicker product iterations & feedback loops_ through continuous integration and deployment   
- means we're **_market-agile._**     
-</br>
-
-> #### **<ins>Agile DevSecOps = Swiftly adapting to evolving Business Requirements.**
+▶️ _Quicker product iterations & feedback loops_
+ means we're **_market-agile._**     👍👍
 
 </br>
 
---> _Quality Assurance_ (due to Automated Testing) + _Reducing costs_ due to post-deployment fixes.   
- Mitigating Security risks early means **_averting Data Security incidents / breaches due to security lapses._**
-</br>
+▶️ _Quality Assurance_ + _Reducing post-deployment fixes' costs_   
+
+= **_Averting Data Security incidents / breaches due to security lapses._**
 
 </br>
 
+>  ### **<ins>Agile DevSecOps = Swiftly adapting to evolving Business Requirements.** 
+
+
+</br>
 
 
 ## _&rarr; Infra-Setup & Tool Configuration_
 
--->Setting up the necessary infrastructure and configuring essential tools in this phase
          
---> Establishing the base for our CI/CD pipeline and security assessments. Next, we've **_configured Jenkins Plugin Installations_**, --> Aid in integrating Jenkins with other CI/CD tools in our pipeline. 
+--> Establishing the base for our CI/CD pipeline and security assessments. Next, we've **_configured Jenkins Plugin Installations_**, for integrating Jenkins with other CI/CD tools in our pipeline. 
 
 Please check `updated_main.tf` & `install.sh`
 
@@ -94,34 +94,26 @@ _**Quick Steps on SQ + Jenkins:-**_
             
 We've integrated SonarQube with our Jenkins pipeline using a security authentication token. By configuring SonarScanner in Jenkins and securely managing credentials, we've enabled automated code inspections.        
 
---> Quality gates in SQ ensures that code must meet specific quality standards before it can proceed through the pipeline. Additionally, the webhook feature provides immediate feedback within our CI/CD process --> Quick identification & resolution of issues. 
+>  Quality gates in SQ ensures that code must meet specific quality standards before it can proceed through the pipeline. Additionally, the webhook feature provides immediate feedback within our CI/CD process --> Quick identification & resolution of issues. 
 
 --
 
 ## _Why global tool configurations?_
 
-Specialised plugins are like  _add-ons to enhance the functionality of Jenkins..._                
---> Allow for _**integration of Jenkins with other tools in the pipeline**_                                   
 
-</br>
-
-Global tool configurations are slightly different....   
-_It's all about defining development tools at a global scope_     
-
-So, they're _automatically installed & available to all jobs_                   
- <ins>**--> In a way, it standardises the environment across all builds, and projects.**</ins>        
+They're _automatically installed & available to all jobs, it's defined at a global scope_                   
+ <ins>**--> In a way, it standardises the environment across all builds, and projects. 👍**</ins>        
 
 </br>
 
  >  _Once setup, they **eliminate the need of manually configuring specific versions** of these runtimes/environments for each of them separately._
 
 </br>
-
-### **_Global Tool Configurations we've utilised:-_**   
+ 
 
 | Category                | Tools                   | Purpose                                                                                   |
 |-------------------------|------------------------|-------------------------------------------------------------------------------------------|
-| Runtime & Environment   | **Eclipse Temurin Installer** | Automates the JDK's installation => Means a specific version of the JDK is available for all jobs. |
+| Runtime & Environment   | **Eclipse Temurin Installer** | Automates the installation => Means a specific version of the JDK is available for all jobs. |
 |                         | **Nodejs**                 | Ensures the necessary runtime version is available for JavaScript-based applications. |
 
 
@@ -139,7 +131,7 @@ The pipeline, scripted in a Jenkinsfile, (Please check `Jenkinsfile` above) util
 </br>
 
 ### _CI/CD Pipeline - Key Stages_
-1 --> _<ins>Workspace Preparation</ins>_: Ensures a clean workspace               
+1 --> _<ins>Workspace Preparation</ins>_: A clean workspace               
  --> No interference from previous builds.
 
 2 --> _<ins>Code Checkout</ins>_: We fetch the latest code from the main branch of our Git repository to maintain up-to-date integration.
@@ -207,7 +199,7 @@ Now that we're done with the continuous integration part, we'd move to the deplo
 **Yes.**             
 But the kind and the emphasis of testing differs.....
 
-What does this mean? Testing in CI is primarily about running tests against the code to ensure the codebase is stable and functional throughout. Integrating multiple code changes into the main-stream, won't break production. It mostly revolves around **Unit testing** & **Integration testing**.          
+What does this mean...? Testing in CI is primarily about running tests against the code to ensure the codebase is stable and functional throughout. Integrating multiple code changes into the main-stream, won't break production. It mostly revolves around **Unit testing** & **Integration testing**.          
 
 The goal here is frequent, incremental updates - (**Immediate feedback** = **Quicker Iterative loops**)
 
@@ -226,7 +218,7 @@ Please check my code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/m
 ## _Tf Configurations - Non functional Aspects:-_
 
 
-### _Multi-AZ NAT Gateway Setup + Multi-AZ Worker Node Deployment:-_ 
+### _Multi-AZ NAT Gateway Setup + Multi-AZ Worker Node Deployment configuration:-_ 
 
 In this architecture, we've deployed **three NATs each with its own Elastic IP**, to ensure **high availability** and **fault tolerance**.
 
@@ -254,7 +246,7 @@ There's one more advantage to it, **Performance Optimization**.
 
 </br>
 
-> We've got a strategic mix of public and private subnets in our VPC. The public subnets host the Load Balancers and NAT Gateways (the resources which are intended to be public), so, they'll distribute incoming internet traffic to the pods running the application. This setup simplifies and centralizes traffic management while keeping our backend pods secure. Also, in case the applications in the private subnet wish to connect to the internet, for example for updates, APIs etc., it can be done via the NAT deployed in each public subnet = **secure outbound-only internet access** 👍.
+> My public subnets host the Load Balancers and NAT Gateways (the resources which are intended to be public), so, they'll distribute incoming internet traffic to the pods running the application. This setup simplifies and centralizes traffic management while keeping our backend pods secure. Also, in case the applications in the private subnet wish to connect to the internet, for example for updates, APIs etc., it can be done via the NAT deployed in each public subnet = **secure outbound-only internet access** 👍.
 
 </br>
 
@@ -342,7 +334,7 @@ Network Load Balancer naturally does ensure scalability - ➡️ NLB means Super
 
 </br>
 
-3- `ingress.yaml` - I'm using this alongside Load Balancer. In general, an Ingress would be used for its path-routing capabilities, -- you could actually host multiple applications on just a single IP, and route traffic to different backend service based on the path.
+3- `ingress.yaml` - I'm using this alongside the Service of type Load Balancer. In general, an Ingress would be used for its path-routing capabilities, -- you could actually host multiple applications on just a single IP, and route traffic to different backend service based on the path.
 
 > At times, when you're having multiple services, I'd not advise creating multiple services of type `LoadBalancer` , That wouldn't be a wise decision, Use an Ingress Controller to distribute / route the traffic based on the path in the URL. You'll simplify your network setup, while saving on extra infra costs.
 
@@ -359,9 +351,7 @@ In my case, I'd be utilising an ingress controller for its advanced traffic mana
 
 </br>
 
-Hence, we've used both **Cluster Auto-scaler** and **Horizontal Pod Autoscaler**, And how're they different? **Cluster auto-scaler** scales the
-
- nodes up and down in the event of a lack of sufficient resources to schedule pods or due to node utilization.              
+Hence, we've used both **Cluster Auto-scaler** and **Horizontal Pod Autoscaler**, And how're they different? **Cluster auto-scaler** scales the nodes up and down in the event of a lack of sufficient resources to schedule pods or due to node utilization.              
 **Horizontal Pod Autoscaler** is about adjusting the number of pod replicas in a deployment, based on current demand, (We're considering **CPU Utilization** as our target metric here). This helps maintain an optimal application performance level as the workload changes.
 
 
@@ -371,7 +361,7 @@ Hence, we've used both **Cluster Auto-scaler** and **Horizontal Pod Autoscaler**
 
 <img width="949" alt="image" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/78b7dab5-93ac-42a3-8677-ee20420b0e46">
 
-ArgoCD has been exposed via a Loadbalancer Endpoint. Here are a couple of snapshots:-
+ArgoCD has been exposed via a LoadBalancer Endpoint. Here are a couple of snapshots:-
 
 ArgoCD Pods:-
 <img width="923" alt="Reddit-App-Clone-ArgoCD-pods-running" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/b108c6f0-3bce-499d-a556-ca6fc3dd8d67">
