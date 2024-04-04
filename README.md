@@ -206,7 +206,10 @@ Let's start with the Terrform Configurations...
 
 Please check my code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/main'
 
+
 ## _Tf Configurations - Non functional Aspects:-_
+
+</br>
 
 
 ### _Multi-AZ NAT Gateway Setup + Multi-AZ Worker node deployment configuration:-_ 
@@ -273,7 +276,6 @@ Enabling **S3 Versioning** on your backend S3 bucket to keep a history of your s
 
 Using **S3 Bucket Encryption** for added security. While your state files are encrypted due to the encrypt attribute, ensuring the bucket itself is also encrypted. ▶ **Additional Security Layer** 👍👍
 
-
 </br>
 
 ### _Cost Optimization through a Mix of On-Demand Instances and Spot Instances_
@@ -288,7 +290,6 @@ Two separate node groups: one for critical workloads (on-demand), and Spot for c
 
 This means we have an **On-Demand capacity** to handle **Baseline Application Performance** + a **Spot Allocation strategy** as a **Cost Optimization strategy**. 👍 ☑️
 
-
 </br>
 
 ## _Why ArgoCD?_
@@ -297,11 +298,17 @@ _Why Argo?_ It's a brilliant declarative, GitOps CD Tool. We've used Argo for it
 
 >   _Automated, Repeatable and most importantly Reliable Deployments_ 👍
 
+</br>
+
 So, that's something I like. ArgoCD automatically checks for differences between your current state of K8s cluster and what's in the manifest files, means that my changes are **automatically deployed** and reflected in the live environment, as soon as they're pushed.
+
+</br>
 
 >  **Every change's versioned**, just in case changes don't go as planned, you can always **rollback to a previous state**
 
 Here's the link to my K8s manifest files:- https://github.com/TanishkaMarrott/Reddit-Clone-K8s-Manifests
+
+</br>
 
 
 ## _Quick Dive into the k8 manifests + Key Design Considerations_
@@ -340,6 +347,7 @@ Network Load Balancer naturally does ensure scalability - ➡️ NLB means Super
 In my case, I'd be utilising an ingress controller for its advanced traffic management + SSL termination capabilities. A standard way for exposing Services with a single external access point Provides scope, to maybe use some ACLs for IP Whitelisting, Geo-restrictions in conjunction with an AWS API Gateway/ WAF for an eve better security posture. 👍
 
 ☑️ I've limited the connections and requests per second, helps prevent resource exhaustion and overwhelming of backend services 🏁 ✔
+
 </br>
 
 4 - `cluster-autoscaler.yaml` and `hpa-manifest.yaml` :- _Scaling via Cluster Auto-Scaler and Horizontal Pod Scaler_
@@ -354,22 +362,38 @@ Hence, we've used both **Cluster Auto-scaler** and **Horizontal Pod Autoscaler**
 **Horizontal Pod Autoscaler** is about adjusting the number of pod replicas in a deployment, based on current demand, (We're considering **CPU Utilization** as our target metric here). This helps maintain an optimal application performance level as the workload changes.
 
 
+</br>
+
 
 <img width="949" alt="image" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/77c0230f-4b32-4b7f-8c20-e44f7035f58d">
 
 
+</br>
+
 <img width="949" alt="image" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/78b7dab5-93ac-42a3-8677-ee20420b0e46">
+
+
+</br>
 
 ArgoCD has been exposed via a LoadBalancer Endpoint. Here are a couple of snapshots:-
 
+</br>
+
 ArgoCD Pods:-
+
+</br>
+
 <img width="923" alt="Reddit-App-Clone-ArgoCD-pods-running" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/b108c6f0-3bce-499d-a556-ca6fc3dd8d67">
+
+</br>
 
 <img width="929" alt="reddit-clone-argocd-pods" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/70767d77-bc23-4181-bda5-11819b265d11">
 
 </br>
 
 My Application's frontend:-
+
+</br>
 
 <img width="952" alt="Reddit-App-Clone-App-FrontEnd" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/bc4d8f79-1ce2-48c2-ae37-b878796d528a">
 
