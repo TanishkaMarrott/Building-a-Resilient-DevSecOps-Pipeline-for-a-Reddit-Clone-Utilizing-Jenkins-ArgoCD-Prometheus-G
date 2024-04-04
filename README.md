@@ -189,8 +189,8 @@ Now that we're done with the continuous integration part, we'd move to the deplo
 
 ### _Is Testing a part of both CI and CD?_
 
-**Yes.**             
-But the kind and the emphasis of testing differs.....
+         
+True.....But the kind and the emphasis of testing differs.....
 
 What does this mean...? Testing in CI is primarily about running tests against the code to ensure the codebase is stable and functional throughout. Integrating multiple code changes into the main-stream, won't break production. It mostly revolves around **Unit testing** & **Integration testing**.   
 
@@ -214,11 +214,10 @@ Let's start with the Terrform Configurations...
 
 Please check my code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/main'
 
-
-## _Tf Configurations - Non functional Aspects:-_
-
 </br>
 
+
+## _Tf Configurations - Non functional Aspects:-_
 
 ### _Multi-AZ NAT Gateway Setup + Multi-AZ Worker node deployment configuration:-_ 
 
@@ -246,7 +245,7 @@ There's one more advantage to it, **Performance Optimization**.
 
 </br>
 
-### _Utilising bith public and private subnets. Why?_
+### _Are we utilising both public and private subnets. Why?_
 
 </br>
 
@@ -254,7 +253,7 @@ There's one more advantage to it, **Performance Optimization**.
 
 </br>
 
-### _Granular Access Control for my EKS Cluster_
+### _Granular Access controls for EKS_
 
 I've pruned down the **public access CIDR**. They're crucial for defining which IP Addresses are allowed to access the Kubernetes API Server. Having centralized control over access and management. = **Security** and **resilience** 👍
 
@@ -286,7 +285,7 @@ Using **S3 Bucket Encryption** for added security. While your state files are en
 
 </br>
 
-### _Optimising costs while still maintaining a level of fault-tolerance?_
+### _How did I optimise on costs while still maintaining a level of fault-tolerance?_
 
 Mix of both On-demand and Spot Instances 👍🏁
 </br>
@@ -336,6 +335,8 @@ _How did I improvise the deployment to be available and fault tolerant?_
 
 ☑ I've also specified the CPU and Memory Requests and Limits for the container. Requests would be guranteed by the kuberenetes scheduler, while limits would ensure that none of our pods is inadvertently consuming excessive resources ▶️ Efficient resource Utilisation and High Availability 🏁 👍
 
+</br>
+
 > I'd been observing that there was an uneven scheduling of pods across the nodes. Hence, I had to utilise the `topologySpreadConstraint` parameter, to ensure we're utilising our resources evenly. And a `maxSkew` parameter, this means resilient scheduling of pods across Nodes.
 
 </br>
@@ -354,6 +355,8 @@ Network Load Balancer naturally does ensure scalability - ➡️ NLB means Super
 </br>
 
 3- `ingress.yaml` - I'm using this alongside the Service of type Load Balancer. In general, an Ingress would be used for its path-routing capabilities, -- you could actually host multiple applications on just a single IP, and route traffic to different backend service based on the path.
+
+</br>
 
 > At times, when you're having multiple services, I'd not advise creating multiple services of type `LoadBalancer` , That wouldn't be a wise decision, Use an Ingress Controller to distribute / route the traffic based on the path in the URL. You'll simplify your network setup, while saving on extra infra costs.
 
