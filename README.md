@@ -539,6 +539,24 @@ Couple of snaps wrt Prometheus and Grafana:-
 <img width="960" alt="Reddit-App-Clone-App-Prometheus-Node-Disk-Info" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/1d185daf-14b0-47cd-8906-985da83a0d76">
 
 
+Attached - Grafana snaps:-
+
+<img width="959" alt="reddit-clone-grafana-dash" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/6dc81ab4-770e-49b3-8418-56cc883ac6d8">
+
+<img width="956" alt="Reddit-clone-app-grafana-pod-monitoring-dash" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/840314e9-233f-4e84-a3a3-efbde7a28ecc">
+
+<img width="959" alt="reddit-clone-grafana-network-io" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/b8d82504-ea19-4a8e-b90f-2877c73fd26c">
+
+<img width="960" alt="reddit-clone-grafana-completemonitoring-dashboard" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/98b3cf79-001a-4ae0-883e-a713acc54c9e">
+
+
+
+
+
+
+
+
+
 
 
 
