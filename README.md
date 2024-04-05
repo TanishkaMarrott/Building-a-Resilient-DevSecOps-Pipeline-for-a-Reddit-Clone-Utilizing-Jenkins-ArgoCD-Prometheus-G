@@ -454,7 +454,7 @@ ArgoCD has been exposed via the LoadBalancer Endpoint. Here are a couple of snap
 
 </br>
 
-ArgoCD Pods:-
+_ArgoCD Pods:-_
 
 </br>
 
@@ -470,7 +470,7 @@ ArgoCD Pods:-
 
 --
 
-My Application's frontend:-
+_My Application's frontend:-_
 
 --
 
@@ -481,6 +481,13 @@ My Application's frontend:-
 
 ## Helm, Prometheus & Grafana 
 
+Helm - It's a package manager for kubernetes, It actually streamlines the process of deploying applications on K8s clusters
 
+> I'd give a quick acronym here, Heard about Docker? What does it actually do? It packages the application code, libraries, necessary dependencies, and runtime environments into a single package (that's called an artifact). In the same way, Helm would package all K8s resources, like deployments, services. This means it more like a directory structure, packaging all K8s manifests, templates and config values.
 
+Key pointers about Helm:-
+
+Helm lets you manage complex K8s applications, It lets you template charts as well, That mean's it'll enable us to inject values and configurations at runtime. == Reproducability and Reusability of K8 manifests
+
+> Helm shares some similarity from a conceptual standpoint with GitOps Practices. Each time I install a new chart, it creates a new "release". So, this is a versioned snapshot, Helm keeps track of changes to your deployments. Just in case, the release isn't as well as it had been planned, you can rollback to a previous stable version. GitOps could extend this to a more broader sense, with both infrastructure provisioning / configuration plus the application deployment aspect...
 
