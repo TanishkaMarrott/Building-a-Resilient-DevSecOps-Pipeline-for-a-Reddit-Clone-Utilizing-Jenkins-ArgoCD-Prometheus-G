@@ -485,9 +485,42 @@ Helm - It's a package manager for kubernetes, It actually streamlines the proces
 
 > I'd give a quick acronym here, Heard about Docker? What does it actually do? It packages the application code, libraries, necessary dependencies, and runtime environments into a single package (that's called an artifact). In the same way, Helm would package all K8s resources, like deployments, services. This means it more like a directory structure, packaging all K8s manifests, templates and config values.
 
-Key pointers about Helm:-
+**Key pointers about Helm:-**
 
-Helm lets you manage complex K8s applications, It lets you template charts as well, That mean's it'll enable us to inject values and configurations at runtime. == Reproducability and Reusability of K8 manifests
+Helm lets you manage complex K8s applications, It lets you template charts as well, That mean's it'll enable us to inject values and configurations at runtime. == Reproducibility and Reusability of K8 manifests
 
 > Helm shares some similarity from a conceptual standpoint with GitOps Practices. Each time I install a new chart, it creates a new "release". So, this is a versioned snapshot, Helm keeps track of changes to your deployments. Just in case, the release isn't as well as it had been planned, you can rollback to a previous stable version. GitOps could extend this to a more broader sense, with both infrastructure provisioning / configuration plus the application deployment aspect...
+
+We've added the Helm Repo `Prometheus-kube-stack.` This repo is a collection of all the k8s resources pertaining to Prometheus and Grafana. It lets you setup these tools in your cluster in a way that's fully integrated and easy to manage.  
+
+## Prometheus and Grafana
+
+--> Our monitoring and observability tool suite.
+
+> Prometheus, it's actually a time- series database. It's like a multi-dimensional model, with metric and some key-value pairs. It collects data from a wide array of sources, be it, infra-components, applications or  services. That's through Exporters. Exporters expose metrics in a way that can be easily consumed by Prom. You can then make use of PromQl, to query the data, or have an Alerting manager setup / integrated with it, to trigger off notifications for anomalies.
+
+A quick flow diagram to help you ingest this idea better:-
+
+            Application/Service/
+           Infrastructure Component
+                   |
+                   v
+                 Exporter
+            (Exposes Metrics)
+                   |
+                   v
+               Prometheus
+           (Time-Series Database)
+                   |
+                   v
+         Querying with  PromQL /
+      Alerting with Alert Manager
+
+
+The prometheus stack, we installed using Helm, comes with the Grafana Deployment embedded.
+
+
+So, what's Grafana?
+
+Grafana is a DV Tool, 
 
