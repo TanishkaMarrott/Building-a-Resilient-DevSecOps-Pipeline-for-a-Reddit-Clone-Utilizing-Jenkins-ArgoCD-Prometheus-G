@@ -522,5 +522,13 @@ The prometheus stack, we installed using Helm, comes with the Grafana Deployment
 
 So, what's Grafana?
 
-Grafana is a DV Tool, 
+Grafana is more of a Data Visualisation tool, you can actually fetch data from any of your Data sources, Prometheus in our case, and create dashboards, create graphs, heatmaps. You can have interactive dashboard with dynamic filtering cpabailities
+
+> I've seen folks utilising it's ingrained alerting mechanism, it gels well with notification and reporting tools like email, slack, etc.
+
+
+#### _Prometheus + Grafana = A powerful combo for monitoring and observability into application health & performance_
+
+
+
 
