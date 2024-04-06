@@ -434,10 +434,15 @@ In our case, I've created a specific SA -> `app-service-account` and attached th
 
 I haven't created a manifest specifically for network-policies, my current use-case doesn't require a policy restricting communication between pods running multiple applications.
 
+</br>
+
 > Basically, we make use of Network Policies in K8s for controlling the ingress, and egress at a pod level. You can have a `deny-all` policy`, restricting any ingress to all the pods (as specified by the selector) within a namespace. Or maybe have a specific Network Policy allowing inbound traffic from pods of a certain application within the same namespace. = Controlling Ingress/Egress , but at the pod level!
 
 </br>
 
+---
+
+</br>
 
 ArgoCD has been exposed via the LoadBalancer Endpoint. Here are a couple of snapshots:-
 
@@ -478,6 +483,9 @@ _My Application's frontend:-_
 
 <img width="952" alt="Reddit-App-Clone-App-FrontEnd" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/bc4d8f79-1ce2-48c2-ae37-b878796d528a">
 
+---
+
+</br>
 
 ## Helm, Prometheus & Grafana - Monitoring + Visualisation
 
@@ -485,19 +493,32 @@ Helm - It's a package manager for kubernetes, It actually streamlines the proces
 
 > I'd give a quick acronym here, Heard about Docker? What does it actually do? It packages the application code, libraries, necessary dependencies, and runtime environments into a single package (that's called an artifact). In the same way, Helm would package all K8s resources, like deployments, services. This means it more like a directory structure, packaging all K8s manifests, templates and config values.
 
+</br>
+
 **Key pointers about Helm:-**
 
 Helm lets you manage complex K8s applications, It lets you template charts as well, That mean's it'll enable us to inject values and configurations at runtime. == Reproducibility and Reusability of K8 manifests
 
+</br>
+
 > Helm shares some similarity from a conceptual standpoint with GitOps Practices. Each time I install a new chart, it creates a new "release". So, this is a versioned snapshot, Helm keeps track of changes to your deployments. Just in case, the release isn't as well as it had been planned, you can rollback to a previous stable version. GitOps could extend this to a more broader sense, with both infrastructure provisioning / configuration plus the application deployment aspect...
 
+</br>
+
 We've added the Helm Repo `Prometheus-kube-stack.` This repo is a collection of all the k8s resources pertaining to Prometheus and Grafana. It lets you setup these tools in your cluster in a way that's fully integrated and easy to manage.  
+
+</br>
 
 ## Prometheus and Grafana
 
 --> Our monitoring and observability tool suite.
 
+</br>
+
 > Prometheus, it's actually a time- series database. It's like a multi-dimensional model, with metric and some key-value pairs. It collects data from a wide array of sources, be it, infra-components, applications or  services. That's through Exporters. Exporters expose metrics in a way that can be easily consumed by Prom. You can then make use of PromQl, to query the data, or have an Alerting manager setup / integrated with it, to trigger off notifications for anomalies.
+
+
+</br>
 
 A quick flow diagram to help you ingest this idea better:-
 
@@ -524,16 +545,24 @@ So, what's Grafana?
 
 Grafana is more of a Data Visualisation tool, you can actually fetch data from any of your Data sources, Prometheus in our case, and create dashboards, create graphs, heatmaps. You can have interactive dashboard with dynamic filtering cpabailities
 
+</br>
+
 > I've seen folks utilising it's ingrained alerting mechanism, it gels well with notification and reporting tools like email, slack, etc.
 
 
+</br>
 
 #### _Prometheus + Grafana = A powerful combo for monitoring and observability into application health & performance_
 
+</br>
 
 We've exposed these via a LoadBalancer Endpoint, not NodePort or ClusterIP
 
+</br>
+
 > Why? To make Prometheus and Grafana accessible from outside the Kubernetes cluster, you should opt for NodePort or LoadBalancer services. NodePort can be suitable for smaller setups or environments where specific port access is manageable. Also, I wouldn't recommend it from a Security perspective. However, LoadBalancer offers a more scalable and user-friendly way to expose services, --> It distributes traffic and ensures service reliability and availability. ClusterIP is more suited for internal communications within the cluster and does not facilitate external access directly.
+
+</br>
 
 Couple of snaps wrt Prometheus and Grafana:-
 
@@ -541,19 +570,32 @@ Couple of snaps wrt Prometheus and Grafana:-
 
 <img width="940" alt="Reddit-App-Clone-App-Pods-prometheus-running" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/b06486ad-8e2a-43c3-a88f-a5f8337a4be3">
 
+--
+
 <img width="960" alt="Reddit-App-Clone-prometheus-console" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/d2c4d253-da78-422c-a576-f785095def5e">
+
+--
 
 <img width="960" alt="Reddit-App-Clone-App-Prometheus-Node-Disk-Info" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/1d185daf-14b0-47cd-8906-985da83a0d76">
 
 </br>
 
-Attached - Grafana snaps:-
+_Attached - Grafana snaps:-_
+
+</br>
 
 <img width="959" alt="reddit-clone-grafana-dash" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/6dc81ab4-770e-49b3-8418-56cc883ac6d8">
+--
+
+</br>
 
 <img width="956" alt="Reddit-clone-app-grafana-pod-monitoring-dash" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/840314e9-233f-4e84-a3a3-efbde7a28ecc">
 
+</br>
+
 <img width="959" alt="reddit-clone-grafana-network-io" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/b8d82504-ea19-4a8e-b90f-2877c73fd26c">
+
+</br>
 
 <img width="960" alt="reddit-clone-grafana-completemonitoring-dashboard" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/98b3cf79-001a-4ae0-883e-a713acc54c9e">
 
@@ -563,6 +605,8 @@ We've imported three dashboards here:-
 &rarr; Pod Monitoring dashboard
 &rarr; Cluster Node Monitoring dashboard
 &rarr; Complete Monitoring dashboard
+
+</br>
 
 ### What do these dashboards represent?
 
@@ -574,13 +618,14 @@ We've imported three dashboards here:-
 
 ---
 
+</br>
+
 ## _The Logging Suite -EFK Stack_
 
 - Since we're done with the monitoring and alerting aspect, let's turn to collecting, aggregating and analysing &  visualising our logs
 
 You can check out my EFK manifests here:- https://github.com/TanishkaMarrott/EFK-Stack
 
-</br>
 
 ### _Quick dive into what's EFK, and into its workflow_
 
