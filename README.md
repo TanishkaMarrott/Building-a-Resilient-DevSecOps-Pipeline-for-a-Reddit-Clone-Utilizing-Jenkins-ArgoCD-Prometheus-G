@@ -527,17 +527,25 @@ Grafana is more of a Data Visualisation tool, you can actually fetch data from a
 > I've seen folks utilising it's ingrained alerting mechanism, it gels well with notification and reporting tools like email, slack, etc.
 
 
+
 #### _Prometheus + Grafana = A powerful combo for monitoring and observability into application health & performance_
 
+
+We've exposed these via a LoadBalancer Endpoint, not NodePort or ClusterIP
+
+> Why? To make Prometheus and Grafana accessible from outside the Kubernetes cluster, you should opt for NodePort or LoadBalancer services. NodePort can be suitable for smaller setups or environments where specific port access is manageable. Also, I wouldn't recommend it from a Security perspective. However, LoadBalancer offers a more scalable and user-friendly way to expose services, --> It distributes traffic and ensures service reliability and availability. ClusterIP is more suited for internal communications within the cluster and does not facilitate external access directly.
+
 Couple of snaps wrt Prometheus and Grafana:-
+
+</br>
 
 <img width="940" alt="Reddit-App-Clone-App-Pods-prometheus-running" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/b06486ad-8e2a-43c3-a88f-a5f8337a4be3">
 
 <img width="960" alt="Reddit-App-Clone-prometheus-console" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/d2c4d253-da78-422c-a576-f785095def5e">
 
-
 <img width="960" alt="Reddit-App-Clone-App-Prometheus-Node-Disk-Info" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/1d185daf-14b0-47cd-8906-985da83a0d76">
 
+</br>
 
 Attached - Grafana snaps:-
 
@@ -549,11 +557,40 @@ Attached - Grafana snaps:-
 
 <img width="960" alt="reddit-clone-grafana-completemonitoring-dashboard" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/98b3cf79-001a-4ae0-883e-a713acc54c9e">
 
+</br>
+
+We've imported three dashboards here:-
+&rarr; Pod Monitoring dashboard
+&rarr; Cluster Node Monitoring dashboard
+&rarr; Complete Monitoring dashboard
+
+What do these dashboards rpresent?
+
++-----------------------------------------+
+|          Pod Monitoring Dashboard       |
++-----------------------------------------+
+| CPU & Memory Usage                      |
+|   +----> Indicates resource consumption |
+|                                         |
+| Network Traffic                         |
+|   +----> Data sent & received,          |
+|         spots anomalies                 |
+|                                         |
+| Restart Counts                          |
+|   +----> Number of restarts,            |
+|         potential issues                |
+|                                         |
+| Logs Volume                             |
+|   +----> Volume of logs,                |
+|         identifies noisy pods           |
++-----------------------------------------+
 
 
 
 
 
+
+   
 
 
 
