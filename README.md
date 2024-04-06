@@ -619,7 +619,9 @@ Role:- Data Visualisation and UI
 
 ****
 
+ Now let's discuss about our EFK Manifests, Apply the K8s manifests to create the EFK Deployment
 
+> I'd like to clarify on a few points here. Why did we create an EFK Stack, when we had Prometheus and Grafana alreday 
 
 
 
