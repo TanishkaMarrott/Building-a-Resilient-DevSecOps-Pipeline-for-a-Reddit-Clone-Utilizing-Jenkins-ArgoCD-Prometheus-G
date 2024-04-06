@@ -631,16 +631,16 @@ You can check out my EFK manifests here:- https://github.com/TanishkaMarrott/EFK
 
 EFK is a popular option for Log Collection, Aggregation and Visualisation.
 
-#### ElasticSearch
+#### _ElasticSearch_
 
 > ElasticSearch is a very typical option when we're talking about a search and analytics engine , Not only does it store data collected from various data sources, it also has indexing, querying and seraching capabilities, over a huge volume of loga data. Filtering and aggregating the logs as well
 
-#### FluentD
+#### _FluentD_
 
 It's our _**Data Collector and Shipper,**_
 open source data collector + aggregator, for unified logging layers, it fetches, collects data from various sources, and them transforms into a unified format, forwards to elasticsearch.
 
-#### Kibana
+#### _Kibana_
 
 Role:- Data Visualisation and UI
 
@@ -650,19 +650,21 @@ Role:- Data Visualisation and UI
 
 ### _The EFK Workflow_
 
-   ****
- **_Data Sources_** - (They could be log files, shippers, etc)                           
- &nbsp;     |                           
- &nbsp;     v                           
- **_Fluentd_** (Data Aggregation and Transformation - Enriching it with metadata, transforming the data into a format suitable for ElasticSerach)               
-  &nbsp;     |                           
- &nbsp;     v                           
- **_Elasticsearch_** (Storage/Index - Storing, indicing the data, --> Search and alaytics engine)                     
-   &nbsp;     |                           
- &nbsp;     v                           
- **_Kibana_** (Visualization - gaining insights into patterns & trends)                  
+                 
+                   Data Sources - (They could be log files, shippers, etc)                           
+                              |                           
+                              v                           
+                   Fluentd (Data Aggregation and Transformation - Enriching it with metadata, transforming the data into a format suitable for ElasticSerach)               
+                             |                           
+                             v                           
+                   Elasticsearch (Storage/Index - Storing, indicing the data, --> Search and alaytics engine)                     
+                             |                           
+                             v                           
+                   Kibana (Visualization - gaining insights into patterns & trends)                  
 
-****
+                  
+
+</br>
 
  Now let's discuss about our EFK Manifests, Apply the K8s manifests to create the EFK Deployment
 
