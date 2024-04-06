@@ -566,24 +566,14 @@ We've imported three dashboards here:-
 
 What do these dashboards rpresent?
 
-+-----------------------------------------+
-|          Pod Monitoring Dashboard       |
-+-----------------------------------------+
-| CPU & Memory Usage                      |
-|   +----> Indicates resource consumption |
-|                                         |
-| Network Traffic                         |
-|   +----> Data sent & received,          |
-|         spots anomalies                 |
-|                                         |
-| Restart Counts                          |
-|   +----> Number of restarts,            |
-|         potential issues                |
-|                                         |
-| Logs Volume                             |
-|   +----> Volume of logs,                |
-|         identifies noisy pods           |
-+-----------------------------------------+
+1-> The Pod monitoring dashboard provides us with metrics + data specifically for individual  pods, Meaning Pod Status, the CPU Memory Usage , the ntwrok usage, the volume of logs produced, the number of restarts etc, _So these are indicative of underlying issues with the pods_
+
+2-> The Cluster Monitoring dashboard indicate the overall health of a cluster with all its components, whether they're nodes, deployments, services etc. It more like a comprehensive dahsboard, covering the workload distribution, the number of deployments, nodes etc, Resource Utilisation, the health and status of nodes + alerting and monitoring notifications etc
+
+3-> the Node Monitoring dashboard is around pod allocation to the nodes, checks for Memory pressure, out of Disk or any such conditions for the nodes, the node utilisation metrics (over-utilised and underutilised), the health and status of the nodes, etc
+
+
+
 
 
 
