@@ -572,12 +572,15 @@ We've imported three dashboards here:-
 
 3-> _**The Node Monitoring dashboard**_ is around pod allocation to the nodes, checks for Memory pressure, out of Disk or any such conditions for the nodes, the node utilisation metrics (over-utilised and underutilised), the health and status of the nodes, etc
 
+---
 
 ## _The Logging Suite -EFK Stack_
 
 - Since we're done with the monitoring and alerting aspect, let's turn to collecting, aggregating and analysing &  visualising our logs
 
 You can check out my EFK manifests here:- https://github.com/TanishkaMarrott/EFK-Stack
+
+</br>
 
 ### _Quick dive into what's EFK, and into its workflow_
 
@@ -598,21 +601,23 @@ Role:- Data Visualisation and UI
 
 **_Expore + Analyse + Visualise Log Data = Making sense of the collected log data in real-time_**
 
+</br>
 
 ### _The EFK Workflow_
 
- Data Sources - (They could be log files, shippers, etc)                     
-      |                     
-      v                     
- Fluentd (Data Aggregation and Transformation - Enriching it with metadata, transforming the data into a format suitable for ElasticSerach)               
-      |                  
-      v                     
- Elasticsearch (Storage/Index - Storing, indicing the data, --> Search and alaytics engine)                     
-      |                  
-      v                     
- Kibana (Visualization - gaining insights into patterns & trends)                  
+   ****
+ **_Data Sources_** - (They could be log files, shippers, etc)                           
+ &nbsp;     |                           
+ &nbsp;     v                           
+ **_Fluentd_** (Data Aggregation and Transformation - Enriching it with metadata, transforming the data into a format suitable for ElasticSerach)               
+  &nbsp;     |                           
+ &nbsp;     v                           
+ **_Elasticsearch_** (Storage/Index - Storing, indicing the data, --> Search and alaytics engine)                     
+   &nbsp;     |                           
+ &nbsp;     v                           
+ **_Kibana_** (Visualization - gaining insights into patterns & trends)                  
 
-
+****
 
 
 
