@@ -479,7 +479,7 @@ _My Application's frontend:-_
 <img width="952" alt="Reddit-App-Clone-App-FrontEnd" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/bc4d8f79-1ce2-48c2-ae37-b878796d528a">
 
 
-## Helm, Prometheus & Grafana 
+## Helm, Prometheus & Grafana - Monitoring + Visualisation
 
 Helm - It's a package manager for kubernetes, It actually streamlines the process of deploying applications on K8s clusters
 
@@ -564,13 +564,59 @@ We've imported three dashboards here:-
 &rarr; Cluster Node Monitoring dashboard
 &rarr; Complete Monitoring dashboard
 
-What do these dashboards rpresent?
+### What do these dashboards represent?
 
-1-> The Pod monitoring dashboard provides us with metrics + data specifically for individual  pods, Meaning Pod Status, the CPU Memory Usage , the ntwrok usage, the volume of logs produced, the number of restarts etc, _So these are indicative of underlying issues with the pods_
+1-> _**The Pod monitoring dashboard**_ provides us with metrics + data specifically for individual  pods, Meaning Pod Status, the CPU Memory Usage , the ntwrok usage, the volume of logs produced, the number of restarts etc, _So these are indicative of underlying issues with the pods_
 
-2-> The Cluster Monitoring dashboard indicate the overall health of a cluster with all its components, whether they're nodes, deployments, services etc. It more like a comprehensive dahsboard, covering the workload distribution, the number of deployments, nodes etc, Resource Utilisation, the health and status of nodes + alerting and monitoring notifications etc
+2-> _**The Cluster Monitoring dashboard**_ indicate the overall health of a cluster with all its components, whether they're nodes, deployments, services etc. It more like a comprehensive dahsboard, covering the workload distribution, the number of deployments, nodes etc, Resource Utilisation, the health and status of nodes + alerting and monitoring notifications etc
 
-3-> the Node Monitoring dashboard is around pod allocation to the nodes, checks for Memory pressure, out of Disk or any such conditions for the nodes, the node utilisation metrics (over-utilised and underutilised), the health and status of the nodes, etc
+3-> _**The Node Monitoring dashboard**_ is around pod allocation to the nodes, checks for Memory pressure, out of Disk or any such conditions for the nodes, the node utilisation metrics (over-utilised and underutilised), the health and status of the nodes, etc
+
+
+## _The Logging Suite -EFK Stack_
+
+- Since we're done with the monitoring and alerting aspect, let's turn to collecting, aggregating and analysing &  visualising our logs
+
+You can check out my EFK manifests here:- https://github.com/TanishkaMarrott/EFK-Stack
+
+### _Quick dive into what's EFK, and into its workflow_
+
+EFK is a popular option for Log Collection, Aggregation and Visualisation.
+
+ElasticSearch
+
+> ElasticSearch is a very typical option when we're talking about a search and analytics engine , Not only does it store data collected from various data sources, it also has indexing, querying and seraching capabilities, over a huge volume of loga data. Filtering and aggregating the logs as well
+
+FluentD
+
+It's our _**Data Collector and Shipper,**_
+open source data collector + aggregator, for unified logging layers, it fetches, collects data from various sources, and them transforms into a unified format, forwards to elasticsearch.
+
+Kibana
+
+Role:- Data Visualisation and UI
+
+**_Expore + Analyse + Visualise Log Data = Making sense of the collected log data in real-time_**
+
+
+#### _The EFK Workflow_
+
+ Data Sources - (They could be log files, shippers, etc)
+      |
+      v
+ Fluentd (Data Aggregation and Transformation - Enriching it with metadata, transforming the data into a format suitable for ElasticSerach)
+      |
+      v
+ Elasticsearch (Storage/Index - Storing, indicing the data, --> Search and alaytics engine)
+      |
+      v
+ Kibana (Visualization - gaining insights into patterns & trends)
+
+
+
+
+
+
 
 
 
