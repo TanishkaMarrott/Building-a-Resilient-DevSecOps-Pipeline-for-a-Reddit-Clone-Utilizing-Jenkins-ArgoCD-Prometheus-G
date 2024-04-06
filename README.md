@@ -583,34 +583,34 @@ You can check out my EFK manifests here:- https://github.com/TanishkaMarrott/EFK
 
 EFK is a popular option for Log Collection, Aggregation and Visualisation.
 
-ElasticSearch
+#### ElasticSearch
 
 > ElasticSearch is a very typical option when we're talking about a search and analytics engine , Not only does it store data collected from various data sources, it also has indexing, querying and seraching capabilities, over a huge volume of loga data. Filtering and aggregating the logs as well
 
-FluentD
+#### FluentD
 
 It's our _**Data Collector and Shipper,**_
 open source data collector + aggregator, for unified logging layers, it fetches, collects data from various sources, and them transforms into a unified format, forwards to elasticsearch.
 
-Kibana
+#### Kibana
 
 Role:- Data Visualisation and UI
 
 **_Expore + Analyse + Visualise Log Data = Making sense of the collected log data in real-time_**
 
 
-#### _The EFK Workflow_
+### _The EFK Workflow_
 
- Data Sources - (They could be log files, shippers, etc)
-      |
-      v
- Fluentd (Data Aggregation and Transformation - Enriching it with metadata, transforming the data into a format suitable for ElasticSerach)
-      |
-      v
- Elasticsearch (Storage/Index - Storing, indicing the data, --> Search and alaytics engine)
-      |
-      v
- Kibana (Visualization - gaining insights into patterns & trends)
+ Data Sources - (They could be log files, shippers, etc)                     
+      |                     
+      v                     
+ Fluentd (Data Aggregation and Transformation - Enriching it with metadata, transforming the data into a format suitable for ElasticSerach)               
+      |                  
+      v                     
+ Elasticsearch (Storage/Index - Storing, indicing the data, --> Search and alaytics engine)                     
+      |                  
+      v                     
+ Kibana (Visualization - gaining insights into patterns & trends)                  
 
 
 
