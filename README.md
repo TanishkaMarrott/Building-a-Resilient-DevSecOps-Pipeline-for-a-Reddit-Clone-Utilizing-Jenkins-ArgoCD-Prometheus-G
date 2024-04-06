@@ -621,7 +621,9 @@ Role:- Data Visualisation and UI
 
  Now let's discuss about our EFK Manifests, Apply the K8s manifests to create the EFK Deployment
 
-> I'd like to clarify on a few points here. Why did we create an EFK Stack, when we had Prometheus and Grafana alreday 
+> I'd like to clarify on a few points here. Why did we create an EFK Stack, when we had Prometheus and Grafana deployed already? Prometheus and Grafana help you with the "what" factor, the metrics. that is what is happening in your system, what is the state of the health of your application at this point of time. EFK is more of a logging suite, It is used for collecting, aggregating and analysing log data, they provide context and detail into why something happened in your system, More like a narrative, providing insights into your system's behaviour
+
+Both are complementary --> a powerful combination of comprehensive logging and monitoring suite
 
 
 
