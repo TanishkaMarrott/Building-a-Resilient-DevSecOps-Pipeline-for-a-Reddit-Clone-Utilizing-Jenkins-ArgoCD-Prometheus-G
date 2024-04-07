@@ -707,25 +707,22 @@ Through Metrics, you'll get to know about "what" the problem is, in the system. 
 
 </br>
 
----
-
 2 - **`ElasticSearch_Service.yaml`** :- We've configred the service to listen fro requests at port 9200, TCP Protocol, And forward these requests to `db` named port on the target pods selected by th `k8s-app: elasticsearch-logging` label. This creates a Service Object to expose the set of pods running the ElasticSearch application.
 
 **_Purpose?_** It actually facilitates access to the underlying pods for sending the logs (as determined by the network policy), --> Centralised Log Aggregation to the ElasticSearch application 
 
 </br>
 
----
 
 3 - **`ElasticSearch_StatefulSet.yaml`** :- 
 
 This is where we make ElasticSearch secure, scalable and resilent. I've deployed multiple components here.
 
-Quickly recapitulating the non-functional enhancements done:- (Please feel free to check the code as well)
+> I'll quickly recapitulate the pointers/ non-functional enhancements we've done. First, a service account that'll be assumed, we'll bind a ClusteRole comprising the `get` permissions. So, I'm being very specific in the permissions attached to the SA , to be assumed for the ElasticSearch operations within the cluster -- with permissions to `get` resources like `endpoints` , `services` and `namespaces`. Chances of things being escalated are minimal, in case of compromise. As we've limited the operations ElasticSearch service can perform.
 
-A- 
+> Next, I wanted things to scale while still being cognizant of the maintained state, that's crucial here -- (Remember, ElasticSearch is a distributed database). So, we've increased the number of replicas. I had to optimise performance as well, so had to define resource requests and limits. This enabled me to ensure we've got sufficient resources for ElasticSearch, while not overwhelming / overconsuming system resources.
 
-</br>
+
 
 ---
 
