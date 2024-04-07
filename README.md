@@ -4,7 +4,7 @@
 ## _Quick Introduction_:-
 
 Our project today is all about the specifics involved while configuring a  **_DevSecOps Pipeline._**   
---> we're not only speeding up releases, but also being security-compliant, from the get-go.    
+--> we're not only speeding up releases, but also being security-compliant, from the get-go. 💡
 
 ****Technicalities in the sections that follow.****
 
@@ -380,7 +380,7 @@ I'm using this alongside the service object. In general, an Ingress would be use
 
 </br>
 
-> At times, when you're having multiple services, I'd not advise creating multiple services of type `LoadBalancer` , That wouldn't be a wise decision, Use an Ingress Controller to distribute / route the traffic based on the path in the URL. You'll simplify your network setup, while saving on extra infra costs.
+> ➡️ At times, when you're having multiple services, I'd not advise creating multiple services of type `LoadBalancer` , That wouldn't be a wise decision, Use an Ingress Controller to distribute / route the traffic based on the path in the URL. You'll simplify your network setup, while saving on extra infra costs.
 
 </br>
 
@@ -400,11 +400,12 @@ _Scaling via Cluster Auto-Scaler and Horizontal Pod Scaler_
 
 </br>
 
-> We wanted something that could adapt both at the pod and the node level. Something that can help us scale effectively in Kubernetes and manage workload fluctuations as well. Hence we added cluster-autoscaler.yaml and hpa-manifest.yaml
+> We wanted something that could adapt both at the pod and the node level. Something that can help us scale effectively in Kubernetes and manage workload fluctuations as well. Hence we added `cluster-autoscaler.yaml` and `hpa-manifest.yaml`
 
 </br>
 
-Hence, I've used both **Cluster Auto-scaler** and **Horizontal Pod Autoscaler**, And how're they different? **Cluster auto-scaler** scales the nodes up and down in the event of a lack of sufficient resources to schedule pods or due to node utilization.              
+Hence, I've used both **Cluster Auto-scaler** and **Horizontal Pod Autoscaler**,                
+And how're they different? **Cluster auto-scaler** scales the nodes up and down in the event of a lack of sufficient resources to schedule pods or due to node utilization.              
 **Horizontal Pod Autoscaler** is about adjusting the number of pod replicas in a deployment, based on current demand, (We're considering **CPU Utilization** as our target metric here). This helps maintain an optimal application performance level as the workload changes.
 
 
@@ -413,6 +414,7 @@ Hence, I've used both **Cluster Auto-scaler** and **Horizontal Pod Autoscaler**,
 ---
 
 </br>
+
 
 6. **`rbac-config.yaml`**
 
@@ -489,9 +491,9 @@ _My Application's frontend:-_
 
 ## Helm, Prometheus & Grafana - Monitoring + Visualisation
 
-Helm - It's a package manager for kubernetes, It actually streamlines the process of deploying applications on K8s clusters
+Helm - It's a package manager for kubernetes, It actually streamlines the process of deploying applications on K8s clusters. 🟩
 
-> I'd give a quick acronym here, Heard about Docker? What does it actually do? It packages the application code, libraries, necessary dependencies, and runtime environments into a single package (that's called an artifact). In the same way, Helm would package all K8s resources, like deployments, services. This means it more like a directory structure, packaging all K8s manifests, templates and config values.
+> 🤔 I'd give a quick acronym here, Heard about Docker? What does it actually do? It packages the application code, libraries, necessary dependencies, and runtime environments into a single package (that's called an artifact). In the same way, Helm would package all K8s resources, like deployments, services. This means it more like a directory structure, packaging all K8s manifests, templates and config values.
 
 </br>
 
@@ -501,7 +503,7 @@ Helm lets you manage complex K8s applications, It lets you template charts as we
 
 </br>
 
-> Helm shares some similarity from a conceptual standpoint with GitOps Practices. Each time I install a new chart, it creates a new "release". So, this is a versioned snapshot, Helm keeps track of changes to your deployments. Just in case, the release isn't as well as it had been planned, you can rollback to a previous stable version. GitOps could extend this to a more broader sense, with both infrastructure provisioning / configuration plus the application deployment aspect...
+> 💡 Helm shares some similarity from a conceptual standpoint with GitOps Practices. Each time I install a new chart, it creates a new "release". So, this is a versioned snapshot, Helm keeps track of changes to your deployments. Just in case, the release isn't as well as it had been planned, you can rollback to a previous stable version. GitOps could extend this to a more broader sense, with both infrastructure provisioning / configuration plus the application deployment aspect...
 
 </br>
 
@@ -541,7 +543,7 @@ A quick flow diagram to help you ingest this idea better:-
 The prometheus stack, we installed using Helm, comes with the Grafana Deployment embedded.
 
 
-So, what's Grafana?
+So, what's Grafana? 💚
 
 Grafana is more of a Data Visualisation tool, you can actually fetch data from any of your Data sources, Prometheus in our case, and create dashboards, create graphs, heatmaps. You can have interactive dashboard with dynamic filtering cpabailities
 
@@ -552,7 +554,7 @@ Grafana is more of a Data Visualisation tool, you can actually fetch data from a
 
 </br>
 
-#### _Prometheus + Grafana = A powerful combo for monitoring and observability into application health & performance_ 🏁 :
+#### _🏁 🥇 Prometheus + Grafana = A powerful combo for monitoring and observability into application health & performance_ 
 
 </br>
 
@@ -564,7 +566,7 @@ We've exposed these via a LoadBalancer Endpoint, not NodePort or ClusterIP
 
 </br>
 
-Couple of snaps wrt Prometheus and Grafana:-
+_Couple of snaps wrt Prometheus and Grafana:-_
 
 </br>
 
@@ -611,9 +613,9 @@ _Attached - Grafana snaps:-_
 </br>
 
 We've imported three dashboards here:-
-&rarr; Pod Monitoring dashboard
-&rarr; Cluster Node Monitoring dashboard
-&rarr; Complete Monitoring dashboard
+&rarr; 💠 Pod Monitoring dashboard
+&rarr; 💠 Cluster Node Monitoring dashboard
+&rarr; 💠 Complete Monitoring dashboard
 
 </br>
 
@@ -642,7 +644,7 @@ EFK is a popular option for Log Collection, Aggregation and Visualisation.
 
 #### _ElasticSearch_
 
-> ElasticSearch is a very typical option when we're talking about a search and analytics engine , Not only does it store data collected from various data sources, it also has indexing, querying and seraching capabilities, over a huge volume of loga data. Filtering and aggregating the logs as well
+> ElasticSearch is a very typical option when we're talking about a search and analytics engine , Not only does it store data collected from various data sources, it also has indexing, querying and searching capabilities, over a huge volume of loga data. Filtering and aggregating the logs as well
 
 #### _FluentD_
 
@@ -684,11 +686,12 @@ Role:- Data Visualisation and UI
 </br>
 
 Both are complementary --> a powerful combination of comprehensive logging and monitoring suite 🏁 ✔️
+
 Through Metrics, you'll get to know about "what" the problem is, in the system. Details and Context around the "root-cause" of the problem can be known through detailed logs, -- Specific error message, status codes etc
 
 </br>
 
-> --> a holistic observability = enhanced troubleshooting, and a better incident response post occurence of an event 👍
+> --> a holistic observability = enhanced troubleshooting, and a better incident response post occurence of an event 👍 👍
 
 </br>
 
@@ -710,15 +713,21 @@ Through Metrics, you'll get to know about "what" the problem is, in the system. 
 
 **_Purpose?_** It actually facilitates access to the underlying pods for sending the logs (as determined by the network policy), --> Centralised Log Aggregation to the ElasticSearch application 
 
+</br>
+
 ---
 
-3 - **`ElasticSearch_StatefulSet`** :- 
+3 - **`ElasticSearch_StatefulSet.yaml`** :- 
 
 This is where we make ElasticSearch secure, scalable and resilent. I've deployed multiple components here.
 
 Quickly recapitulating the non-functional enhancements done:- (Please feel free to check the code as well)
 
+A- 
 
+</br>
+
+---
 
 
 
