@@ -552,7 +552,7 @@ Grafana is more of a Data Visualisation tool, you can actually fetch data from a
 
 </br>
 
-#### _Prometheus + Grafana = A powerful combo for monitoring and observability into application health & performance_
+#### _Prometheus + Grafana = A powerful combo for monitoring and observability into application health & performance_ 🏁 :
 
 </br>
 
@@ -580,16 +580,21 @@ Couple of snaps wrt Prometheus and Grafana:-
 
 </br>
 
+--
+
 _Attached - Grafana snaps:-_
 
 </br>
 
 <img width="959" alt="reddit-clone-grafana-dash" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/6dc81ab4-770e-49b3-8418-56cc883ac6d8">
+
 --
 
 </br>
 
 <img width="956" alt="Reddit-clone-app-grafana-pod-monitoring-dash" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/840314e9-233f-4e84-a3a3-efbde7a28ecc">
+
+--
 
 </br>
 
@@ -597,7 +602,11 @@ _Attached - Grafana snaps:-_
 
 </br>
 
+--
+
 <img width="960" alt="reddit-clone-grafana-completemonitoring-dashboard" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/98b3cf79-001a-4ae0-883e-a713acc54c9e">
+
+--
 
 </br>
 
@@ -608,7 +617,7 @@ We've imported three dashboards here:-
 
 </br>
 
-### What do these dashboards represent?
+### What do these dashboards represent? ⚛️
 
 1-> _**The Pod monitoring dashboard**_ provides us with metrics + data specifically for individual  pods, Meaning Pod Status, the CPU Memory Usage , the ntwrok usage, the volume of logs produced, the number of restarts etc, _So these are indicative of underlying issues with the pods_
 
@@ -624,7 +633,7 @@ We've imported three dashboards here:-
 
 - Since we're done with the monitoring and alerting aspect, let's turn to collecting, aggregating and analysing &  visualising our logs
 
-You can check out my EFK manifests here:- https://github.com/TanishkaMarrott/EFK-Stack
+You can check out my EFK manifests here:- https://github.com/TanishkaMarrott/EFK-Stack ☑️ 
 
 
 ### _Quick dive into what's EFK, and into its workflow_
@@ -644,7 +653,7 @@ open source data collector + aggregator, for unified logging layers, it fetches,
 
 Role:- Data Visualisation and UI
 
-**_Expore + Analyse + Visualise Log Data = Making sense of the collected log data in real-time_**
+**_Expore + Analyse + Visualise Log Data = Making sense of the collected log data in real-time_** 🙂
 
 </br>
 
@@ -668,23 +677,46 @@ Role:- Data Visualisation and UI
 
  Now let's discuss about our EFK Manifests, Apply the K8s manifests to create the EFK Deployment
 
-> I'd like to clarify on a few points here. Why did we create an EFK Stack, when we had Prometheus and Grafana deployed already? Prometheus and Grafana help you with the "what" factor, the metrics. that is what is happening in your system, what is the state of the health of your application at this point of time. EFK is more of a logging suite, It is used for collecting, aggregating and analysing log data, they provide context and detail into why something happened in your system, More like a narrative, providing insights into your system's behaviour
+</br>
 
-Both are complementary --> a powerful combination of comprehensive logging and monitoring suite
+>  ➡️ I'd like to clarify on a few points here. Why did we create an EFK Stack, when we had Prometheus and Grafana deployed already? Prometheus and Grafana help you with the "what" factor, the metrics. that is what is happening in your system, what is the state of the health of your application at this point of time. EFK is more of a logging suite, It is used for collecting, aggregating and analysing log data, they provide context and detail into why something happened in your system, More like a narrative, providing insights into your system's behaviour
+
+</br>
+
+Both are complementary --> a powerful combination of comprehensive logging and monitoring suite 🏁 ✔️
 Through Metrics, you'll get to know about "what" the problem is, in the system. Details and Context around the "root-cause" of the problem can be known through detailed logs, -- Specific error message, status codes etc
 
-> It provides for a holistic observability, enhanced troubleshooting, and a better incident response post occurence of an event
+</br>
+
+> --> a holistic observability = enhanced troubleshooting, and a better incident response post occurence of an event 👍
+
+</br>
+
+---
 
 ### _More on the EFK Manifests:-_
 
-1 - `namespace.yaml` :- Applying this manifest would create a namespace `efklog` for the EFK stack components. 
+1 - **`namespace.yaml`** :- Applying this manifest would create a namespace `efklog` for the EFK stack components. 
 
+</br>
 
+> I haven't spoken much on namespaces. I'd like to give a quick brief with regards to this. Namespaces are an amazing way to enforce resource isolation, divide the cluster in a logical separation, meaning we can have multiple environments segregated within a cluster. And that's awesome. I can have multiple users across multiple teams working on a single cluster, and I can make use of RBAC - that's namespace scoped, That means users can access resources they're intended to.
 
+</br>
 
+---
 
+2 - **`ElasticSearch_Service.yaml`** :- We've configred the service to listen fro requests at port 9200, TCP Protocol, And forward these requests to `db` named port on the target pods selected by th `k8s-app: elasticsearch-logging` label. This creates a Service Object to expose the set of pods running the ElasticSearch application.
 
-   
+**_Purpose?_** It actually facilitates access to the underlying pods for sending the logs (as determined by the network policy), --> Centralised Log Aggregation to the ElasticSearch application 
+
+---
+
+3 - **`ElasticSearch_StatefulSet`** :- 
+
+This is where we make ElasticSearch secure, scalable and resilent. I've deployed multiple components here.
+
+Quickly recapitulating the non-functional enhancements done:- (Please feel free to check the code as well)
 
 
 
