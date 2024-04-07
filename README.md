@@ -724,6 +724,10 @@ This is where we make ElasticSearch secure, scalable and resilent. I've deployed
 
 > Next, I wanted things to scale while still being cognizant of the maintained state, that's crucial here -- (Remember, ElasticSearch is a distributed database). So, we've increased the number of replicas. I had to optimise performance as well, so had to define resource requests and limits. This enabled me to ensure we've got sufficient resources for ElasticSearch, while not overwhelming / overconsuming system resources.
 
+> Simultaneusly, I had to focus on Data Persistence to improve durability, I had to ensure that data is persistently stored across pod restarts and deployments. hence, we utilised `PersistentVolumeClaim` Plus, a rolling update strategy for minimal downtime
+
+
+
 
 
 ---
