@@ -732,6 +732,8 @@ This is where we make ElasticSearch secure, scalable and resilent. I've deployed
 
 Okay, so this means there's a lacuna in this StatefulSet configuration❗
 
+</br>
+
 Not going too deep, but this is important. The `vm_max_map_count` is a system-level parameter in linux that defines the maximum number of memory-map areas a process may have. And it's crucial for such databases like ElasticSearch. We need to set a higher `vm.max_map_count` value (at least 262144) than the usual default.
 
 In a k8s environment, adjusting system-level settings for the nodes, that too from within the pods isn't possible. 🤔 However, for the application to function optimally, I need to have this modified.
@@ -743,11 +745,15 @@ It must run in Privileged Mode, --> a container running in privileged mode, make
 
 But containers running in priv mode is not recommended. High risk of Privilege Escalation in case of a VM Compromise.
 
-➡ possibilities :- The container could be compromised by the attacker, he could gain root access to the node, gaining control over other containers and services running on the node. He could access any critical files & configuration settings; could deploy malware, and exfiltrate sensitive data. Endless possibilities, all boiling down to privilege escalation
+--
+
+➡ Possibilities :- The container could be compromised by the attacker, he could gain root access to the node, gaining control over other containers and services running on the node. He could access any critical files & configuration settings; could deploy malware, and exfiltrate sensitive data. Endless possibilities, all boiling down to privilege escalation
+
+</br>
 
 ### _How can we eliminate this pain-point?_
 
-By using DaemonSet. 
+By using DaemonSet. 💡
 
 I'll explain how.
 
@@ -778,6 +784,7 @@ Advantage 2 &rarr; Automatic application to new nodes
 
 Advantage 2 &rarr; We're reducing overhead that'll be incurred by the application pods, while checking or applying system-level settings, as these settings are pre-applied at the node level, reducing startup times and complexities
 
+ 👍🙂
 
 
 ---
