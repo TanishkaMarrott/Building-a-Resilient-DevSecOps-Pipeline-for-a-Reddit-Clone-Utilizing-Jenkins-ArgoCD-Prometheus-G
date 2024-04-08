@@ -747,6 +747,36 @@ But containers running in priv mode is not recommended. High risk of Privilege E
 
 ### _How can we eliminate this pain-point?_
 
+By using DaemonSet. 
+
+I'll explain how.
+
+Consider I'm using the `initContainer` Approach. What does it do? Each time a pod restarts or is redeployed, the initContainer checks if this system-level Configuration `vm-max-map-count` , is 262144 in our case. Once this node-level configuration has been verified or applied if , subsequent ElasticSearch containers would run. 
+
+> This means 1) Multiple `initContainers` in multiple pods = Multiple Containers running in privileged mode = High Risk in terms of security exposure
+
+> 2) Besides a higher attack surface area, it also means a lag in pod startup times, = Operationally inefficient + a performance bottleneck
+
+> This means I'm propagating changes from 'pod-level'. Not an ideal approach.
+
+--
+
+Now, let's shift to approach 2
+
+I'm using a DaemonSet for this purpose. DaemonSet is a K8s object which is responsible for creating a copy of a specific pod across some / all nodes, as the case maybe.
+
+How would it work? The DaemonSet would create a pod in each node, As new nodes are added to the cluster, it'll automatically deploy this pod to the new nodes as well.
+
+There'll be a container within this pod, that'll be responsible for modifying the host kernel parameter - It's the `vm-max-map` count in our scenario. 
+So, it's a one-time execution, this container executes once during the startup time, and this change is made once and persists beyond the lifecycle of the pod
+
+What does this mean ?
+
+Advantage 1 &rarr; There's a consistent application of required system-level settings across all nodes in a cluster
+
+Advantage 2 &rarr; Automatic application to new nodes 
+
+Advantage 2 &rarr; We're reducing overhead that'll be incurred by the application pods, while checking or applying system-level settings, as these settings are pre-applied at the node level, reducing startup times and complexities
 
 
 
