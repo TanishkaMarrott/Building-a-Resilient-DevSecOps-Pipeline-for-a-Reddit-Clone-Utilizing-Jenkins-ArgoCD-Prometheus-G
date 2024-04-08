@@ -543,7 +543,7 @@ A quick flow diagram to help you ingest this idea better:-
 The prometheus stack, we installed using Helm, comes with the Grafana Deployment embedded.
 
 
-So, what's Grafana? 💚
+So, what's Grafana? ⏬
 
 Grafana is more of a Data Visualisation tool, you can actually fetch data from any of your Data sources, Prometheus in our case, and create dashboards, create graphs, heatmaps. You can have interactive dashboard with dynamic filtering cpabailities
 
@@ -554,7 +554,7 @@ Grafana is more of a Data Visualisation tool, you can actually fetch data from a
 
 </br>
 
-#### _🏁 🥇 Prometheus + Grafana = A powerful combo for monitoring and observability into application health & performance_ 
+#### 🥇🏁 _Prometheus + Grafana = A powerful combo for monitoring and observability into application health & performance_ 
 
 </br>
 
@@ -613,15 +613,15 @@ _Attached - Grafana snaps:-_
 </br>
 
 We've imported three dashboards here:-
-&rarr; 💠 Pod Monitoring dashboard
-&rarr; 💠 Cluster Node Monitoring dashboard
-&rarr; 💠 Complete Monitoring dashboard
+&rarr; 💠 Pod Monitoring dashboard            
+&rarr; 💠 Cluster Node Monitoring dashboard               
+&rarr; 💠 Complete Monitoring dashboard               
 
 </br>
 
 ### What do these dashboards represent? ⚛️
 
-1-> _**The Pod monitoring dashboard**_ provides us with metrics + data specifically for individual  pods, Meaning Pod Status, the CPU Memory Usage , the ntwrok usage, the volume of logs produced, the number of restarts etc, _So these are indicative of underlying issues with the pods_
+1-> _**The Pod monitoring dashboard**_ provides us with metrics + data specifically for individual pods, Meaning Pod Status, the CPU Memory Usage , the ntwrok usage, the volume of logs produced, the number of restarts etc, _So these are indicative of underlying issues with the pods_
 
 2-> _**The Cluster Monitoring dashboard**_ indicate the overall health of a cluster with all its components, whether they're nodes, deployments, services etc. It more like a comprehensive dahsboard, covering the workload distribution, the number of deployments, nodes etc, Resource Utilisation, the health and status of nodes + alerting and monitoring notifications etc
 
@@ -631,7 +631,7 @@ We've imported three dashboards here:-
 
 </br>
 
-## _The Logging Suite -EFK Stack_
+## _The Logging Suite - EFK Stack_
 
 - Since we're done with the monitoring and alerting aspect, let's turn to collecting, aggregating and analysing &  visualising our logs
 
@@ -681,7 +681,7 @@ Role:- Data Visualisation and UI
 
 </br>
 
->  ➡️ I'd like to clarify on a few points here. Why did we create an EFK Stack, when we had Prometheus and Grafana deployed already? Prometheus and Grafana help you with the "what" factor, the metrics. that is what is happening in your system, what is the state of the health of your application at this point of time. EFK is more of a logging suite, It is used for collecting, aggregating and analysing log data, they provide context and detail into why something happened in your system, More like a narrative, providing insights into your system's behaviour
+>  💡 I'd like to clarify a few points here. Why did we create an EFK Stack, when we had Prometheus and Grafana deployed already? 🤔 Prometheus and Grafana help you with the "what" factor, the 'metrics'. that is what is happening in your system, what is the state of the health of your application at this point of time. EFK is more of a logging suite, It is used for collecting, aggregating and analysing log data, they provide context and detail into why something happened in your system, More like a narrative, providing insights into your system's behaviour
 
 </br>
 
@@ -726,11 +726,28 @@ This is where we make ElasticSearch secure, scalable and resilent. I've deployed
 
 > Simultaneusly, I had to focus on Data Persistence to improve durability, I had to ensure that data is persistently stored across pod restarts and deployments. hence, we utilised `PersistentVolumeClaim` Plus, a rolling update strategy for minimal downtime
 
+#### The Lacuna in this stateful set
 
+Okay, so this means there's a lacuna in this StatefulSet configuration❗
+
+Not going too deep, but this is important. The `vm_max_map_count` is a system-level parameter in linux that defines the maximum number of memory-map areas a process may have. And it's crucial for such databases like ElasticSearch. We need to set a higher `vm.max_map_count` value (at least 262144) than the usual default.
+
+In a k8s environment, adjusting system-level settings for the nodes, that too from within the pods isn't possible. 🤔 However, for the application to function optimally, I need to have this modified.
+
+--
+
+➡️ So, we've used an `initContainer` . `InitContainer`  runs to completion before other subsequent ElasticSearch Containers (They'll have an environment set up and running.)
+It must run in Privileged Mode, --> a container running in privileged mode, makes it nearly equivalent to being a root on the node machine
+
+But containers running in priv mode is not recommended. High risk of Privilege Escalation in case of a VM Compromise.
+
+--> possibilities :- The container compromised 
 
 
 
 ---
+
+`fluentd_config_map.yaml`
 
 
 
