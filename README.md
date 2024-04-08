@@ -726,7 +726,9 @@ This is where we make ElasticSearch secure, scalable and resilent. I've deployed
 
 > Simultaneusly, I had to focus on Data Persistence to improve durability, I had to ensure that data is persistently stored across pod restarts and deployments. hence, we utilised `PersistentVolumeClaim` Plus, a rolling update strategy for minimal downtime
 
-#### The Lacuna in this stateful set
+--
+
+### _The Lacuna in this StatefulSet_
 
 Okay, so this means there's a lacuna in this StatefulSet configuration❗
 
@@ -736,12 +738,15 @@ In a k8s environment, adjusting system-level settings for the nodes, that too fr
 
 --
 
-➡️ So, we've used an `initContainer` . `InitContainer`  runs to completion before other subsequent ElasticSearch Containers (They'll have an environment set up and running.)
+▶️ So, we've used an `initContainer` . `InitContainer`  runs to completion before other subsequent ElasticSearch Containers (In this eay, they'll have an environment set up and running.)
 It must run in Privileged Mode, --> a container running in privileged mode, makes it nearly equivalent to being a root on the node machine
 
 But containers running in priv mode is not recommended. High risk of Privilege Escalation in case of a VM Compromise.
 
---> possibilities :- The container compromised 
+➡ possibilities :- The container could be compromised by the attacker, he could gain root access to the node, gaining control over other containers and services running on the node. He could access any critical files & configuration settings; could deploy malware, and exfiltrate sensitive data. Endless possibilities, all boiling down to privilege escalation
+
+### _How can we eliminate this pain-point?_
+
 
 
 
