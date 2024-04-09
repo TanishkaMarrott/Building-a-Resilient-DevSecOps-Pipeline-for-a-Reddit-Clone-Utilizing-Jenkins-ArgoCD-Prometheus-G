@@ -718,6 +718,8 @@ Through Metrics, you'll get to know about "what" the problem is, in the system. 
 
 This is where we make ElasticSearch secure, scalable and resilent. I've deployed multiple components here.
 
+### _Security + Performance + Data Durability - How?_
+
 > I'll quickly recapitulate the pointers/ non-functional enhancements we've done. First, a service account that'll be assumed, we'll bind a ClusteRole comprising the `get` permissions. So, I'm being very specific in the permissions attached to the SA , to be assumed for the ElasticSearch operations within the cluster -- with permissions to `get` resources like `endpoints` , `services` and `namespaces`. Chances of things being escalated are minimal, in case of compromise. As we've limited the operations ElasticSearch service can perform.
 
 </br>
@@ -747,11 +749,11 @@ But containers running in priv mode is not recommended. High risk of Privilege E
 
 --
 
-➡ Possibilities :- The container could be compromised by the attacker, he could gain root access to the node, gaining control over other containers and services running on the node. He could access any critical files & configuration settings; could deploy malware, and exfiltrate sensitive data. Endless possibilities, all boiling down to privilege escalation
+➡ Possibilities :- What could be the Security Risks? Well, if the container would be compromised by an attacker, he could gain root access to the node, gaining control over other containers and services running on the node. He could access any critical files & configuration settings; could deploy malware, and exfiltrate sensitive data. Endless possibilities, all boiling down to privilege escalation
 
 </br>
 
-### _How can we eliminate this pain-point?_
+### _How did we enhance security while solving this pain-point?_
 
 By using DaemonSet. 💡
 
@@ -778,11 +780,11 @@ So, it's a one-time execution, this container executes once during the startup t
 
 > _So, how does it actually help us?_
 
-Advantage 1 &rarr; There's a consistent application of required system-level settings across all nodes in a cluster
+Advantage 1 &rarr; There's a **consistent application of required system-level settings** across all nodes in a cluster
 
-Advantage 2 &rarr; Automatic application to new nodes in future
+Advantage 2 &rarr; **Automatic application to new nodes in future**
 
-Advantage 3 &rarr; We're reducing the overhead that'll be incurred by the application pods, due to checking or applying system-level settings, as these settings are pre-applied at the node level, reducing startup times and complexity.
+Advantage 3 &rarr; We're **reducing the overhead that'll be incurred by the application pods,** due to checking or applying system-level settings, as these settings are pre-applied at the node level, reducing startup times and complexity.
 
  👍🙂
 
@@ -795,6 +797,8 @@ We'll be defining something called a ConfigMap. So, what's a configmap? It's use
 
 Let's make a deep-dive into this ⤵️
 
+Cluster Logs --> Fluentd - Collection & Enrichment -->  Forwarded to ElasticSearch for Storage
+
 1 - First things first, &rarr; system configurations. We'll specify the root directory for our fluentD buffers. Logging level set to info, configured the security settings like shared keys, including hostname verification
 
 2- Next is the input configuration -- configuration for inputting the container logs.
@@ -805,7 +809,9 @@ We'll configure fluentd to "tail" container logs, With a position file to keep t
 
 3- Next up, some Data Enrichment as well.
 
-> 👍 It not only parses JSON logs, but also enriches the logs by adding some context to it, like namespace, the pod name, tags etc.  Implementing some sort of filters to transform the log records, and remove sensitive data (like passwords, and secret keys)
+> 👍 It not only parses JSON logs, but also enriches the logs by adding some context to it, like namespace, the pod name, tags etc.  Implementing some sort of filters to transform the log records, and remove sensitive data (like passwords and secret keys)
+
+### _Buffer configuration and overflow management_
 
 4- The third phase is more around buffer configuration. It should efficiently handle bursts of log data.             
 How? 🤔 We've specified limits on total buffer size, in terms of both total and chunk size, flush behaviour and retry strategies. 
@@ -816,10 +822,23 @@ The logs are now "processed"
 
 5 - We'll now direct these processed logs to the ElasticSearch instance port 9200, protocol https. It configures auth with ES, Also setups up buffering for outoutting the logs (file-based buffering here), I've also customised the naming pattern of ElasticSearch indexing, The indexing would be based on the orginating namespace and the current date.
 
-> Why did we customising ES Indexing Names?  Being populated dynamically with the name of the originating namespace and its respective date, means a quicker query performance. Time-based Segmentation helps in implementing certain Stoarge Lifecycle Configuration. namespace Segragation also helps in an organised storage of logs and subsequently a faster retrieval. So, in future, if we'd wish to carry out historical data analysis, we'll be able to clearly delineate logs from different time periods and carry out Trend Analysis / Anomaly Detection
+### _How did we accelerate query and retrieval times in ES?_
+
+> Why did we customise ES Indexing Names?  Being populated dynamically with the name of the originating namespace and its respective date, means a quicker query performance. Time-based Segmentation helps in implementing certain Stoarge Lifecycle Configuration. namespace Segragation also helps in an organised storage of logs and subsequently a faster retrieval. So, in future, if we'd wish to carry out historical data analysis, we'll be able to clearly delineate logs from different time periods and carry out Trend Analysis / Anomaly Detection
+
+### _Security Enhancements we've primarily focused upon_:-
+
+1- All communications between FluentD and other components, like K8s API and ElasticSearch are secured by TLS/SSL            
+2- Interactions between FluentD instances for centralising the collected logs to a fluentD aggregator, are preceded by a mutual authentication via the `shared_key` . --> verifying the integrity and authenticity of the connection         
+3- Hostname Verifications prevents traffic from being intercepted, prevents MITM - Man in the Middle Attacks            
+4- Sensitive data has been giltered out before loga aggregation, this ensures none of the sensitive info/secrets lie exposed in the cluster logs.           
+5 - Though I've covered buffer configuration management separately, it does partially fall in this context as well. There've been multiple measures implemented to ensure that resource usage is bounded, and thus preventing a DenialOfService Attack.         
 
 
 
+---
+
+5. **`Fluentd_DaemonSet.yaml`** :-
 
 
 
