@@ -1,4 +1,4 @@
-# Orchestrating a DevSecOps Pipeline for Cloud-Native Reddit Clone
+# Optimising Cloud Operations with DevSecOps Pipeline and 
 
 
 ## _Quick Introduction_:-
@@ -816,11 +816,15 @@ We'll configure fluentd to "tail" container logs, With a position file to keep t
 4- The third phase is more around buffer configuration. It should efficiently handle bursts of log data.             
 How? 🤔 We've specified limits on total buffer size, in terms of both total and chunk size, flush behaviour and retry strategies. 
 
+### __
+
 > ➡️ This ensures that in event of buffer overflows, the action would be to block further buffering and prevent unbounded memory usage. 
 
 The logs are now "processed"
 
 5 - We'll now direct these processed logs to the ElasticSearch instance port 9200, protocol https. It configures auth with ES, Also setups up buffering for outoutting the logs (file-based buffering here), I've also customised the naming pattern of ElasticSearch indexing, The indexing would be based on the orginating namespace and the current date.
+
+
 
 ### _How did we accelerate query and retrieval times in ES?_
 
@@ -832,8 +836,7 @@ The logs are now "processed"
 2- Interactions between FluentD instances for centralising the collected logs to a fluentD aggregator, are preceded by a mutual authentication via the `shared_key` . --> verifying the integrity and authenticity of the connection         
 3- Hostname Verifications prevents traffic from being intercepted, prevents MITM - Man in the Middle Attacks            
 4- Sensitive data has been giltered out before loga aggregation, this ensures none of the sensitive info/secrets lie exposed in the cluster logs.           
-5 - Though I've covered buffer configuration management separately, it does partially fall in this context as well. There've been multiple measures implemented to ensure that resource usage is bounded, and thus preventing a DenialOfService Attack.         
-
+5 - Though I've covered buffer configuration management separately, it does partially fall in this context as well. There've been multiple measures implemented to ensure that resource usage is bounded, and thus preventing a DDoS Attack.         
 
 
 ---
