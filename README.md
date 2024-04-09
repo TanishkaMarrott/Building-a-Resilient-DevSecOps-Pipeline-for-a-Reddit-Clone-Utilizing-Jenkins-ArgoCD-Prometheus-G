@@ -659,7 +659,7 @@ Role:- Data Visualisation and UI
 
 </br>
 
-### _The EFK Workflow_
+## _The EFK Workflow_
 
                  
                    Data Sources - (They could be log files, shippers, etc)                           
@@ -697,7 +697,7 @@ Through Metrics, you'll get to know about "what" the problem is, in the system. 
 
 ---
 
-### _More on the EFK Manifests:-_
+## _More on the EFK Manifests:-_
 
 1 - **`namespace.yaml`** :- Applying this manifest would create a namespace `efklog` for the EFK stack components. 
 
@@ -780,16 +780,35 @@ What does this mean ?
 
 Advantage 1 &rarr; There's a consistent application of required system-level settings across all nodes in a cluster
 
-Advantage 2 &rarr; Automatic application to new nodes 
+Advantage 2 &rarr; Automatic application to new nodes in future
 
-Advantage 2 &rarr; We're reducing overhead that'll be incurred by the application pods, while checking or applying system-level settings, as these settings are pre-applied at the node level, reducing startup times and complexities
+Advantage 3 &rarr; We're reducing the overhead that'll be incurred by the application pods, due to checking or applying system-level settings, as these settings are pre-applied at the node level, reducing startup times and complexity.
 
  👍🙂
 
 
 ---
 
-`fluentd_config_map.yaml`
+4 - **`Fluentd_Config_Map.yaml`** :-
+
+This manifest will be defining something called a ConfigMap. So, what's a configmap? It's used to store non-confidential data, in a key-value format. In our case, we'll be using a configMap to configure FluentD, our log collector and shipper
+
+Let's make a deep-dive into this ⤵️
+
+1 - First things first, system configurations. We'll specify the root directory for our fluentD buffers. Logging level set to info, configured the security settings like shared keys, including hostname verification
+
+2- Next is the input configuration -- Container Log input configuration, What does this comprise? We'll configure fluentd to "tail" container logs, With a position file to keep track of the logs that've already been read.
+
+3- We'll perform some Data Enrichment as well. 👍 It not only parses JSON logs, but also enriches the logs by adding some context to it, like namespace, the pod name, tags etc. Implementing some sort of filters to transform the log records, and remove sensitive data (like passwords, and secret keys)
+
+4- The third phase is more around buffer configuration. It should efficiently handle bursts of log data.             
+How? 🤔 We've specified limits on total buffer size, in terms of both total and chunk size, flush behaviour and retry strategies. 
+
+➡️ This ensures that in event of buffer overflows, the action would be to block further buffering and prevent unbounded memory usage. 
+
+The logs are now "processed"
+
+5 - We'll now direct these to the elasticsearch instance port 9200, protocol https. It configures auth with ES, Also setups up buffering for outoutting the logs (file-based buffering here), I've also customised the naming pattern of ElasticSearch, based on the orginating namespace and the timestamps - date 
 
 
 
