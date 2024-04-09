@@ -776,7 +776,7 @@ How would it work? The DaemonSet would create a pod in each node, As new nodes a
 There'll be a container within this pod, that'll be responsible for modifying the host kernel parameter - It's the `vm-max-map` count in our scenario. 
 So, it's a one-time execution, this container executes once during the startup time, and this change is made once and persists beyond the lifecycle of the pod
 
-What does this mean ?
+> _So, how does it actually help us?_
 
 Advantage 1 &rarr; There's a consistent application of required system-level settings across all nodes in a cluster
 
@@ -791,24 +791,37 @@ Advantage 3 &rarr; We're reducing the overhead that'll be incurred by the applic
 
 4 - **`Fluentd_Config_Map.yaml`** :-
 
-This manifest will be defining something called a ConfigMap. So, what's a configmap? It's used to store non-confidential data, in a key-value format. In our case, we'll be using a configMap to configure FluentD, our log collector and shipper
+We'll be defining something called a ConfigMap. So, what's a configmap? It's used to store non-confidential data, in a key-value format. In our case, we'll be using a configMap to configure FluentD, our log collector and shipper
 
 Let's make a deep-dive into this ⤵️
 
-1 - First things first, system configurations. We'll specify the root directory for our fluentD buffers. Logging level set to info, configured the security settings like shared keys, including hostname verification
+1 - First things first, &rarr; system configurations. We'll specify the root directory for our fluentD buffers. Logging level set to info, configured the security settings like shared keys, including hostname verification
 
-2- Next is the input configuration -- Container Log input configuration, What does this comprise? We'll configure fluentd to "tail" container logs, With a position file to keep track of the logs that've already been read.
+2- Next is the input configuration -- configuration for inputting the container logs.
 
-3- We'll perform some Data Enrichment as well. 👍 It not only parses JSON logs, but also enriches the logs by adding some context to it, like namespace, the pod name, tags etc. Implementing some sort of filters to transform the log records, and remove sensitive data (like passwords, and secret keys)
+What does this comprise?
+
+We'll configure fluentd to "tail" container logs, With a position file to keep track of the logs that've already been read.
+
+3- Next up, some Data Enrichment as well.
+
+> 👍 It not only parses JSON logs, but also enriches the logs by adding some context to it, like namespace, the pod name, tags etc.  Implementing some sort of filters to transform the log records, and remove sensitive data (like passwords, and secret keys)
 
 4- The third phase is more around buffer configuration. It should efficiently handle bursts of log data.             
 How? 🤔 We've specified limits on total buffer size, in terms of both total and chunk size, flush behaviour and retry strategies. 
 
-➡️ This ensures that in event of buffer overflows, the action would be to block further buffering and prevent unbounded memory usage. 
+> ➡️ This ensures that in event of buffer overflows, the action would be to block further buffering and prevent unbounded memory usage. 
 
 The logs are now "processed"
 
-5 - We'll now direct these to the elasticsearch instance port 9200, protocol https. It configures auth with ES, Also setups up buffering for outoutting the logs (file-based buffering here), I've also customised the naming pattern of ElasticSearch, based on the orginating namespace and the timestamps - date 
+5 - We'll now direct these processed logs to the ElasticSearch instance port 9200, protocol https. It configures auth with ES, Also setups up buffering for outoutting the logs (file-based buffering here), I've also customised the naming pattern of ElasticSearch indexing, The indexing would be based on the orginating namespace and the current date.
+
+> Why did we customising ES Indexing Names?  Being populated dynamically with the name of the originating namespace and its respective date, means a quicker query performance. Time-based Segmentation helps in implementing certain Stoarge Lifecycle Configuration. namespace Segragation also helps in an organised storage of logs and subsequently a faster retrieval. So, in future, if we'd wish to carry out historical data analysis, we'll be able to clearly delineate logs from different time periods and carry out Trend Analysis / Anomaly Detection
+
+
+
+
+
 
 
 
