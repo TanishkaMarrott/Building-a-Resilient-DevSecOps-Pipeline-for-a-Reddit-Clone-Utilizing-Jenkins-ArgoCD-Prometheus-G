@@ -1,4 +1,4 @@
-# Orchestrating a DevSecOps Pipeline with integrated Logging & Monitoring Frameworks
+# Orchestrating a DevSecOps Pipeline with extensive Logging & Monitoring Frameworks incorporated
 
 
 ## _Quick Introduction_:-
@@ -811,10 +811,30 @@ We'll configure fluentd to "tail" container logs, With a position file to keep t
 
 > 👍 It not only parses JSON logs, but also enriches the logs by adding some context to it, like namespace, the pod name, tags etc.  Implementing some sort of filters to transform the log records, and remove sensitive data (like passwords and secret keys)
 
-### _Buffer configuration and overflow management_
+4 -
 
-4- The third phase is more around buffer configuration. It should efficiently handle bursts of log data.             
-How? 🤔 We've specified limits on total buffer size, in terms of both total and chunk size, flush behaviour and retry strategies. 
+### _Specifics into Buffer configuration and overflow management_
+
+> We had to ensure there's no data loss during high-volume periods, or in cases when the downstream system (ES in this case) is temporarily unavailable
+
+What did we do? 
+
+- Mixing both memory and fil based buffers :-
+
+  Memory based buffers are suitable for faster data access. It's almost instantaneous. Which is brilliant for faster data ingestion and subsequent processing.
+
+== This ends up reducing ovreall latency in the data ingestion and processing cycle.
+
+We couldn't ignore the data persistence capability as well. File based buffers store data on the disk, ---> Data can persist irrespective of system crashes, or when restarted. Also during spikes, or periods when there're high log volume, or when the downstream service is temporairly unreachable, File-based buffers are used to sustain such backpressure scenarios. It provides us with larger capacity when compared to memory buffers.
+
+> 👍We've achieved speed in data ingestion process while ensuring logs are efficiently handled in case of outages in the system
+
+
+- Having some limits on the total buffer size, and the max chunk size
+
+One, there's an upper bound of 512 MB, of the total memory size of the buffer, prevents fluentd from consuming excessive memory resources
+
+Two, we've also set a limit on the total chunk size, 16 MB for memory, and 2M for file based buffers
 
 ### __
 
