@@ -1,4 +1,4 @@
-# Optimising the Cloud Ecosystem with a DevSecops Pipeline with integrated Logging and Monitoring Solutions
+# Orchestrating a DevSecOps Pipeline with integrated Logging and Monitoring Frameworks
 
 
 ## _Quick Introduction_:-
