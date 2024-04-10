@@ -805,11 +805,11 @@ Cluster Logs --> Fluentd - Collection & Enrichment -->  Forwarded to ElasticSear
 
 What does this comprise?
 
-We'll configure fluentd to "tail" container logs, With a position file to keep track of the logs that've already been read.
+We'll configure fluentd to "tail" container logs, With a position file to keep track of the logs that've already been read. 
 
-3- Next up, some Data Enrichment as well.
+3- Next up, some Data Enrichment as well. 📇
 
-> 👍 It not only parses JSON logs, but also enriches the logs by adding some context to it, like namespace, the pod name, tags etc.  Implementing some sort of filters to transform the log records, and remove sensitive data (like passwords and secret keys)
+>  It not only parses JSON logs, but also enriches the logs by adding some context to it - k8s-specific info.  Implementing some sort of filters to transform the log records, and remove sensitive data (like passwords and secret keys). 👍
 
 4 -
 
@@ -819,24 +819,29 @@ We'll configure fluentd to "tail" container logs, With a position file to keep t
 
 What did we do? 
 
-- Mixing both memory and fil based buffers :-
+- **Mixing both memory and file based buffers :-** :bu
 
   Memory based buffers are suitable for faster data access. It's almost instantaneous. Which is brilliant for faster data ingestion and subsequent processing.
 
-== This ends up reducing ovreall latency in the data ingestion and processing cycle.
+== This ends up reducing ovreall latency in the data ingestion and processing cycle. 💡
 
 We couldn't ignore the data persistence capability as well. File based buffers store data on the disk, ---> Data can persist irrespective of system crashes, or when restarted. Also during spikes, or periods when there're high log volume, or when the downstream service is temporairly unreachable, File-based buffers are used to sustain such backpressure scenarios. It provides us with larger capacity when compared to memory buffers.
 
-> 👍We've achieved speed in data ingestion process while ensuring logs are efficiently handled in case of outages in the system
+> 👍We've achieved speed in data ingestion process while still ensuring that we've handled logs reliably in case of any sys outages ☑ 
 
 
-- Having some limits on the total buffer size, and the max chunk size
+- Having some **limits on the total buffer size, and the max chunk size** ⤵️
 
-One, there's an upper bound of 512 MB, of the total memory size of the buffer, prevents fluentd from consuming excessive memory resources
+One ➡️ there's an upper bound of 512 MB, of the total memory size of the buffer, prevents fluentd from consuming excessive memory resources
 
-Two, we've also set a limit on the total chunk size, 16 MB for memory, and 2M for file based buffers
+Two ➡️ we've also set a limit on the total chunk size, 16 MB for memory, and 2M for file based buffers. Smaller chunks makes them more manageable and can reduce latency, But we need to cognizant of the overhead that may come along. 16 MB is a good figure though
 
-### __
+- A **flush interval of 5 seconds** -->  not too short, not too frequent, helps reduce latency in forwarding/flushing the logs
+
+- Our configuration also employs an **exponential retry strategy**, this means that if the logs cannot be directed downstream, for any problem whatsoever, FluentD would retry at increased intervals ☑️        
+
+- Additionally, we've configured **overflow_action of block**, meaning if the buffer reaches its capacity, Fluentd will block new data from being buffered until space becomes available. 
+
 
 > ➡️ This ensures that in event of buffer overflows, the action would be to block further buffering and prevent unbounded memory usage. 
 
