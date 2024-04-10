@@ -722,6 +722,8 @@ Through Metrics, you'll get to know about "what" the problem is, in the system. 
 
 This is where we make ElasticSearch secure, scalable and resilent. I've deployed multiple components here.
 
+---
+
 ### _Security + Performance + Data Durability - How?_
 
 > I'll quickly recapitulate the pointers/ non-functional enhancements we've done. First, a service account that'll be assumed, we'll bind a ClusteRole comprising the `get` permissions. So, I'm being very specific in the permissions attached to the SA , to be assumed for the ElasticSearch operations within the cluster -- with permissions to `get` resources like `endpoints` , `services` and `namespaces`. Chances of things being escalated are minimal, in case of compromise. As we've limited the operations ElasticSearch service can perform.
@@ -753,7 +755,7 @@ But containers running in priv mode is not recommended. High risk of Privilege E
 
 --
 
-➡ Possibilities :- What could be the Security Risks? Well, if the container would be compromised by an attacker, he could gain root access to the node, gaining control over other containers and services running on the node. He could access any critical files & configuration settings; could deploy malware, and exfiltrate sensitive data. Endless possibilities, all boiling down to privilege escalation
+➡ What could be the Security Risks? Well, if the container would be compromised by an attacker, he could gain root access to the node, gaining control over other containers and services running on the node. He could access any critical files & configuration settings; could deploy malware, and exfiltrate sensitive data. Endless possibilities, all boiling down to privilege escalation
 
 </br>
 
@@ -890,10 +892,11 @@ The logs are now "processed"
 
 #### 5. **`Fluentd_DaemonSet.yaml`** :-
 
-Task s we performed here:- 
-1- Created an SA that will be assumed by the FluentD application pods to communicate with the K8s API Server
-2- A Cluster Role consisting fo the permissions that'll be needed by FluentD for collecting cluster-wide logs
-3- A role binding that'll be binding this ClusterRole to the SA . This means these pods will be able to inherit these permissions.
+Tasks we performed here:- 
+
+1- Created an SA that will be assumed by the FluentD application pods to communicate with the K8s API Server            
+2- A Cluster Role consisting fo the permissions that'll be needed by FluentD for collecting cluster-wide logs         
+3- A role binding that'll be binding this ClusterRole to the SA . This means these pods will be able to inherit these permissions.         
 
 4 - DaemonSet for FluentD
 
@@ -909,12 +912,27 @@ FluentD is a log forwarder. It doesn't need to be stateful. Moreover, we need to
 
 1- As I discussed previously with you, FluentD is deployed as a DaemonSet because of its _guarantees_ the fact that the pod will be deployed on each and every node of the K8s cluster, ensuring we've got a reliable and robust, centralized logging solution, for the cluster all across...
 
-2- Had it been a StatefulSet we would have been restrained to use stable network ids or maybe a persistent storage, which is out of context, for the use-case at hand. 
-
+2- Had it been a StatefulSet we would have been restrained to use stable network ids or maybe a persistent storage, which is out of context, for the use-case at hand.                      
 FluentD needs to collect logs from node-specific paths like `/var/log`. DS will ensure it has got access to such paths on all nodes 
 
+#### `Kibana_Deployment.yaml`
 
+Kibana will be our visualisation component in our stack. Will be used for searchung, viewing and interacting with the data 📊
 
+Okay, so let's focus on what are the non-functional aspects we've tried to incorporate in this deployment
+
+💠- Replicas - 2 replicas of Kiban pods, ▶️ Higher availability. Even if one goes down, we've got another to serve requests, minimized downtime 👍
+
+💠- SecurityContext - these containers will be running as a non-root user (`runAsUser: 1000`). We have made it a point to explicitly set `runAsNonRoot: true` 
+ &rarr; Reduces the risk of privilege escalation attacks. 
+
+💠- Seccomp profile ...
+
+> What's a seccomp profile :ques This was new to me as well when I was just starting out... It's a feature, a kernel feature. that enables administrators to limit the system calls a container/ process can make. This has wide application in protecting against kernel-level exploits. It helps in reducing 
+
+💠- Having specified CPu and memory requests and limits, helps me in a dual manner. One, we've got sufficient resources for Kibana Containers for maintaining a stable operation, while still preventing them from over-consuming resources, affecting my other services ▶️ Efficient Resource Management
+
+ 
 
 
 
