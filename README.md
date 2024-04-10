@@ -1,4 +1,4 @@
-# Orchestrating a DevSecOps Pipeline with integrated Logging and Monitoring Frameworks
+# Orchestrating a DevSecOps Pipeline with integrated Logging & Monitoring Frameworks
 
 
 ## _Quick Introduction_:-
