@@ -521,7 +521,7 @@ We've added the Helm Repo `Prometheus-kube-stack.` This repo is a collection of 
 
 </br>
 
-> Prometheus, it's actually a time- series database. It's like a multi-dimensional model, with metric and some key-value pairs. It collects data from a wide array of sources, be it, infra-components, applications or  services. That's through Exporters. Exporters expose metrics in a way that can be easily consumed by Prom. You can then make use of PromQl, to query the data, or have an Alerting manager setup / integrated with it, to trigger off notifications for anomalies.
+> Prometheus, it's actually a time- series database.... It's like a multi-dimensional model, with metric and some key-value pairs. It collects data from a wide array of sources, be it, infra-components, applications or  services..... That's through Exporters. Exporters expose metrics in a way that can be easily consumed by Prom. You can then make use of PromQl, to query the data, or have an Alerting manager setup / integrated with it, to trigger off notifications for anomalies.
 
 
 </br>
@@ -921,17 +921,21 @@ Kibana will be our visualisation component in our stack. Will be used for search
 
 Okay, so let's focus on what are the non-functional aspects we've tried to incorporate in this deployment
 
-💠- Replicas - 2 replicas of Kiban pods, ▶️ Higher availability. Even if one goes down, we've got another to serve requests, minimized downtime 👍
+💠-  Multiple replicas of Kibana pods, ▶ Higher availability. Even if one goes down, we've got another to serve requests, minimized downtime 👍
 
-💠- SecurityContext - these containers will be running as a non-root user (`runAsUser: 1000`). We have made it a point to explicitly set `runAsNonRoot: true` 
- &rarr; Reduces the risk of privilege escalation attacks. 
+💠- These containers will be running as a non-root user (`runAsUser: 1000`). We have made it a point to explicitly set `runAsNonRoot: true` 
+ ➡️ Strong SecurityContext reduces the risk of privilege escalation attacks. 
 
 💠- Seccomp profile ...
 
-> What's a seccomp profile :ques This was new to me as well when I was just starting out... It's a feature, a kernel feature. that enables administrators to limit the system calls a container/ process can make. This has wide application in protecting against kernel-level exploits. It helps in reducing 
+> What's a seccomp profile? 🤔 This was new to me as well when I just started out... It's a feature, a kernel feature. that enables administrators to limit the system calls a container/ process can make. This has wide application in protecting against kernel-level exploits. It helps in reducing the attack-surface area by filtering the system calls it can make
 
-💠- Having specified CPu and memory requests and limits, helps me in a dual manner. One, we've got sufficient resources for Kibana Containers for maintaining a stable operation, while still preventing them from over-consuming resources, affecting my other services ▶️ Efficient Resource Management
+💠- Having specified CPU and memory requests and limits, helps me in a dual manner. One, we've got sufficient resources for Kibana Containers for maintaining a stable operation, while still preventing them from over-consuming resources, affecting my other services ▶️ Efficient Resource Management
 
+ 💠- Liveness + Readiness Probes.                        
+ Readiness = When a Kibana pod is ready to start accepting traffic, Livelibess = Checks if the pod requires a restart
+
+💠- Plus a PVC - Persistent volume claim to preserve the application's state and configuration across restarts.
  
 
 
