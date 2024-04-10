@@ -928,7 +928,11 @@ Okay, so let's focus on what are the non-functional aspects we've tried to incor
 
 💠- Seccomp profile ...
 
+</br>
+
 > What's a seccomp profile? 🤔 This was new to me as well when I just started out... It's a feature, a kernel feature. that enables administrators to limit the system calls a container/ process can make. This has wide application in protecting against kernel-level exploits. It helps in reducing the attack-surface area by filtering the system calls it can make
+
+</br>
 
 💠- Having specified CPU and memory requests and limits, helps me in a dual manner. One, we've got sufficient resources for Kibana Containers for maintaining a stable operation, while still preventing them from over-consuming resources, affecting my other services ▶️ Efficient Resource Management
 
@@ -937,6 +941,10 @@ Okay, so let's focus on what are the non-functional aspects we've tried to incor
 
 💠- Plus a PVC - Persistent volume claim to preserve the application's state and configuration across restarts.
  
+---
+
+#### `Kibana_Service.yaml`
+
 
 
 
