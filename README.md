@@ -899,12 +899,19 @@ Task s we performed here:-
 
 Why?
 
-FluentD is a log forwarder. It doesnt need to be stateful. Moreover, we need to ensure that a fluentD pod runs across all the nodes of the cluster. Daemonset is necessary for ensuring that a copy of a specific pod, runs across all the nodes of a cluster including the ones that'll be added in future. 
+FluentD is a log forwarder. It doesn't need to be stateful. Moreover, we need to ensure that a fluentD pod runs across all the nodes of the cluster. Daemonset is necessary for ensuring that a copy of a specific pod, runs across all the nodes of a cluster including the ones that'll be added in future. 
 
-> Running FluentD as a DaemonSet means I'm comprehensively covering node all across the cluster, uniform collection and forwarding all a
+> Running FluentD as a DaemonSet means I'm comprehensively covering node all across the cluster, uniform cluster-wide log collection + forwarding 👍
 
+</br>
 
+🏁 Quickly recapitulating why a daemonSet was used for Fluentd:-
 
+1- As I discussed previously with you, FluentD is deployed as a DaemonSet because of its _guarantees_ the fact that the pod will be deployed on each and every node of the K8s cluster, ensuring we've got a reliable and robust, centralized logging solution, for the cluster all across...
+
+2- Had it been a StatefulSet we would have been restrained to use stable network ids or maybe a persistent storage, which is out of context, for the use-case at hand. 
+
+FluentD needs to collect logs from node-specific paths like `/var/log`. DS will ensure it has got access to such paths on all nodes 
 
 
 
