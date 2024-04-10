@@ -838,7 +838,7 @@ What did we do?
 We couldn't ignore the data persistence capability as well. File based buffers store data on the disk, ---> Data can persist irrespective of system crashes, or when restarted. Also during spikes, or periods when there're high log volume, or when the downstream service is temporairly unreachable, File-based buffers are used to sustain such backpressure scenarios. It provides us with larger capacity when compared to memory buffers.
 </br>
 
-> 👍We've achieved speed in data ingestion process while still ensuring that we've handled logs reliably in case of any sys outages ☑ 
+> 👍This means you don't only speed up the data ingestion process but still ensure that we've handled logs reliably in case of any system outages ☑ 
 
 </br>
 
@@ -862,6 +862,8 @@ Two ➡️ we've also set a limit on the total chunk size, 16 MB for memory, and
 > ➡️ This ensures that in event of buffer overflows, the action would be to block further buffering and prevent unbounded memory usage. 
 
 </br>
+
+I had to make some provisions for the max queue length limit and max time interval between the two subsequent retries for the file buffers
 
 The logs are now "processed"
 
@@ -888,7 +890,18 @@ The logs are now "processed"
 
 #### 5. **`Fluentd_DaemonSet.yaml`** :-
 
+Task s we performed here:- 
+1- Created an SA that will be assumed by the FluentD application pods to communicate with the K8s API Server
+2- A Cluster Role consisting fo the permissions that'll be needed by FluentD for collecting cluster-wide logs
+3- A role binding that'll be binding this ClusterRole to the SA . This means these pods will be able to inherit these permissions.
 
+4 - DaemonSet for FluentD
+
+Why?
+
+FluentD is a log forwarder. It doesnt need to be stateful. Moreover, we need to ensure that a fluentD pod runs across all the nodes of the cluster. Daemonset is necessary for ensuring that a copy of a specific pod, runs across all the nodes of a cluster including the ones that'll be added in future. 
+
+> Running FluentD as a DaemonSet means I'm comprehensively covering node all across the cluster, uniform collection and forwarding all a
 
 
 
