@@ -264,7 +264,9 @@ I've pruned down the **public access CIDR**. They're crucial for defining which 
 
 </br>
 
-I'd advise to **tighten up security** to the **Corporate IP Address Range** as an ingress rule for the node group, that's something we might need for troubleshooting or administrative access - (We might need to SSH into the VMs to check if everything's alright)
+> I'd advise to **tighten up security** to the **Corporate IP Address Range** as an ingress rule for the node group, that's something we might need for troubleshooting or administrative access - (We might need to SSH into the VMs to check if everything's alright)
+
+</br>
 
 I've made sure the **IAM Policies** attached to the cluster and the node group are tied down - in lines with **Principle of Least Privilege**. So, even in case of a compromise, chances of privilege escalation will be low.
 
@@ -276,19 +278,19 @@ Plus, we have **endpoint access restrictions**, and **secured SSH Access** - lim
 
 </br>
 
-> Eliminating potential chances of State Corruption that might happen during multiple Terraform applies. Terraform locks the state, preventing multiple concurrent Terraform runs from multiple users, + DynamoDB is a secure and durable storage for State Locking as well.
+> I wanted to eliminate potential chances of State Corruption that might happen during multiple Terraform applies. Terraform locks the state, preventing multiple concurrent Terraform runs from multiple users, + DynamoDB is a durable storage for State Locking as well.
 
 </br>
 
-Enabling **S3 Versioning** on your backend S3 bucket to keep a history of your state files,▶️ for recovery from unintended changes.
+---> **S3 Versioning** on your backend S3 bucket to keep a history of your state files,▶️ for recovery from unintended changes.
 
-Using **S3 Bucket Encryption** for added security. While your state files are encrypted due to the encrypt attribute, ensuring the bucket itself is also encrypted. ▶ **Additional Security Layer** 👍👍
+---> **S3 Bucket Encryption**. While your state files are encrypted due to the encrypt attribute, ensuring the bucket itself is also encrypted. ▶ 👍👍
 
 </br>
 
 ### _How did I optimise on costs while still maintaining a level of fault-tolerance?_
 
-Mix of both On-demand and Spot Instances 👍🏁
+Mix of both On-demand and Spot Instances
 </br>
 
 > We wanted to achieve a certain level of cost optimization as well while still retaining our fault tolerance capabilities. Hence, I've decided to go in for:-
@@ -297,7 +299,7 @@ Two separate node groups: one for critical workloads (on-demand), and Spot for c
 
 </br>
 
-This means we have an **On-Demand capacity** to handle **Baseline Application Performance** + a **Spot Allocation strategy** as a **Cost Optimization strategy**. 👍 ☑️
+---> This means we have an **On-Demand capacity** to handle **Baseline Application Performance** + a **Spot Allocation strategy** as a **Cost Optimization strategy**. 👍 ☑️
 
 </br>
 
@@ -308,6 +310,8 @@ This means we have an **On-Demand capacity** to handle **Baseline Application Pe
 It's actually a brilliant declarative, GitOps CD Tool. 
 
 I've used Argo for its capability to **automate deployments** across various environments. _**It ensures that my actual state of the Kubernetes matches the configuration manifests in the Git repo**_, (That's the **desired state** of the cluster).
+
+</br>
 
 >   _Automated, Repeatable and most importantly Reliable Deployments_ 👍
 
@@ -332,7 +336,7 @@ Here's the link to my K8s manifest files:- https://github.com/TanishkaMarrott/Re
 ## _Quick Dive into the k8 manifests + Key Design Considerations_
 
 
-1- **`deployment.yaml`** 
+#### 1- **`deployment.yaml`** 
 
 My Deployment for the Reddit-Clone application. Contains a blueprint for the pods it'll create 
 
@@ -355,7 +359,7 @@ _How did I improvise the deployment to be available and fault tolerant?_
 
 </br>
 
-2- **`service.yaml`** 
+#### 2- **`service.yaml`** 
 
 We're exposing the set of pods running the containerised application through the Service of type loadBalancer. It listens for traffic on port 80 and forwards it to port 3000 - the port the application listens on within the container.
 
@@ -374,7 +378,7 @@ Network Load Balancer naturally does ensure scalability - ➡️ NLB means Super
 
 </br>
 
-3- **`ingress.yaml`**
+#### 3- **`ingress.yaml`**
 
 I'm using this alongside the service object. In general, an Ingress would be used for its path-routing capabilities, -- you could actually host multiple applications on just a single IP, and route traffic to different backend service based on the path.
 
@@ -394,7 +398,7 @@ In my case, I'd be utilising an ingress controller for its advanced traffic mana
 
 </br>
 
-4 - **`cluster-autoscaler.yaml`** & 5. **`hpa-manifest.yaml`** 
+#### 4 - **`cluster-autoscaler.yaml`** & 5. **`hpa-manifest.yaml`** 
 
 _Scaling via Cluster Auto-Scaler and Horizontal Pod Scaler_
 
@@ -416,7 +420,7 @@ And how're they different? **Cluster auto-scaler** scales the nodes up and down 
 </br>
 
 
-6. **`rbac-config.yaml`**
+#### 6. **`rbac-config.yaml`**
 
 I've also included a template for `rbac-config.yaml`. Why? That's Kubernetes native way of Role Based Access Control. Finetuning Access Control to Kubernetes resources, either through User Accounts or Service Accounts
 
@@ -432,7 +436,7 @@ In our case, I've created a specific SA -> `app-service-account` and attached th
 
 </br>
 
-7. **K8s Network Policies** - A side note
+#### 7. **K8s Network Policies** - A side note
 
 I haven't created a manifest specifically for network-policies, my current use-case doesn't require a policy restricting communication between pods running multiple applications.
 
@@ -697,9 +701,9 @@ Through Metrics, you'll get to know about "what" the problem is, in the system. 
 
 ---
 
-## _More on the EFK Manifests:-_
+### _More on the EFK Manifests:-_
 
-1 - **`namespace.yaml`** :- Applying this manifest would create a namespace `efklog` for the EFK stack components. 
+#### 1 - **`namespace.yaml`** :- Applying this manifest would create a namespace `efklog` for the EFK stack components. 
 
 </br>
 
@@ -707,14 +711,14 @@ Through Metrics, you'll get to know about "what" the problem is, in the system. 
 
 </br>
 
-2 - **`ElasticSearch_Service.yaml`** :- We've configred the service to listen fro requests at port 9200, TCP Protocol, And forward these requests to `db` named port on the target pods selected by th `k8s-app: elasticsearch-logging` label. This creates a Service Object to expose the set of pods running the ElasticSearch application.
+#### 2 - **`ElasticSearch_Service.yaml`** :- We've configred the service to listen fro requests at port 9200, TCP Protocol, And forward these requests to `db` named port on the target pods selected by th `k8s-app: elasticsearch-logging` label. This creates a Service Object to expose the set of pods running the ElasticSearch application.
 
 **_Purpose?_** It actually facilitates access to the underlying pods for sending the logs (as determined by the network policy), --> Centralised Log Aggregation to the ElasticSearch application 
 
 </br>
 
 
-3 - **`ElasticSearch_StatefulSet.yaml`** :- 
+#### 3 - **`ElasticSearch_StatefulSet.yaml`** :- 
 
 This is where we make ElasticSearch secure, scalable and resilent. I've deployed multiple components here.
 
@@ -791,7 +795,7 @@ Advantage 3 &rarr; We're **reducing the overhead that'll be incurred by the appl
 
 ---
 
-4 - **`Fluentd_Config_Map.yaml`** :-
+#### 4 - **`Fluentd_Config_Map.yaml`** :-
 
 We'll be defining something called a ConfigMap. So, what's a configmap? It's used to store non-confidential data, in a key-value format. In our case, we'll be using a configMap to configure FluentD, our log collector and shipper
 
@@ -815,26 +819,37 @@ We'll configure fluentd to "tail" container logs, With a position file to keep t
 
 ### _Specifics into Buffer configuration and overflow management_
 
+</br>
+
 > We had to ensure there's no data loss during high-volume periods, or in cases when the downstream system (ES in this case) is temporarily unavailable
+
+</br>
 
 What did we do? 
 
 - **Mixing both memory and file based buffers :-** :bu
 
   Memory based buffers are suitable for faster data access. It's almost instantaneous. Which is brilliant for faster data ingestion and subsequent processing.
+  
+</br>
 
 == This ends up reducing ovreall latency in the data ingestion and processing cycle. 💡
 
 We couldn't ignore the data persistence capability as well. File based buffers store data on the disk, ---> Data can persist irrespective of system crashes, or when restarted. Also during spikes, or periods when there're high log volume, or when the downstream service is temporairly unreachable, File-based buffers are used to sustain such backpressure scenarios. It provides us with larger capacity when compared to memory buffers.
+</br>
 
 > 👍We've achieved speed in data ingestion process while still ensuring that we've handled logs reliably in case of any sys outages ☑ 
+
+</br>
 
 
 - Having some **limits on the total buffer size, and the max chunk size** ⤵️
 
 One ➡️ there's an upper bound of 512 MB, of the total memory size of the buffer, prevents fluentd from consuming excessive memory resources
 
-Two ➡️ we've also set a limit on the total chunk size, 16 MB for memory, and 2M for file based buffers. Smaller chunks makes them more manageable and can reduce latency, But we need to cognizant of the overhead that may come along. 16 MB is a good figure though
+Two ➡️ we've also set a limit on the total chunk size, 16 MB for memory, and 2M for file based buffers. Smaller chunks makes them more manageable and can reduce latency, But we need to cognizant of the overhead that may come along. 16 MB is a good figure though.
+
+</br>
 
 - A **flush interval of 5 seconds** -->  not too short, not too frequent, helps reduce latency in forwarding/flushing the logs
 
@@ -842,31 +857,38 @@ Two ➡️ we've also set a limit on the total chunk size, 16 MB for memory, and
 
 - Additionally, we've configured **overflow_action of block**, meaning if the buffer reaches its capacity, Fluentd will block new data from being buffered until space becomes available. 
 
+</br>
 
 > ➡️ This ensures that in event of buffer overflows, the action would be to block further buffering and prevent unbounded memory usage. 
+
+</br>
 
 The logs are now "processed"
 
 5 - We'll now direct these processed logs to the ElasticSearch instance port 9200, protocol https. It configures auth with ES, Also setups up buffering for outoutting the logs (file-based buffering here), I've also customised the naming pattern of ElasticSearch indexing, The indexing would be based on the orginating namespace and the current date.
 
-
-
 ### _How did we accelerate query and retrieval times in ES?_
 
+</br>
+
 > Why did we customise ES Indexing Names?  Being populated dynamically with the name of the originating namespace and its respective date, means a quicker query performance. Time-based Segmentation helps in implementing certain Stoarge Lifecycle Configuration. namespace Segragation also helps in an organised storage of logs and subsequently a faster retrieval. So, in future, if we'd wish to carry out historical data analysis, we'll be able to clearly delineate logs from different time periods and carry out Trend Analysis / Anomaly Detection
+
+</br>
 
 ### _Security Enhancements we've primarily focused upon_:-
 
 1- All communications between FluentD and other components, like K8s API and ElasticSearch are secured by TLS/SSL            
 2- Interactions between FluentD instances for centralising the collected logs to a fluentD aggregator, are preceded by a mutual authentication via the `shared_key` . --> verifying the integrity and authenticity of the connection         
 3- Hostname Verifications prevents traffic from being intercepted, prevents MITM - Man in the Middle Attacks            
-4- Sensitive data has been giltered out before loga aggregation, this ensures none of the sensitive info/secrets lie exposed in the cluster logs.           
+4- Sensitive data has been filtered out before loga aggregation, this ensures none of the sensitive info/secrets lie exposed in the cluster logs.           
 5 - Though I've covered buffer configuration management separately, it does partially fall in this context as well. There've been multiple measures implemented to ensure that resource usage is bounded, and thus preventing a DDoS Attack.         
 
 
 ---
 
-5. **`Fluentd_DaemonSet.yaml`** :-
+#### 5. **`Fluentd_DaemonSet.yaml`** :-
+
+
 
 
 
