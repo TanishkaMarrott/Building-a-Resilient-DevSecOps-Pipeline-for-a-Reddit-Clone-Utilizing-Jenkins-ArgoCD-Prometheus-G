@@ -1,4 +1,4 @@
-# Optimising Cloud Operations with DevSecOps Pipeline and 
+# Optimising the Cloud Ecosystem with a DevSecops Pipeline with integrated Logging and Monitoring Solutions
 
 
 ## _Quick Introduction_:-
