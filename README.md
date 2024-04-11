@@ -3,7 +3,7 @@
 
 ## _Quick Introduction_:-
 
-Our project today is all about the specifics involved while configuring a  **_DevSecOps Pipeline._**   
+Our project today is all about the specifics involved while setting up an automated  **_DevSecOps Pipeline._**   
 --> we're not only speeding up releases, but also being security-compliant, from the get-go. 💡
 
 ****Technicalities in the sections that follow.****
@@ -13,7 +13,7 @@ Our project today is all about the specifics involved while configuring a  **_De
 
 &nbsp;
 
-## _So, how does the workflow actually look like?_
+## So, how does the workflow actually look like?
 
 
 **_Infrastructure Provisioning_** (Terraform)            
@@ -33,7 +33,7 @@ Our project today is all about the specifics involved while configuring a  **_De
 
 </br>
 
->  _**Okay, so how does DevSecOps augment Business Processes?**_
+>  **Okay, so how does DevSecOps augment Business Processes?**
 
 </br>
 
@@ -54,7 +54,7 @@ _It's more like a ***Strategic Enabler,***_ to boost efficiency & streamline pro
 
 ▶️ _Quality Assurance_ + _Reducing post-deployment fixes' costs_   
 
-= **_Averting Data Security incidents / breaches due to security lapses._**
+= **_Averting Data Security incidents due to security lapses._**
 
 </br>
 
@@ -66,18 +66,6 @@ _It's more like a ***Strategic Enabler,***_ to boost efficiency & streamline pro
 
 ## _&rarr; Infra-Setup & Tool Configuration_
 
-         
---> Establishing the base for our CI/CD pipeline and security assessments. Next, I've **_configured Jenkins Plugin Installations_**, for integrating Jenkins with other CI/CD tools in our pipeline. 
-
-Please check `updated_main.tf` & `install.sh`
-
-</br>
-
-
-> I've already installed the foundational plugins --> In short, it's for a **fully functional Jenkins environment**, covering all the necessary aspects from Source Code Management to Pipeline Orchestration
-
-</br>
-
 ### **_Plugins I've used:-_**   
 
 
@@ -85,42 +73,42 @@ Please check `updated_main.tf` & `install.sh`
 | Category               | Plugin/Tool                 | Purpose                                                                                   |
 |-------------------------|-----------------------------|-------------------------------------------------------------------------------------------|
 | Code Quality & Analysis | **SonarQube Scanner**       | Integrates SQ into Jenkins --> SAST|
-|                         | **Sonar Quality Gates**     | Breaks the build based on SonarQube quality gates --> code quality  |
+|                         | **Sonar Quality Gates**     | Breaks the build based on SonarQube quality gates  |
 |                         | **OWASP Dependency Check**  | --> Vulnerabilities within the project's dependencies.                                |
 | IaC Scanning | **TfSec**  | Scans the IaC for security misconfigurations. |
-| Secrets Detection  | **truffleHog**              | Scans the repository for accidentally committed secrets |
+| Secrets Detection  | **truffleHog**              |  Accidentally committed secrets |
 
 --
-   
 
->  Quality gates in SQ ensures that code must meet specific quality standards before it can proceed through the pipeline. Additionally, the webhook feature provides immediate feedback within our CI/CD process --> Quick identification & resolution of issues. 
+Please check `updated_main.tf` & `install.sh`
+
+>  Quality gates in SQ ensures that code meets some quality standards before it can proceed through.  Webhooks provide immediate feedback within our CI/CD process ➡️ Quick identification & resolution
 
 --
 
 ## _Why global tool configurations?_
 
 
-They're _automatically installed & available to all jobs, it's defined at a global scope_                   
- <ins>**--> In a way, it standardises the environment across all builds, and projects. 👍**</ins>        
+They're _automatically installed & available to all jobs ➡️ it's defined at a global scope_        
+
+ <ins>**--> In a way, it standardises the environment across all builds and projects. 👍**</ins>        
 
 </br>
 
- >  _Once setup, they **eliminate the need of manually configuring specific versions** of these runtimes/environments for each of them separately._
+ > Eliminates the need of manually configuring specific versions of these runtimes/environments for each of them separately._
 
 </br>
  
 
 | Category                | Tools                   | Purpose                                                                                   |
 |-------------------------|------------------------|-------------------------------------------------------------------------------------------|
-| Runtime & Environment   | **Eclipse Temurin Installer** | Automates the installation => Means a specific version of the JDK is available for all jobs. |
-|                         | **Nodejs**                 | Ensures the necessary runtime version is available for JavaScript-based applications. |
+| Runtime & Environment   | **Eclipse Temurin Installer** | Means a specific version of the JDK is available for all jobs. |
+|                         | **Nodejs**                 | Once setup, the necessary runtime is available for JS applications. |
 
 ---
 
 ## _Pipeline Configuration_
-
-In Phase 2 of our project, I've focused on pipeline configuration to automate our build and deployment processes.             
-The pipeline, scripted in a Jenkinsfile, (Please check `Jenkinsfile` above) utilises both JDK 17 and Node.js 16 tools for a build environment suitable for our Reddit Clone App. 
+     
 
 </br>
 
@@ -129,49 +117,49 @@ The pipeline, scripted in a Jenkinsfile, (Please check `Jenkinsfile` above) util
 
 </br>
 
+--
+
 ### _CI/CD Pipeline - Key Stages_
 
 
-1 → Workspace Preparation          
-2 →  Fetch the latest code from the repo's main branch         
-3 → Static Code Analysis for potential bugs & vulnerabilities.         
-4 → Quality Gate → Crucial checkpoint to align with our quality criteria, Decides if changes can be promoted.         
-5 → Installing Dependencies         
-6 → Scanning both our File system and Docker images.         
-7 → Containerization          
-8 → Detecting unwanted secrets (checking if they've been exposed)      
-9 → IaC Analysis - Securing Tf Configurations
+
+1. **Workspace Preparation** → 2. **Fetch the Latest Code** → 3. **Static Code Analysis** → 4. **Quality Gate Checkpoint** → 5. **Installing Dependencies** → 6. **Scanning File System & Docker Images** → 7. **Containerization** → 8. **Detecting Unwanted Secrets** → 9. **IaC Analysis for Security**
 </br>
 
 You can find the application code here :- https://github.com/TanishkaMarrott/Reddit-Clone-App
 
-_**Dependency-Check Results**_ – This screenshot from Jenkins displays the results of the Dependency Check, showcasing the distribution and severity of discovered vulnerabilities in the Reddit Clone App.
+_**Dependency-Check Results**_ –  Distribution and severity of vulnerabilities in the Reddit Clone App.
 
 </br>
 
 
 ![image](https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/0e9a27ca-158a-4fa4-bfd7-4f82c5f6d30e)
 
+--
 
 </br>
 
-_**Console Output**_ - This image captures the console output in Jenkins, --> Verbose Logs for execution of the pipeline stages for the Reddit Clone App.
+_**Console Output**_ -  --> Verbose Logs for execution of the pipeline stages
 
 </br>
 
 ![image](https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/cc0a6fbd-245c-49c4-9144-b0a6c41e7c80)
 
+--
+
 </br>
 
-_**SonarQube Dashboard**_ - This screenshot shows a successful Quality Gate with overview of code analysis for the Reddit project
+_**SonarQube Dashboard**_ - Successful Quality Gate with an overview of code analysis
 
 </br>
 
 <img width="958" alt="Reddit-Clone-App-SonarQubeServer" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/698eaff4-1db7-4938-b711-2a3141543b88">
 
+--
 
+</br>
 
-_**Docker Hub Repository: 'tanishkamarrott/reddit'**_ – The third screenshot shows the Docker Hub repository page for the 'reddit' image, ready for Image pushes
+_**Docker Hub Repository: 'tanishkamarrott/reddit'**_ – Docker Hub repository page for the 'reddit' image &rarr; ready for Image pushes
 
 </br>
 
@@ -179,11 +167,15 @@ _**Docker Hub Repository: 'tanishkamarrott/reddit'**_ – The third screenshot s
 
 </br>
 
-Now that we're done with the continuous integration part, we'd move to the deployment part.  Continuous deployment is geared towards automating the deployment of code from dev to prod, post a successful build, that's post passing the necessary code quality and security tests. 
+--
+
+Now that we're done with the continuous integration part, we'd move to the deployment part. 
+
+It's geared towards automating the deployment of code from dev to prod, post a successful build ▶️ that's post passing the necessary tests. 
 
 </br>
 
---> Means a faster deployment velocity, accelerated software releases = Faster time-to-market 
+> --> Means a faster deployment velocity, accelerated software releases = Faster time-to-market 
 
 </br>
 
