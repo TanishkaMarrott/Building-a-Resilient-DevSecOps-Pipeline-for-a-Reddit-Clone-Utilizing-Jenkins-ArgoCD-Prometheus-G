@@ -937,7 +937,7 @@ Okay, so let's focus on what are the non-functional aspects we've tried to incor
 💠- Having specified CPU and memory requests and limits, helps me in a dual manner. One, we've got sufficient resources for Kibana Containers for maintaining a stable operation, while still preventing them from over-consuming resources, affecting my other services ▶️ Efficient Resource Management
 
  💠- Liveness + Readiness Probes.                        
- Readiness = When a Kibana pod is ready to start accepting traffic, Livelibess = Checks if the pod requires a restart
+ Readiness = When a Kibana pod is ready to start accepting traffic, Liveliness = Checks if the pod requires a restart
 
 💠- Plus a PVC - Persistent volume claim to preserve the application's state and configuration across restarts.
  
@@ -945,8 +945,26 @@ Okay, so let's focus on what are the non-functional aspects we've tried to incor
 
 #### `Kibana_Service.yaml`
 
+What're we essentially doing? Setting up a way to access the Kibana dashboard from outside the Kubernetes cluster... ☑️                
+
+The LoadBalancer type automatically provisions an external load balancer (supported by the cloud provider) & assigns it a public IP that routes to Kibana (port 5601)
+
+> ➡️ This means users can interact with Kibana’s UI by visiting `http://<External-IP>:5601`, where `<External-IP>` is the IP address allocated by the CP's load balancer.
+
+</br>
+
+_Kibana Snapshots:-_
+
+<img width="511" alt="Reddit-App-clone-kibana-1" src="https://github.com/TanishkaMarrott/Orchestrating-a-DevSecOps-Pipeline-with-integrated-Logging-and-Monitoring-Frameworks/assets/78227704/c237f72d-1222-4149-b737-cabcfb2116bc">
 
 
+--
 
+
+<img width="956" alt="Reddit-App-Clone-App-Kibana-2" src="https://github.com/TanishkaMarrott/Orchestrating-a-DevSecOps-Pipeline-with-integrated-Logging-and-Monitoring-Frameworks/assets/78227704/97ae9186-c4f6-43e4-bd01-a7a987b05b55">
+
+--
+
+<img width="956" alt="Reddit-App-Clone-App-Kibana-3" src="https://github.com/TanishkaMarrott/Orchestrating-a-DevSecOps-Pipeline-with-integrated-Logging-and-Monitoring-Frameworks/assets/78227704/c42feea1-b905-4723-98d5-3ea90075db3c">
 
 
