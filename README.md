@@ -139,7 +139,7 @@ _**Dependency-Check Results**_ –  Distribution and severity of vulnerabilities
 
 </br>
 
-_**Console Output**_ -  --> Verbose Logs for execution of the pipeline stages
+_**Console Output**_ -  --> Logs for execution of the pipeline stages
 
 </br>
 
@@ -149,7 +149,7 @@ _**Console Output**_ -  --> Verbose Logs for execution of the pipeline stages
 
 </br>
 
-_**SonarQube Dashboard**_ - Successful Quality Gate with an overview of code analysis
+_**SonarQube Dashboard**_ --> Successful Quality Gate with an overview of code analysis
 
 </br>
 
@@ -159,7 +159,7 @@ _**SonarQube Dashboard**_ - Successful Quality Gate with an overview of code ana
 
 </br>
 
-_**Docker Hub Repository: 'tanishkamarrott/reddit'**_ – Docker Hub repository page for the 'reddit' image &rarr; ready for Image pushes
+_**Docker Hub Repository: 'tanishkamarrott/reddit'**_ – 'reddit' image &rarr; ready for Image pushes
 
 </br>
 
@@ -175,7 +175,7 @@ It's geared towards automating the deployment of code from dev to prod, post a s
 
 </br>
 
-> --> Means a faster deployment velocity, accelerated software releases = Faster time-to-market 
+> ➡️ Means a faster deployment velocity = Accelerated releases = Faster Time-to-market 
 
 </br>
 
@@ -210,7 +210,7 @@ Please check my code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/m
 
 ---
 
-## _Tf Configurations - Non functional Aspects:-_
+## _TF Configurations - Non functional Aspects:-_
 
 ### _Multi-AZ NAT Gateway Setup + Multi-AZ Worker node deployment configuration:-_ 
 
@@ -218,23 +218,23 @@ In this architecture, I've deployed **three NATs each with its own Elastic IP**,
 
 </br>
 
-> We can thus ensure that our architecture can withstand an AZ Failure. If one NAT gateway becomes unavailable due to some issue in an AZ, we can still route outbound traffic to the internet, ensuring continuous access to our resources. Also, failure/outage of an AZ does not impact the availability of our application, hence **fault-tolerant**.   
+> We need to  ensure that our architecture can withstand an AZ Failure. If one NAT gateway becomes unavailable due to some issue in an AZ, we can still route outbound traffic to the internet. Any AZ-failure does not impact the availability of our application, hence **fault-tolerant**.   
 
 </br> 
 
-▶ **High Availability** + **Fault Tolerance** = 👍
+▶ **High Availability** = **Fault Tolerance** = 👍
 
 </br>
 
-There's one more advantage to it, **Performance Optimization**.  
+ Second, **Performance Optimization**.  
 
 </br>   
 
->  By optimizing network paths, traffic from the instances do not necessarily need to cross inter-AZ for reaching the internet, = reducing **Latency** 👍. It does help in the scalability aspect as well since resources in each AZ can scale out independently. We can add new subnets and add new instances in each AZ, without worrying NAT Gateway being a potential bottleneck.
+>  I didn't want any SPOFs or performance bottlenecks in my architecture. Multi -NAT ensures that traffic from the instances do not necessarily need to cross inter-AZ for reaching the internet, = reducing **Latency** 👍. It does help in the scalability aspect as well since resources in each AZ can scale out independently. We can add new subnets, add new instances in each AZ, without worrying NAT Gateway being a potential bottleneck. 💡
 
 </br>
 
-➡ However, this is a **cost vs. fault tolerance trade-off**. The decision to implement this architecture is based on prioritizing the application's availability and performance over the cost considerations.
+➡ However, this is a **cost vs. fault tolerance trade-off**. This decision means prioritizing availability and performance over the cost considerations.
 
 </br>
 
@@ -242,17 +242,19 @@ There's one more advantage to it, **Performance Optimization**.
 
 </br>
 
-> My public subnets host the Load Balancers and NAT Gateways (the resources which are intended to be public), so, they'll distribute incoming internet traffic to the pods running the application. This setup simplifies and centralizes traffic management while keeping our backend pods secure. Also, in case the applications in the private subnet wish to connect to the internet, for example for updates, APIs etc., it can be done via the NAT deployed in each public subnet = **secure outbound-only internet access** 👍.
+> My public subnets host the Load Balancers and NAT Gateways (the resources which are intended to be public), so, they'll distribute incoming internet traffic to the pods running the application. ➡️ This setup simplifies and centralizes traffic management while keeping our backend pods secure.
+
+> Also, in case the applications in the private subnet wish to connect to the internet, for example for updates, APIs etc., it can be done via the NAT deployed in each public subnet = **secure outbound-only internet access** 👍.
 
 </br>
 
 ### _Granular Access controls for EKS_
 
-I've pruned down the **public access CIDR**. They're crucial for defining which IP Addresses are allowed to access the Kubernetes API Server. Having centralized control over access and management. = **Security** and **resilience** 👍
+I've pruned down the **public access CIDR** allowed to access the Kubernetes API Server. Having centralized control over access and management.
 
 </br>
 
-> By doing so, we're adopting a **principle of least privilege**, ensuring that only necessary access is granted and reducing the surface area for potential cyber threats. I've ensured flexibility and automation, as the list of EC2 Instance Connect IPs can change, and fetching them dynamically ensures our access controls are always up-to-date without manual intervention.
+> By doing so, we're adopting a **principle of least privilege** and reducing the surface area for potential cyber threats.
 
 </br>
 
@@ -260,9 +262,11 @@ I've pruned down the **public access CIDR**. They're crucial for defining which 
 
 </br>
 
-I've made sure the **IAM Policies** attached to the cluster and the node group are tied down - in lines with **Principle of Least Privilege**. So, even in case of a compromise, chances of privilege escalation will be low.
+I've made sure the **IAM Policies** attached to the cluster and the node group are tied down. Chances of privilege escalation will be low.
 
-Plus, we have **endpoint access restrictions**, and **secured SSH Access** - limited SSH access to worker nodes by specifying source security group IDs and SSH keys.
+</br>
+
+Plus, we have **endpoint access restrictions**, and **secured SSH Access** - to the worker nodes by specifying source security group IDs and SSH keys.
 
 </br>
 
@@ -270,19 +274,18 @@ Plus, we have **endpoint access restrictions**, and **secured SSH Access** - lim
 
 </br>
 
-> I wanted to eliminate potential chances of State Corruption that might happen during multiple Terraform applies. Terraform locks the state, preventing multiple concurrent Terraform runs from multiple users, + DynamoDB is a durable storage for State Locking as well.
+> I wanted to eliminate potential chances of State Corruption that might happen during multiple Terraform applies. + DynamoDB will be used as a durable data-store for State Locking.
 
 </br>
 
----> **S3 Versioning** on your backend S3 bucket to keep a history of your state files,▶️ for recovery from unintended changes.
-
----> **S3 Bucket Encryption**. While your state files are encrypted due to the encrypt attribute, ensuring the bucket itself is also encrypted. ▶ 👍👍
+---> **S3 Versioning** on our backend S3 bucket to keep a history of our state files,▶️ for recovery from unintended changes. + **S3 Encryption** 👍👍
 
 </br>
 
 ### _How did I optimise on costs while still maintaining a level of fault-tolerance?_
 
 Mix of both On-demand and Spot Instances
+
 </br>
 
 > We wanted to achieve a certain level of cost optimization as well while still retaining our fault tolerance capabilities. Hence, I've decided to go in for:-
@@ -299,9 +302,9 @@ Two separate node groups: one for critical workloads (on-demand), and Spot for c
 
 ## _Why ArgoCD?_
 
-It's actually a brilliant declarative, GitOps CD Tool. 
+ It's actually a brilliant "declarative, GitOps CD Tool." 
 
-I've used Argo for its capability to **automate deployments** across various environments. _**It ensures that my actual state of the Kubernetes matches the configuration manifests in the Git repo**_, (That's the **desired state** of the cluster).
+_**It ensures that my actual state of the Kubernetes matches the configuration manifests in the Git repo**_, (That's the **desired state** of the cluster).
 
 </br>
 
@@ -328,9 +331,9 @@ Here's the link to my K8s manifest files:- https://github.com/TanishkaMarrott/Re
 ## _Quick Dive into the k8 manifests + Key Design Considerations_
 
 
-#### 1- **`deployment.yaml`** 
+#### 1- **`Deployment.yaml`** 
 
-My Deployment for the Reddit-Clone application. Contains a blueprint for the pods it'll create 
+Blueprint for the Reddit-Clone pods we'll be creating
 
 </br>
 
@@ -351,7 +354,7 @@ _How did I improvise the deployment to be available and fault tolerant?_
 
 </br>
 
-#### 2- **`service.yaml`** 
+#### 2- **`Service.yaml`** 
 
 We're exposing the set of pods running the containerised application through the Service of type loadBalancer. It listens for traffic on port 80 and forwards it to port 3000 - the port the application listens on within the container.
 
@@ -370,7 +373,7 @@ Network Load Balancer naturally does ensure scalability - ➡️ NLB means Super
 
 </br>
 
-#### 3- **`ingress.yaml`**
+#### 3- **`Ingress.yaml`**
 
 I'm using this alongside the service object. In general, an Ingress would be used for its path-routing capabilities, -- you could actually host multiple applications on just a single IP, and route traffic to different backend service based on the path.
 
@@ -390,7 +393,7 @@ In my case, I'd be utilising an ingress controller for its advanced traffic mana
 
 </br>
 
-#### 4 - **`cluster-autoscaler.yaml`** & 5. **`hpa-manifest.yaml`** 
+#### 4 - **`Cluster-autoscaler.yaml`** & 5. **`HPA-manifest.yaml`** 
 
 _Scaling via Cluster Auto-Scaler and Horizontal Pod Scaler_
 
@@ -423,6 +426,8 @@ There's one more advantage to it. I'm not only adhering to the principle of Leas
 > Even in case of a compromise, chances of Privilege Escalation are minimized greatly
 
 In our case, I've created a specific SA -> `app-service-account` and attached the `app-role` to it, comprising the `get` , `watch` , and `list` permissions inherited the pods running the application.
+
+</br>
 
 ---
 
@@ -487,7 +492,7 @@ _My Application's frontend:-_
 
 ## Helm, Prometheus & Grafana - Monitoring + Visualisation
 
-Helm - It's a package manager for kubernetes, It actually streamlines the process of deploying applications on K8s clusters. 🟩
+Helm - It's a package manager for kubernetes, Streamlines the process of deploying applications on K8s clusters. 🟩
 
 > 🤔 I'd give a quick acronym here, Heard about Docker? What does it actually do? It packages the application code, libraries, necessary dependencies, and runtime environments into a single package (that's called an artifact). In the same way, Helm would package all K8s resources, like deployments, services. This means it more like a directory structure, packaging all K8s manifests, templates and config values.
 
