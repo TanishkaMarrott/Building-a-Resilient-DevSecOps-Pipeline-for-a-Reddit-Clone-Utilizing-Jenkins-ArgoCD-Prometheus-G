@@ -86,12 +86,10 @@ Please check `updated_main.tf` & `install.sh`
 
 --
 
-## _Why global tool configurations?_
+#### Global tool configurations?
+      
 
-
-They're _automatically installed & available to all jobs ➡️ it's defined at a global scope_        
-
- <ins>**--> In a way, it standardises the environment across all builds and projects. 👍**</ins>        
+ <ins>**--> In a way, it standardises the environment across all builds and projects. **</ins>        
 
 </br>
 
@@ -107,7 +105,7 @@ They're _automatically installed & available to all jobs ➡️ it's defined at 
 
 ---
 
-## _Pipeline Configuration_
+## &rarr; _Pipeline Configuration_
      
 
 </br>
@@ -212,7 +210,7 @@ Please check my code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/m
 
 ## _TF Configurations - Non functional Aspects:-_
 
-### _Multi-AZ NAT Gateway Setup + Multi-AZ Worker node deployment configuration:-_ 
+### _Multi-AZ NAT Gateway Setup + Multi-AZ Worker node deployments:-_ 
 
 In this architecture, I've deployed **three NATs each with its own Elastic IP**, to ensure **high availability** and **fault tolerance**.
 
@@ -238,7 +236,7 @@ In this architecture, I've deployed **three NATs each with its own Elastic IP**,
 
 </br>
 
-### _Are we utilising both public and private subnets. Why?_
+#### _Are we utilising both public and private subnets. Why?_
 
 </br>
 
@@ -278,7 +276,7 @@ Plus, we have **endpoint access restrictions**, and **secured SSH Access** - to 
 
 </br>
 
----> **S3 Versioning** on our backend S3 bucket to keep a history of our state files,▶️ for recovery from unintended changes. + **S3 Encryption** 👍👍
+> topping it up, with **S3 Versioning** on our backend S3 bucket to keep a history of our state files,▶️ for recovery from unintended changes. + **S3 Encryption** 👍
 
 </br>
 
