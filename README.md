@@ -955,7 +955,7 @@ The LoadBalancer type automatically provisions an external load balancer (suppor
 
 _Kibana Snapshots:-_
 
-<img width="511" alt="Reddit-App-clone-kibana-1" src="https://github.com/TanishkaMarrott/Orchestrating-a-DevSecOps-Pipeline-with-integrated-Logging-and-Monitoring-Frameworks/assets/78227704/c237f72d-1222-4149-b737-cabcfb2116bc">
+<img width="956" alt="Reddit-App-clone-kibana-1" src="https://github.com/TanishkaMarrott/Orchestrating-a-DevSecOps-Pipeline-with-integrated-Logging-and-Monitoring-Frameworks/assets/78227704/c237f72d-1222-4149-b737-cabcfb2116bc">
 
 
 --
@@ -963,8 +963,57 @@ _Kibana Snapshots:-_
 
 <img width="956" alt="Reddit-App-Clone-App-Kibana-2" src="https://github.com/TanishkaMarrott/Orchestrating-a-DevSecOps-Pipeline-with-integrated-Logging-and-Monitoring-Frameworks/assets/78227704/97ae9186-c4f6-43e4-bd01-a7a987b05b55">
 
+
 --
 
+
 <img width="956" alt="Reddit-App-Clone-App-Kibana-3" src="https://github.com/TanishkaMarrott/Orchestrating-a-DevSecOps-Pipeline-with-integrated-Logging-and-Monitoring-Frameworks/assets/78227704/c42feea1-b905-4723-98d5-3ea90075db3c">
+
+--
+
+## Wrapping it up!
+
+
+A big thank you for accompanying me on this journey. It was an absolutely amazing experience!! 😊
+
+--
+
+This project,  was more around the paradigm shift... towards a much secure, scalable and I'd say, a _transparent_ software development process in the cloud
+
+</br>
+
+> And yes, there's definitely a scope of potential improvement here, improving the efficiency of existing components, or integrating newer / more optimised components to enhance it even further.
+
+</br>
+
+However in my humble opinion, by integrating tools like Jenkins, ArgoCD, SAST Tools, OWASPand our logging/monitroing suite -- Prometheus, Grafana and the EFK stack within the k8s eco, we have essentially built something, that holds a good potential to streamline development and deployment processes
+
+▶ In way that's very well aligned with, I'd say, with the fast-paced business requirements
+
+</br>
+
+--> From an agility and security standpoint, if you actually wish to "create value", it is absolutely important to ingrain DevSecOps principles from the very beginning 💡
+
+</br>
+
+And hence, I've done my best in improvising this architectural workflow from a non-functional standpoint ➡️ security, scalability, cost-optimization and fault tolerance &rarr; all have been taken into account while creating this workflow 👍
+
+> It's my passion to set a robust foundation that not only meets the current business needs but also anticipates future challenges.
+
+Post continuous integration and deployment, the frameworks we've used for logging and monitoring are "lenses"          
+Lenses for us to observe and understand our application's behaviour and performance - real-time.
+
+I've just scratched the surface, there's a long way to go,  while crafting even better, resilent cloud solutions! 😊  
+
+
+### Suggestions for Potential Improvements:-
+
+Absolutely!!         
+You're warmly invited to contribute via a pull request or reach out directly at tanishka.marrott@gmail.com for any inquiries or collaboration opportunities. Additionally, connect with me on LinkedIn - https://www.linkedin.com/in/tanishka-marrott/ to stay updated on my latest projects and professional endeavors.
+
+
+### Acknowledgments:
+Grateful to Mudit Mathur and to Sridhar Modalavalasa for their insightful blogs on DevSecOps. A special thank you to the AWS Well-Architected documentation for serving as my de-facto guide throughout this journey. 🙏
+
 
 
