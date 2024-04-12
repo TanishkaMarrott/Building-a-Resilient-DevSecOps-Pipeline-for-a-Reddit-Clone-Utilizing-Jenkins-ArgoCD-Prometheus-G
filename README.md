@@ -1,6 +1,6 @@
 # Orchestrating a DevSecOps Pipeline with extensive Logging & Monitoring Frameworks incorporated
 
-## _Quick Introduction_:-
+## _Quick Introduction_:
 
 Our project today is all about the specifics involved while setting up an automated  **_DevSecOps Pipeline._**   
 --> we're not only speeding up releases, but also being security-compliant, from the get-go. 💡
