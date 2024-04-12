@@ -4,13 +4,13 @@
 ## _Quick Introduction_:-
 
 Our project today is all about the specifics involved while setting up an automated  **_DevSecOps Pipeline._**   
-
 --> we're not only speeding up releases, but also being security-compliant, from the get-go. 💡
 
 ****Technicalities in the sections that follow.****
 
---> _What are we trying to achieve?_    
-&nbsp; &nbsp; &nbsp; **Optimized QA + Speedy Delivery + Security Ingrained = Real Business Value** 
+--> _What are we trying to achieve?_  
+
+&nbsp; **Optimized QA + Speedy Delivery + Security Ingrained = REAL Business Value** 
 
 &nbsp;
 
@@ -77,18 +77,19 @@ _It's more like a ***Strategic Enabler,***_ to boost efficiency & streamline pro
 |                         | **Sonar Quality Gates**     | Breaks the build based on the quality thresholds we've set  |
 |                         | **OWASP Dependency Check**  | --> Vulnerabilities within the project's dependencies.                                |
 | IaC Scanning | **TfSec**  | Scans the IaC for security misconfigurations. |
-| Secrets Detection  | **truffleHog**              |  Accidentally committed secrets |
+| Secrets Detection  | **truffleHog**              |  detects accidentally committed secrets |
 
 --
 
 Please check `updated_main.tf` & `install.sh`
 
 >  Quality gates ensure that code meets some quality standards before it can proceed through.
+
 >  Webhooks provide immediate feedback ➡️ Quick identification & resolution
 
 --
 
-#### Global tool configurations?
+#### Global tool configurations
       
 
  <ins>**--> In a way, it standardises the environment across all builds and projects. **</ins>        
