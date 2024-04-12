@@ -1,13 +1,12 @@
-# Orchestrating a DevSecOps Pipeline with extensive Logging & Monitoring Frameworks incorporated
+# Orchestrating a DevSecOps Pipeline using Jenkins & ArgoCD + Extensive Logging & Monitoring Frameworks incorporated
 
 ## _Quick Introduction_
 
 Our project today is all about the specifics involved while setting up an automated  **_DevSecOps Pipeline._**   
 --> we're not only speeding up releases, but also being security-compliant, from the get-go. 💡
 
-****Technicalities in the sections that follow.****
 
---> _What are we trying to achieve?_  
+👉 _What are we trying to achieve?_  
 
 &nbsp; **Optimized QA + Speedy Delivery + Security Ingrained = REAL Business Value** 
 
@@ -17,7 +16,7 @@ Our project today is all about the specifics involved while setting up an automa
 
 
 **_Infrastructure Provisioning_** (Terraform)            
-   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;     ⬇️             
+   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;     ⬇        
 **_Container Orchestration_** (Elastic Kubernetes Service)       
     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;    ⬇️       
 **_CI/CD_**  (Jenkins & ArgoCD)      
@@ -25,15 +24,13 @@ Our project today is all about the specifics involved while setting up an automa
 **_Security Integrations_** (SonarQube, OWASP & Trivy)      
       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;  ⬇️        
 **_Logging, Monitoring & Data Visualization_** (Prometheus, Grafana & EFK Stack)      
-      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; 
-      =   
-      
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;      =   
 **_Real-time Insights_** into application health & performance  
 
 
 </br>
 
->  **Okay, so how does DevSecOps augment Business Processes?**
+>  Okay, so how does DevSecOps augment Business Processes?
 
 </br>
 
@@ -66,44 +63,28 @@ _It's more like a ***Strategic Enabler,***_ to boost efficiency & streamline pro
 
 ## _&rarr; Infra-Setup & Tool Configuration_
 
-### **_Plugins I've used:-_**   
+### **_What plugins & global tool configurations have we used:-_**   
 
 
 
-| Category               | Plugin/Tool                 | Purpose                                                                                   |
+|       Plugins &rarr;     |                 |                                                                                   |
 |-------------------------|-----------------------------|-------------------------------------------------------------------------------------------|
-| Code Quality & Analysis | **SonarQube Scanner**       | Integrates SQ into Jenkins --> SAST|
+| Code Quality & Analysis | **SonarQube Scanner**       | SQ + Jenkins --> SAST|
 |                         | **Sonar Quality Gates**     | Breaks the build based on the quality thresholds we've set  |
-|                         | **OWASP Dependency Check**  | --> Vulnerabilities within the project's dependencies.                                |
+|                         | **OWASP Dependency Check**  | --> Vulnerabilities in project dependencies.                                |
 | IaC Scanning | **TfSec**  | Scans the IaC for security misconfigurations. |
 | Secrets Detection  | **truffleHog**              |  detects accidentally committed secrets |
 
---
 
-Please check `updated_main.tf` & `install.sh`
 
->  Quality gates ensure that code meets some quality standards before it can proceed through.
+> Please check `updated_main.tf` & `install.sh`
 
->  Webhooks provide immediate feedback ➡️ Quick identification & resolution
-
---
-
-#### Global tool configurations
-      
-
- <ins> **--> In a way, it standardises the environment across all builds and projects.** </ins>        
-
-</br>
-
- > Eliminates the need of manually configuring specific runtime versions.
-
-</br>
  
 
-| Category                | Tools                   | Purpose                                                                                   |
+|   Global Tools    &rarr;      | |                                                                                   |
 |-------------------------|------------------------|-------------------------------------------------------------------------------------------|
-| Runtime & Environment   | **Eclipse Temurin Installer** | Means a specific JDK version is available for all jobs. |
-|                         | **Nodejs**                 | Once setup, the necessary runtime is available for JS applications. |
+| Runtime & Environment   | **Eclipse Temurin Installer** | ➡️ Means a specific JDK version is available for all jobs. |
+|                         | **Nodejs**                 | Once setup, the necessary runtime is available for JS applications. 👍 |
 
 ---
 
@@ -121,14 +102,21 @@ Please check `updated_main.tf` & `install.sh`
 
 ### _CI/CD Pipeline - Key Stages_
 
-
+Cumulating the steps ⤵️
 
 1. **Workspace Preparation** → 2. **Fetch the Latest Code** → 3. **Static Code Analysis** → 4. **Quality Gate Checkpoint** → 5. **Installing Dependencies** → 6. **Scanning File System & Docker Images** → 7. **Containerization** → 8. **Detecting Unwanted Secrets** → 9. **IaC Analysis for Security**
+   
 </br>
 
-You can find the application code here :- https://github.com/TanishkaMarrott/Reddit-Clone-App
+You can find my application code here :- https://github.com/TanishkaMarrott/Reddit-Clone-App
 
-_**Dependency-Check Results**_ –  Distribution and severity of vulnerabilities in the Reddit Clone App.
+</br>
+
+---
+
+_Snapshots:-_
+
+_**Dependency-Check Results**_ –->  Distribution & severity of vulnerabilities in the Reddit Clone App.
 
 </br>
 
@@ -167,28 +155,30 @@ _**Docker Hub Repository: 'tanishkamarrott/reddit'**_ – 'reddit' image &rarr; 
 
 </br>
 
+---
+
+Now that we're done with the CI part,let's move to the deployment aspect
+
 --
 
-Now that we're done with the CI part, we'd move to the deployment aspect
-
---
-
-Key intent:- automating the deployment of code from dev to prod, post a successful build ▶️
+_**Key intent:-**_ automating the deployment of code from dev to prod, post a successful build ▶️
 
 </br>
 
-> ➡️ Means a faster deployment velocity = Accelerated releases = Faster Time-to-market 
+> ➡️ Means a faster deployment velocity = Accelerated releases = Faster Time-to-market 👍
 
 </br>
 
 ### _Is Testing a part of both CI and CD?_
 
          
-True...
+True.
 
-But the kind and the emphasis of testing differs
+But the kind and the emphasis of testing differs...
 
-What does this mean?
+</br>
+
+What does this mean? 🤔
 
 ➡️ Testing in CI is primarily about running tests against the code to ensure the codebase is stable and functional throughout.
 
@@ -204,19 +194,21 @@ What does this mean?
 
 --
 
-When I talk about CD, it's not only about a "bug-free" code. You need some other types of testing too, **Security testing**, **Performance Testing**, **UAT testing**. Making my software production-ready, considering all non-functional aspects as well. 
+When I talk about CD, it's not only about a "bug-free" code. 
+
+We need some other types of testing too, **Security testing**, **Performance Testing**, **UAT testing**. Making my software production-ready, considering the non-functional aspects as well. 
 
 </br>
 
-> *Is my software production ready? Can this be delivered to my users? Does it meet the overall high quality standards?* CD answers such questions.
+> *Is my software production ready? Can this be delivered to my users? Does it meet the overall quality standards?* CD answers such questions.
 
 </br>
 
-Let's start with the Terrform Configurations...
+Let's start with the Terraform Configurations...
 
 </br>
 
-Please check my code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/main'
+Please check out my code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/main'
 
 </br>
 
@@ -230,7 +222,7 @@ In this architecture, I've deployed **three NATs each with its own Elastic IP**,
 
 </br>
 
-> We need to  ensure that our architecture can withstand an AZ Failure. If one NAT gateway becomes unavailable due to some issue in an AZ, we can still route outbound traffic to the internet. Any AZ-failure does not impact the availability of our application, hence **fault-tolerant**.   
+>  If one NAT gateway becomes unavailable, we can still route outbound traffic to the internet. We're fault-tolerantault tolerant to AZ Failure
 
 </br> 
 
@@ -242,11 +234,13 @@ In this architecture, I've deployed **three NATs each with its own Elastic IP**,
 
 </br>   
 
->  I didn't want any SPOFs or performance bottlenecks in my architecture. Multi -NAT ensures that traffic from the instances do not necessarily need to cross inter-AZ for reaching the internet, = reducing **Latency** 👍. It does help in the scalability aspect as well since resources in each AZ can scale out independently. We can add new subnets, add new instances in each AZ, without worrying NAT Gateway being a potential bottleneck. 💡
+>  I didn't want any SPOFs or performance bottlenecks in my architecture. **Multi -NAT ensures that traffic from the instances do not necessarily need to cross inter-AZ for reaching the internet, = reducing Latency** 👍.
+
+>  It does help me in the scalability aspect as well since resources in each AZ can scale out independently. We can add new subnets, add new instances in each AZ, without worrying NAT Gateway being a potential bottleneck. 💡
 
 </br>
 
-➡ However, this is a **cost vs. fault tolerance trade-off**. This decision means prioritizing availability and performance over the cost considerations.
+➡ However, this is a **cost vs. fault tolerance trade-off**. My decision here was prioritizing availability and performance over the cost considerations.
 
 </br>
 
@@ -258,7 +252,7 @@ In this architecture, I've deployed **three NATs each with its own Elastic IP**,
 
 > Also, in case the applications in the private subnet wish to connect to the internet, for example for updates, APIs etc., it will be done via the NAT deployed in each public subnet
 
-**secure outbound-only internet access** 👍.
+**Secure outbound-only internet access** 👍.
 
 </br>
 
@@ -268,19 +262,15 @@ I've pruned down the **public access CIDR** allowed to access the Kubernetes API
 
 </br>
 
-> By doing so, we're adopting a **principle of least privilege** and reducing the surface area for potential cyber threats.
-
-</br>
-
 > I'd advise to **tighten up security** to the **Corporate IP Address Range** as an ingress rule for the node group, that's something we might need for troubleshooting or administrative access
 
 </br>
 
 I've made sure the **IAM Policies** attached to the cluster and the node group are tied down. Chances of privilege escalation will be low.
 
-</br>
+Plus
 
-Plus, we have **endpoint access restrictions**, and **secured SSH Access** - to the worker nodes by specifying source security group IDs and SSH keys.
+We've  got **endpoint access restrictions**, and **secured SSH Access** - to the worker nodes by specifying source security group IDs and SSH keys.
 
 </br>
 
@@ -292,24 +282,26 @@ Plus, we have **endpoint access restrictions**, and **secured SSH Access** - to 
 
 </br>
 
-> topping it up, with **S3 Versioning** on our backend S3 bucket to keep a history of our state files,▶️ for recovery from unintended changes. + **S3 Encryption** 👍
+> Topping it up with **S3 Versioning** on our backend S3 bucket to keep a history of our state files,▶️ for recovery from unintended changes. + **S3 Encryption** 👍
 
 </br>
 
 ### _How did I optimise on costs while still maintaining a level of fault-tolerance?_
 
-Mix of both On-demand and Spot Instances
+Mix of both On-demand and Spot Instances 👍
 
 </br>
 
-> We wanted to achieve a certain level of cost optimization as well while still retaining our fault tolerance capabilities. Hence, I've decided to go in for:-
-**1- Two separate node groups: one for critical workloads (on-demand), and Spot for cost optimization.**
+We've decided to go in for:-          
+
+**1- Two separate node groups:-                                 
+One for critical workloads (on-demand) and Spot for cost optimization.***
      
-**Multiple Instance groups** have been specified to increase chances of Spot Instances fulfillment.
+**2 - Multiple Instance groups have been specified ➡ Increasing chances of Spot Instances fulfillment.**
 
 </br>
 
----> This means we have an **On-Demand capacity** to handle **Baseline Application Performance** + a **Spot Allocation strategy** as a **Cost Optimization strategy**. 👍 ☑️
+> ###---> This means we have an On-Demand capacity to handle Baseline Application Performance + a Spot Allocation strategy as a Cost Optimization strategy. 👍 ☑️
 
 </br>
 
@@ -317,13 +309,7 @@ Mix of both On-demand and Spot Instances
 
 ## _Why ArgoCD?_
 
- It's actually a brilliant "declarative, GitOps CD Tool." 
-
-_**It ensures that my actual state of the Kubernetes matches the configuration manifests in the Git repo**_, (That's the **desired state** of the cluster).
-
-</br>
-
->   _Automated, Repeatable and most importantly Reliable Deployments_ 👍
+👉 Brilliant "declarative, GitOps Tool." 
 
 </br>
 
@@ -352,11 +338,13 @@ Blueprint for the Reddit-Clone pods we'll be creating
 
 </br>
 
-_How did I improvise the deployment to be available and fault tolerant?_
+_**How did I improvise the deployment to be available and fault tolerant?**_
 
-☑ I've increased the number of Pod Replicas, K8s would then ensure that we'll have 2 instances of our application running at any given time. -> Availability, Load Distribution                  
+☑ I've **increased the number of Pod Replicas**, K8s would then ensure that we'll have 2 instances of our application running at any given time. -> Availability, Load Distribution                  
 
-☑ I've also specified the CPU and Memory Requests and Limits for the container. Requests would be guranteed by the kuberenetes scheduler, while limits would ensure that none of our pods is inadvertently consuming excessive resources ▶️ Efficient resource Utilisation and High Availability 🏁 👍
+☑ I've also **specified the CPU and Memory Requests and Limits for the container**. Requests would be guranteed by the kuberenetes scheduler, while limits would ensure that none of our pods is inadvertently consuming excessive resources
+
+▶️ **Efficient resource Utilisation** and **High Availability** 🏁 👍
 
 </br>
 
