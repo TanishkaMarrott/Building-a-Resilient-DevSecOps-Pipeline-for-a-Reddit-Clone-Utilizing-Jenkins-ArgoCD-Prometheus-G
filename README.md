@@ -4,6 +4,7 @@
 ## _Quick Introduction_:-
 
 Our project today is all about the specifics involved while setting up an automated  **_DevSecOps Pipeline._**   
+
 --> we're not only speeding up releases, but also being security-compliant, from the get-go. 💡
 
 ****Technicalities in the sections that follow.****
@@ -54,7 +55,7 @@ _It's more like a ***Strategic Enabler,***_ to boost efficiency & streamline pro
 
 ▶️ _Quality Assurance_ + _Reducing post-deployment fixes' costs_   
 
-= **_Averting Data Security incidents due to security lapses._**
+= **_Averting Data Security lapses_**
 
 </br>
 
@@ -73,7 +74,7 @@ _It's more like a ***Strategic Enabler,***_ to boost efficiency & streamline pro
 | Category               | Plugin/Tool                 | Purpose                                                                                   |
 |-------------------------|-----------------------------|-------------------------------------------------------------------------------------------|
 | Code Quality & Analysis | **SonarQube Scanner**       | Integrates SQ into Jenkins --> SAST|
-|                         | **Sonar Quality Gates**     | Breaks the build based on SonarQube quality gates  |
+|                         | **Sonar Quality Gates**     | Breaks the build based on the quality thresholds we've set  |
 |                         | **OWASP Dependency Check**  | --> Vulnerabilities within the project's dependencies.                                |
 | IaC Scanning | **TfSec**  | Scans the IaC for security misconfigurations. |
 | Secrets Detection  | **truffleHog**              |  Accidentally committed secrets |
@@ -82,7 +83,8 @@ _It's more like a ***Strategic Enabler,***_ to boost efficiency & streamline pro
 
 Please check `updated_main.tf` & `install.sh`
 
->  Quality gates in SQ ensures that code meets some quality standards before it can proceed through.  Webhooks provide immediate feedback within our CI/CD process ➡️ Quick identification & resolution
+>  Quality gates ensure that code meets some quality standards before it can proceed through.
+>  Webhooks provide immediate feedback ➡️ Quick identification & resolution
 
 --
 
@@ -93,14 +95,14 @@ Please check `updated_main.tf` & `install.sh`
 
 </br>
 
- > Eliminates the need of manually configuring specific versions of these runtimes/environments for each of them separately._
+ > Eliminates the need of manually configuring specific runtime versions for each of them separately._
 
 </br>
  
 
 | Category                | Tools                   | Purpose                                                                                   |
 |-------------------------|------------------------|-------------------------------------------------------------------------------------------|
-| Runtime & Environment   | **Eclipse Temurin Installer** | Means a specific version of the JDK is available for all jobs. |
+| Runtime & Environment   | **Eclipse Temurin Installer** | Means a specific JDK version is available for all jobs. |
 |                         | **Nodejs**                 | Once setup, the necessary runtime is available for JS applications. |
 
 ---
@@ -157,7 +159,7 @@ _**SonarQube Dashboard**_ --> Successful Quality Gate with an overview of code a
 
 </br>
 
-_**Docker Hub Repository: 'tanishkamarrott/reddit'**_ – 'reddit' image &rarr; ready for Image pushes
+_**Docker Hub Repository: 'tanishkamarrott/reddit'**_ – 'reddit' image &rarr; ready for pushes
 
 </br>
 
@@ -167,9 +169,9 @@ _**Docker Hub Repository: 'tanishkamarrott/reddit'**_ – 'reddit' image &rarr; 
 
 --
 
-Now that we're done with the continuous integration part, we'd move to the deployment part. 
+Now that we're done with the CI part, we'd move to the deployment aspect
 
-It's geared towards automating the deployment of code from dev to prod, post a successful build ▶️ that's post passing the necessary tests. 
+It's geared towards automating the deployment of code from dev to prod, post a successful build ▶️ that's post passing the tests. 
 
 </br>
 
@@ -180,15 +182,25 @@ It's geared towards automating the deployment of code from dev to prod, post a s
 ### _Is Testing a part of both CI and CD?_
 
          
-True.....But the kind and the emphasis of testing differs.....
+True...
 
-What does this mean...? Testing in CI is primarily about running tests against the code to ensure the codebase is stable and functional throughout. Integrating multiple code changes into the main-stream, won't break production. It mostly revolves around **Unit testing** & **Integration testing**.   
+But the kind and the emphasis of testing differs
+
+What does this mean?
+
+➡️ Testing in CI is primarily about running tests against the code to ensure the codebase is stable and functional throughout.
 
 </br>
 
-> The goal here is frequent, incremental updates - (**Immediate feedback** = **Quicker Iterative loops**)
+> Integrating multiple code changes into the main-stream, shouldn't break production. --> **Unit testing** & **Integration testing**.   ☑️
 
 </br>
+
+> The goal here is frequent, incremental updates - (**Immediate feedback** = **Quicker Iterative loops**) 👍
+
+</br>
+
+--
 
 When I talk about CD, it's not only about a "bug-free" code. You need some other types of testing too, **Security testing**, **Performance Testing**, **UAT testing**. Making my software production-ready, considering all non-functional aspects as well. 
 
