@@ -5,6 +5,7 @@
 ## _Quick Introduction:-_
 
 Our project today is all about the specifics involved while setting up an automated  **_DevSecOps Pipeline._**   
+
 --> we're not only speeding up releases, but also being security-compliant, from the get-go. 💡
 
 
@@ -65,11 +66,13 @@ _It's more like a ***Strategic Enabler,***_ to boost efficiency & streamline pro
 
 ## _&rarr; Infra-Setup & Tool Configuration_
 
+</br>
+
 ### **_What plugins & global tool configurations have we used:-_**   
 
 
 
-|       Plugins &rarr;     |                 |                                                                                   |
+|      The Plugins we've used &rarr;     |                 |                                                                                   |
 |-------------------------|-----------------------------|-------------------------------------------------------------------------------------------|
 | Code Quality & Analysis | **SonarQube Scanner**       | SQ + Jenkins --> SAST|
 |                         | **Sonar Quality Gates**     | Breaks the build based on the quality thresholds we've set  |
@@ -77,13 +80,16 @@ _It's more like a ***Strategic Enabler,***_ to boost efficiency & streamline pro
 | IaC Scanning | **TfSec**  | Scans the IaC for security misconfigurations. |
 | Secrets Detection  | **truffleHog**              |  detects accidentally committed secrets |
 
+</br>
 
 
 > Please check `updated_main.tf` & `install.sh`
 
+</br>
+
  
 
-|   Global Tools    &rarr;      | |                                                                                   |
+|   Global Tools  to standardise environments all across &rarr;      | |                                                                                   |
 |-------------------------|------------------------|-------------------------------------------------------------------------------------------|
 | Runtime & Environment   | **Eclipse Temurin Installer** | ➡️ Means a specific JDK version is available for all jobs. |
 |                         | **Nodejs**                 | Once setup, the necessary runtime is available for JS applications. 👍 |
