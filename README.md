@@ -1,6 +1,8 @@
-# Orchestrating a DevSecOps Pipeline using Jenkins & ArgoCD + Extensive Logging & Monitoring Frameworks incorporated
+# Orchestrating a DevSecOps Pipeline using Jenkins & ArgoCD +  </br>  Logging & monitoring solutions incorporated
 
-## _Quick Introduction_
+</br>
+
+## _Quick Introduction:-_
 
 Our project today is all about the specifics involved while setting up an automated  **_DevSecOps Pipeline._**   
 --> we're not only speeding up releases, but also being security-compliant, from the get-go. 💡
@@ -30,7 +32,7 @@ Our project today is all about the specifics involved while setting up an automa
 
 </br>
 
->  Okay, so how does DevSecOps augment Business Processes?
+>  **Okay, so how does DevSecOps augment Business Processes?**
 
 </br>
 
@@ -51,7 +53,7 @@ _It's more like a ***Strategic Enabler,***_ to boost efficiency & streamline pro
 
 ▶️ _Quality Assurance_ + _Reducing post-deployment fixes' costs_   
 
-= **_Averting Data Security lapses_**
+= **_Averting Data Security Incidents / lapses_**
 
 </br>
 
