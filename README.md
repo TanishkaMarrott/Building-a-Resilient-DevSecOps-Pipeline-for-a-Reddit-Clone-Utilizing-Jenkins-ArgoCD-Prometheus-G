@@ -51,7 +51,6 @@ _It's more like a ***Strategic Enabler,***_ to boost efficiency & streamline pro
 ▶️ _Quicker product iterations & feedback loops_
  means we're **_market-agile._**     👍👍
 
-</br>
 
 ▶️ _Quality Assurance_ + _Reducing post-deployment fixes' costs_   
 
@@ -64,10 +63,10 @@ _It's more like a ***Strategic Enabler,***_ to boost efficiency & streamline pro
 
 </br>
 
+---
+
 
 ## _&rarr; Infra-Setup & Tool Configuration_
-
-</br>
 
 ### **_What plugins & global tool configurations have we used:-_**   
 
@@ -503,21 +502,25 @@ _My Application's frontend:-_
 
 </br>
 
-## Helm, Prometheus & Grafana - Monitoring + Visualisation
+## Helm, Prometheus & Grafana - Monitoring + Visualisation combined
 
-Helm - It's a package manager for kubernetes, Streamlines the process of deploying applications on K8s clusters. 🟩
+Helm - It's a package manager for kubernetes, 🟩
 
 > 🤔 I'd give a quick acronym here, Heard about Docker? What does it actually do? It packages the application code, libraries, necessary dependencies, and runtime environments into a single package (that's called an artifact). In the same way, Helm would package all K8s resources, like deployments, services. This means it more like a directory structure, packaging all K8s manifests, templates and config values.
 
 </br>
 
-**Key pointers about Helm:-**
+**Helm ~ GitOps. How?**
 
-Helm lets you manage complex K8s applications, It lets you template charts as well, That mean's it'll enable us to inject values and configurations at runtime. == Reproducibility and Reusability of K8 manifests
+Helm lets you manage complex K8s applications, It lets you template charts as well, That means it'll enable us to inject values and configurations at runtime. 💡 **Reproducibility and Reusability of K8 manifests**
 
 </br>
 
 > 💡 Helm shares some similarity from a conceptual standpoint with GitOps Practices. Each time I install a new chart, it creates a new "release". So, this is a versioned snapshot, Helm keeps track of changes to your deployments. Just in case, the release isn't as well as it had been planned, you can rollback to a previous stable version. GitOps could extend this to a more broader sense, with both infrastructure provisioning / configuration plus the application deployment aspect...
+
+</br>
+
+--
 
 </br>
 
