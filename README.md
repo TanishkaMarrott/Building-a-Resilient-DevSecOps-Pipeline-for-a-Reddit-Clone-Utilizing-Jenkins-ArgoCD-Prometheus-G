@@ -504,15 +504,19 @@ _My Application's frontend:-_
 
 ## Helm, Prometheus & Grafana - Monitoring + Visualisation combined
 
-Helm - It's a package manager for kubernetes, 🟩
+Helm - It's a package manager for kubernetes. 🟩
 
-> 🤔 I'd give a quick acronym here, Heard about Docker? What does it actually do? It packages the application code, libraries, necessary dependencies, and runtime environments into a single package (that's called an artifact). In the same way, Helm would package all K8s resources, like deployments, services. This means it more like a directory structure, packaging all K8s manifests, templates and config values.
+</br>
+
+> 🤔 I'll give a quick acronym here, Heard about Docker? What does it actually do? It packages the application code, libraries, necessary dependencies, and runtime environments into a single package (that's called an artifact). In the same way, Helm would package all K8s resources, like deployments, services. This means it more like a directory structure, packaging all K8s manifests, templates and config values.
 
 </br>
 
 **Helm ~ GitOps. How?**
 
-Helm lets you manage complex K8s applications, It lets you template charts as well, That means it'll enable us to inject values and configurations at runtime. 💡 **Reproducibility and Reusability of K8 manifests**
+Helm lets you manage complex K8s applications, It lets you template charts as well, That means it'll enable us to inject values and configurations at runtime.
+
+▶ _**Reproducibility and Reusability of K8 manifests**_
 
 </br>
 
