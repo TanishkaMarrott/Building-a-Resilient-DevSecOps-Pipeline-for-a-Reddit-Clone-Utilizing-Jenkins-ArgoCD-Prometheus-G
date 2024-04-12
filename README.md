@@ -5,9 +5,9 @@
 ## _Quick Introduction:-_
 
 Our project today is all about the specifics involved while setting up an automated  **_DevSecOps Pipeline._**   
-
 --> we're not only speeding up releases, but also being security-compliant, from the get-go. 💡
 
+</br>
 
 👉 _What are we trying to achieve?_  
 
@@ -39,6 +39,7 @@ Our project today is all about the specifics involved while setting up an automa
 
 ## _How does DevSecOps align with my Business Goals?_
 
+</br>
 
 _Simple Answer:-_   
 **Solid Foundation to quickly realign with changing business requirements**
@@ -110,6 +111,8 @@ _It's more like a ***Strategic Enabler,***_ to boost efficiency & streamline pro
 
 ### _CI/CD Pipeline - Key Stages_
 
+</br>
+
 Cumulating the steps ⤵️
 
 1. **Workspace Preparation** → 2. **Fetch the Latest Code** → 3. **Static Code Analysis** → 4. **Quality Gate Checkpoint** → 5. **Installing Dependencies** → 6. **Scanning File System & Docker Images** → 7. **Containerization** → 8. **Detecting Unwanted Secrets** → 9. **IaC Analysis for Security**
@@ -124,9 +127,9 @@ You can find my application code here :- https://github.com/TanishkaMarrott/Redd
 
 _Snapshots:-_
 
-_**Dependency-Check Results**_ –->  Distribution & severity of vulnerabilities in the Reddit Clone App.
-
 </br>
+
+_**Dependency-Check Results**_ –->  Distribution & severity of vulnerabilities in the Reddit Clone App.
 
 
 ![image](https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/0e9a27ca-158a-4fa4-bfd7-4f82c5f6d30e)
@@ -167,7 +170,11 @@ _**Docker Hub Repository: 'tanishkamarrott/reddit'**_ – 'reddit' image &rarr; 
 
 Now that we're done with the CI part,let's move to the deployment aspect
 
---
+</br>
+
+---
+
+</br>
 
 _**Key intent:-**_ automating the deployment of code from dev to prod, post a successful build ▶️
 
@@ -181,13 +188,11 @@ _**Key intent:-**_ automating the deployment of code from dev to prod, post a su
 
          
 True.
-
 But the kind and the emphasis of testing differs...
 
 </br>
 
-What does this mean? 🤔
-
+What does this mean? 🤔               
 ➡️ Testing in CI is primarily about running tests against the code to ensure the codebase is stable and functional throughout.
 
 </br>
@@ -202,13 +207,12 @@ What does this mean? 🤔
 
 --
 
-When I talk about CD, it's not only about a "bug-free" code. 
-
+When I talk about CD, it's not only about a "bug-free" code...        
 We need some other types of testing too, **Security testing**, **Performance Testing**, **UAT testing**. Making my software production-ready, considering the non-functional aspects as well. 
 
 </br>
 
-> *Is my software production ready? Can this be delivered to my users? Does it meet the overall quality standards?* CD answers such questions.
+> #### *Is my software production ready? Can this be delivered to my users? Does it meet the overall quality standards?* CD answers such questions.
 
 </br>
 
@@ -230,7 +234,7 @@ In this architecture, I've deployed **three NATs each with its own Elastic IP**,
 
 </br>
 
->  If one NAT gateway becomes unavailable, we can still route outbound traffic to the internet. We're fault-tolerantault tolerant to AZ Failure
+>  If one NAT gateway becomes unavailable, we can still route outbound traffic to the internet. We're fault-tolerant to AZ Failure. There's no impact on our operational efficiency.
 
 </br> 
 
@@ -242,9 +246,7 @@ In this architecture, I've deployed **three NATs each with its own Elastic IP**,
 
 </br>   
 
->  I didn't want any SPOFs or performance bottlenecks in my architecture. **Multi -NAT ensures that traffic from the instances do not necessarily need to cross inter-AZ for reaching the internet, = reducing Latency** 👍.
-
->  It does help me in the scalability aspect as well since resources in each AZ can scale out independently. We can add new subnets, add new instances in each AZ, without worrying NAT Gateway being a potential bottleneck. 💡
+>  I didn't want any SPOFs or performance bottlenecks in my architecture. **Multi -NAT ensures that traffic from the instances do not necessarily need to cross inter-AZ for reaching the internet, = reducing Latency** 👍. It does help me in the scalability aspect as well since resources in each AZ can scale out independently. We can add new subnets, add new instances in each AZ, without worrying NAT Gateway being a potential bottleneck. 💡
 
 </br>
 
@@ -282,7 +284,7 @@ We've  got **endpoint access restrictions**, and **secured SSH Access** - to the
 
 </br>
 
-### _Terraform State Backend - S3 + DynamoDB --> Concurrency + State Locking_
+### _Terraform State Backend - S3 + DynamoDB --> State Locking_
 
 </br>
 
@@ -303,13 +305,13 @@ Mix of both On-demand and Spot Instances 👍
 We've decided to go in for:-          
 
 **1- Two separate node groups:-                                 
-One for critical workloads (on-demand) and Spot for cost optimization.***
+One for critical workloads (on-demand) and second, Spot for cost optimization.***
      
 **2 - Multiple Instance groups have been specified ➡ Increasing chances of Spot Instances fulfillment.**
 
 </br>
 
-> ###---> This means we have an On-Demand capacity to handle Baseline Application Performance + a Spot Allocation strategy as a Cost Optimization strategy. 👍 ☑️
+> ↪️ This means we have an On-Demand capacity to handle Baseline Application Performance + a Spot Allocation strategy as a Cost Optimization strategy. 👍 ☑️
 
 </br>
 
