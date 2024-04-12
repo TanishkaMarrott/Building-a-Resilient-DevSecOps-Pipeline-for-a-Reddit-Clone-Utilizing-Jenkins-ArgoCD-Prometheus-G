@@ -92,11 +92,11 @@ Please check `updated_main.tf` & `install.sh`
 #### Global tool configurations
       
 
- <ins>**--> In a way, it standardises the environment across all builds and projects. **</ins>        
+ <ins> **--> In a way, it standardises the environment across all builds and projects.** </ins>        
 
 </br>
 
- > Eliminates the need of manually configuring specific runtime versions for each of them separately._
+ > Eliminates the need of manually configuring specific runtime versions.
 
 </br>
  
@@ -172,7 +172,9 @@ _**Docker Hub Repository: 'tanishkamarrott/reddit'**_ – 'reddit' image &rarr; 
 
 Now that we're done with the CI part, we'd move to the deployment aspect
 
-It's geared towards automating the deployment of code from dev to prod, post a successful build ▶️ that's post passing the tests. 
+--
+
+Key intent:- automating the deployment of code from dev to prod, post a successful build ▶️
 
 </br>
 
@@ -197,7 +199,7 @@ What does this mean?
 
 </br>
 
-> The goal here is frequent, incremental updates - (**Immediate feedback** = **Quicker Iterative loops**) 👍
+> My goal here is frequent, incremental updates - (**Immediate feedback** = **Quicker Iterative loops**) 👍
 
 </br>
 
@@ -225,7 +227,7 @@ Please check my code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/m
 
 ### _Multi-AZ NAT Gateway Setup + Multi-AZ Worker node deployments:-_ 
 
-In this architecture, I've deployed **three NATs each with its own Elastic IP**, to ensure **high availability** and **fault tolerance**.
+In this architecture, I've deployed **three NATs each with its own Elastic IP**, for **high availability** and **fault tolerance**.
 
 </br>
 
@@ -253,9 +255,11 @@ In this architecture, I've deployed **three NATs each with its own Elastic IP**,
 
 </br>
 
-> My public subnets host the Load Balancers and NAT Gateways (the resources which are intended to be public), so, they'll distribute incoming internet traffic to the pods running the application. ➡️ This setup simplifies and centralizes traffic management while keeping our backend pods secure.
+> My public subnets host the Load Balancers and NAT Gateways (the resources which are actually intended to be public), so, they'll distribute incoming internet traffic to the pods running the application. ➡️ This setup simplifies and centralizes traffic management while keeping our backend pods secure.
 
-> Also, in case the applications in the private subnet wish to connect to the internet, for example for updates, APIs etc., it can be done via the NAT deployed in each public subnet = **secure outbound-only internet access** 👍.
+> Also, in case the applications in the private subnet wish to connect to the internet, for example for updates, APIs etc., it will be done via the NAT deployed in each public subnet
+
+**secure outbound-only internet access** 👍.
 
 </br>
 
@@ -269,7 +273,7 @@ I've pruned down the **public access CIDR** allowed to access the Kubernetes API
 
 </br>
 
-> I'd advise to **tighten up security** to the **Corporate IP Address Range** as an ingress rule for the node group, that's something we might need for troubleshooting or administrative access - (We might need to SSH into the VMs to check if everything's alright)
+> I'd advise to **tighten up security** to the **Corporate IP Address Range** as an ingress rule for the node group, that's something we might need for troubleshooting or administrative access
 
 </br>
 
@@ -281,7 +285,7 @@ Plus, we have **endpoint access restrictions**, and **secured SSH Access** - to 
 
 </br>
 
-### _Terraform State Backend - S3 + DynamoDB -> Concurrency + State Locking_
+### _Terraform State Backend - S3 + DynamoDB --> Concurrency + State Locking_
 
 </br>
 
@@ -300,8 +304,9 @@ Mix of both On-demand and Spot Instances
 </br>
 
 > We wanted to achieve a certain level of cost optimization as well while still retaining our fault tolerance capabilities. Hence, I've decided to go in for:-
-Two separate node groups: one for critical workloads (on-demand), and Spot for cost optimization.          
-**Multiple Instance groups** specified to increase chances of Spot Instances fulfillment.
+**1- Two separate node groups: one for critical workloads (on-demand), and Spot for cost optimization.**
+     
+**Multiple Instance groups** have been specified to increase chances of Spot Instances fulfillment.
 
 </br>
 
