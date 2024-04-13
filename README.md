@@ -66,17 +66,17 @@ _Simple Answer:-_
 
 ##  &rarr; Jenkins Setup & Tool Configuration_
 
-### **_What sort of plugins & global tool configurations have we used?_**   
+### **What sort of plugins & global tool configurations have we used?**   
 
 </br>
 
 |     **The plugins we've used &rarr;**    |                 |                                                                                   |
 |-------------------------|-----------------------------|-------------------------------------------------------------------------------------------|
-| The ones for code quality & analysis | **SonarQube Scanner**       | SQ + Jenkins --> SAST|
-|                         | **Sonar Quality Gates**     | It breaks the build based on the quality thresholds |
-|                         | **OWASP Dependency Check**  | --> Vulnerabilities in project dependencies.                                |
-| IaC Scanning | **TfSec**  | Scans the IaC from a security standpoint |
-| Secrets Detection  | **truffleHog**              |  Helps detect accidentally committed secrets |
+| The ones for code quality & analysis | SonarQube Scanner       | SQ + Jenkins --> SAST|
+|                         | Sonar Quality Gates     | It breaks the build based on the quality thresholds |
+|                         | OWASP Dependency Check  | --> Vulnerabilities in project dependencies.                                |
+| IaC Scanning | TfSec  | Scans the IaC from a security standpoint |
+| Secrets Detection  | truffleHog              |  Helps detect accidentally committed secrets |
 
 </br>
 
@@ -89,8 +89,8 @@ _Simple Answer:-_
 
 |   Global tools  to standardise environments all across &rarr;      | |                                                                                   |
 |-------------------------|------------------------|-------------------------------------------------------------------------------------------|
-| Runtime & Environment   | **Eclipse Temurin Installer** | ➡️ Means a specific JDK version is available for all jobs. |
-|                         | **Nodejs**                 | Once setup, the necessary runtime is available for JS applications. 👍 |
+| Runtime & Environment   | Eclipse Temurin Installer | ➡️ Means a specific JDK version is available for all jobs. |
+|                         | Nodejs                 | Once setup, the necessary runtime is available for JS applications. 👍 |
 
 </br>
 
@@ -116,6 +116,8 @@ Workspace Preparation → **Fetch** the Latest Code → **Static Code Analysis**
 
 
 </br>
+
+--
 
 _Snapshots:-_
 
@@ -224,7 +226,7 @@ In this architecture, I've deployed **three NATs each with its own Elastic IP**,
 
 </br>
 
-> My public subnets host the Load Balancers and NAT Gateways (the resources which are actually intended to be public), so, they'll distribute incoming internet traffic to the pods running the application. ➡️ This setup will help us simplify and centralize traffic management while keeping our backend pods secure. Also, in case the applications in the private subnet wish to connect to the internet, for example :- for updates, APIs etc., it will be done via the NAT deployed in each public subnet
+> My public subnets host the Load Balancers and NAT Gateways (the resources which are actually intended to be public), so, they'll distribute incoming internet traffic to the pods running the application. ➡️ This setup will **help us simplify and centralize traffic management** while keeping our backend pods secure. Also, **in case the applications in the private subnet wish to connect to the internet, for example :- for updates, APIs etc., it will be done via the NAT deployed in each public subnet**
 
 **Secure outbound-only internet access** 👍.
 
@@ -232,19 +234,19 @@ In this architecture, I've deployed **three NATs each with its own Elastic IP**,
 
 ### _Granular Access controls for EKS_
 
-I've pruned down the **public access CIDR** allowed to access the Kubernetes API Server. Having centralized control over access and management.
+**I've pruned down the public access CIDR** allowed to access the Kubernetes API Server. Having centralized control over access and management.
 
 </br>
 
-> I'd advise to **tighten up security** to the **Corporate IP Address Range** as an ingress rule for the node group, that's something we might need for troubleshooting or administrative access
+> **I'd advise to tighten up security to the Corporate IP Address Range** as an ingress rule for the node group, that's something we might need for troubleshooting or administrative access
 
 </br>
 
-I've made sure the **IAM Policies** attached to the cluster and the node group are tied down. Chances of privilege escalation will be low.
+**I've made sure the IAM Policies attached to the cluster and the node group are tied down.** Chances of privilege escalation will be low.
 
 Plus
 
-We've  got **endpoint access restrictions**, and **secured SSH Access** - to the worker nodes by specifying source security group IDs and SSH keys.
+**We've  got endpoint access restrictions, and secured SSH Access** - to the worker nodes by specifying source security group IDs and SSH keys.
 
 </br>
 
@@ -252,7 +254,7 @@ We've  got **endpoint access restrictions**, and **secured SSH Access** - to the
 
 </br>
 
-> I wanted to eliminate potential chances of State Corruption that might happen during multiple Terraform applies. + DynamoDB will be used as a durable data-store for State Locking.
+> **I wanted to eliminate potential chances of State Corruption that might happen during multiple Terraform applies**. + DynamoDB will be used as a durable data-store for State Locking.
 
 </br>
 
@@ -266,7 +268,7 @@ Mix of both On-demand and Spot Instances 👍
 
 </br>
 
-We've decided to go in for:-          
+**We've decided to go in for:-**          
 
 **1- Two separate node groups:-                                 
 One for critical workloads (on-demand) and second, Spot for cost optimization.***
@@ -334,7 +336,8 @@ _**How did I improvise the deployment to be available and fault tolerant?**_
 
 #### 2- **`Service.yaml`** 
 
-We're exposing the set of pods running the containerised application through the Service of type loadBalancer. It listens for traffic on port 80 and forwards it to port 3000 - the port the application listens on within the container.
+We're exposing the set of pods running the containerised application through the Service of type loadBalancer.             
+**It listens for traffic on port 80 and forwards it to port 3000** - the port the application listens on within the container.
 
 </br>
 
@@ -357,13 +360,13 @@ I'm using this alongside the service object.
 
 </br>
 
-> ➡️ At times, when you're having multiple services, **I'd not advise creating multiple services of type `LoadBalancer`** , That wouldn't be a wise decision, Use an Ingress Controller to distribute / route the traffic based on the path in the URL. **You'll simplify your network setup, while saving on extra infra costs.**
+> ➡️ At times, when you're having multiple services, I'd not advise creating multiple services of type `LoadBalancer` , That wouldn't be a wise decision, **Instead, I'd advise to use an Ingress Controller to distribute / route the traffic based on the path in the URL**. **You'll simplify your network setup, while saving on extra infra costs.**
 
 </br>
 
-In my case, **I'd be utilising an ingress controller for its advanced traffic management + SSL termination capabilities.** A standard way for exposing Services with a single external access point Provides scope, to maybe use some ACLs for IP Whitelisting, Geo-restrictions in conjunction with an AWS API Gateway/ WAF for an eve better security posture. 👍
+In my case, **we will be utilising an ingress controller for its advanced traffic management + SSL termination capabilities.** A standard way for exposing Services with a single external access point Provides scope, to maybe use some ACLs for IP Whitelisting, Geo-restrictions in conjunction with an AWS API Gateway/ WAF for an eve better security posture. 👍
 
-☑️ **I've limited the connections and requests per second, helps prevent resource exhaustion and overwhelming** of backend services 🏁 ✔
+☑️ **We've limited the connections and requests per second, helps prevent resource exhaustion and overwhelming** of backend services 🏁 ✔
 
 </br>
 
@@ -405,9 +408,9 @@ Why?
 
 > **Rationale for RBAC:-** Usually, pods make use of a Default Service Account, for performing all Kuberenetes API Operation. But, that's way too broad.
 
->  If we're looking for a **much more auditable, and secure K8s environment wherein permissions are scoped, we must create a specific SA**, bind necessary permissions to the role 👍 -- (the one's I need for the application's proper functioning  ). This Role would then be attached to the SA... 
+>  **If we're looking for a much more auditable, and secure K8s environment wherein permissions are scoped, we must create a specific SA**, bind necessary permissions to the role 👍 -- (the one's I need for the application's proper functioning  ). This Role would then be attached to the SA... 
 
-Advantage A --> I'm not only adhering to the **principle of Least privilege,**
+Advantage A --> We're adhering to the **principle of Least privilege,**
 
 Advantage B --> **We can also _scope_ permissions to a specific namespace,** if we're looking for granular access control. User Accounts too can be granted specific permissions for the resources they need to access (pods etc.)
 
@@ -427,9 +430,9 @@ In our case, I've created a specific SA -> `app-service-account` and attached th
 
 --> How you could implement it?
 
-Option 1 - You can have a `deny-all` policy`, restricting any ingress to all the pods (as specified by the selector) within a namespace. 
+_Option 1_ - You can have a `deny-all` policy`, restricting any ingress to all the pods (as specified by the selector) within a namespace. 
 
-Option 2 - Or maybe have a specific Network Policy allowing inbound traffic from pods of a certain application within the same namespace. = This is what is predominantly done when you've got multiple applications --> **We're controlling Ingress/Egress , but at the pod level!**
+_Option 2_ - Or maybe have a specific Network Policy allowing inbound traffic from pods of a certain application within the same namespace. = This is what is predominantly done when you've got multiple applications --> **We're controlling Ingress/Egress , but at the pod level!**
 
 </br>
 
@@ -486,7 +489,7 @@ _My Application's frontend:-_
 
 </br>
 
-> 🤔 I'll give an acronym here, heard about Docker? What does it actually do? It packages the application code, libraries, necessary dependencies, and runtime environments into a single package (that's called an artifact). In the same way, Helm would package all K8s resources, like deployments, services. This means it more like a directory structure, packaging all K8s manifests, templates and config values.
+> 🤔 I'll give an acronym here, heard about Docker? What does it actually do? It packages the application code, libraries & necessary dependencies into a single package (that's called an artifact). In the same way, Helm would package all K8s resources, like deployments, services. This means it more like a directory structure, packaging all K8s manifests, templates and config values.
 
 </br>
 
@@ -518,9 +521,9 @@ We've added the Helm Repo `Prometheus-kube-stack.` This repo is a collection of 
 
 </br>
 
-> Prometheus, it's actually a time- series database....  It collects data from a wide array of sources, be it, infra-components, applications or  services..... That's through Exporters. --> Expose metrics in a way that can be easily consumed by Prom.
+> Prometheus, it's actually a time- series database....  **It collects data from a wide array of sources,** be it, infra-components, applications or  services..... That's through Exporters. **--> Expose metrics in a way that can be easily consumed by Prom.**
 
-> Next step --> You can then make use of PromQL, to query the data, or have an Alerting manager setup / integrated with it, to trigger off notifications for anomalies.
+> **Next step -->** You can then make use of **PromQL, to query the data,** or have an **Alerting manager setup / integrated with it,** to trigger off notifications for anomalies.
 
 
 </br>
@@ -547,7 +550,8 @@ The prometheus stack, we installed using Helm, comes with the Grafana Deployment
 
 So, what's Grafana? ⏬
 
-Grafana is more of a Data Visualisation tool, you can actually fetch data from any of your Data sources, Prometheus in our case, and create dashboards, create graphs, heatmaps. You can have interactive dashboard with dynamic filtering cpabailities
+Grafana is more of a Data Visualisation tool 📊            
+**You can actually fetch data from any of your Data sources, Prometheus in our case,** and create dashboards, create graphs, heatmaps. You can have _interactive dashboard with dynamic filtering capabailities_
 
 </br>
 
@@ -622,11 +626,20 @@ We've imported three dashboards here:-
 
 </br>
 
-### What do these dashboards represent? ⚛️
+### What do these dashboards represent? ⚛️               
 
-1-> _**The Pod monitoring dashboard**_ provides us with metrics + data specifically for individual pods, Meaning Pod Status, the CPU Memory Usage , the ntwrok usage, the volume of logs produced, the number of restarts etc, _So these are indicative of underlying issues with the pods_
+1-> _**The Pod monitoring dashboard**_ provides us with metrics + data specifically for individual pods. 
+➡️ Meaning Pod Status, the CPU Memory Usage, the network usage, the volume of logs produced, the number of restarts etc,
 
-2-> _**The Cluster Monitoring dashboard**_ indicate the overall health of a cluster with all its components, whether they're nodes, deployments, services etc. It more like a comprehensive dahsboard, covering the workload distribution, the number of deployments, nodes etc, Resource Utilisation, the health and status of nodes + alerting and monitoring notifications etc
+> _So these are indicative of underlying issues with the pods_
+
+</br>
+
+2-> _**The Cluster Monitoring dashboard**_ indicate the overall health of a cluster with all its components, whether they're nodes, deployments, services etc. 
+
+> It more like a comprehensive dashboard, covering the workload distribution, the number of deployments, nodes etc, Resource Utilisation, the health and status of nodes + alerting and monitoring notifications etc
+
+</br>
 
 3-> _**The Node Monitoring dashboard**_ is around pod allocation to the nodes, checks for Memory pressure, out of Disk or any such conditions for the nodes, the node utilisation metrics (over-utilised and underutilised), the health and status of the nodes, etc
 
