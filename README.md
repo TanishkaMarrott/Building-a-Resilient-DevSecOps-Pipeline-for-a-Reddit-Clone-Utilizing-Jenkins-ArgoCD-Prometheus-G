@@ -17,6 +17,7 @@ Our project today is all about the specifics involved while setting up an automa
 
 ## So, how does the workflow actually look like?
 
+</br>
 
 **_Infrastructure Provisioning_** (Terraform)            
    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;     ⬇        
@@ -50,24 +51,17 @@ _Simple Answer:-_
 
 </br>
 
-▶ Quicker product iterations & feedback loops
- --> means we're **_market-agile._**     👍👍
+▶ Quicker product iterations & feedback loops --> means we're **_market-agile._** 👍👍
 
-
-▶ Quality Assurance + Reducing post-deployment fixes' costs   
-
-= **_Averting Data Security Incidents / lapses_**
+▶ Quality Assurance + Reducing post-deployment fixes' costs
 
 </br>
 
->  #### **<ins>Agile DevSecOps = Swiftly adapting to evolving Business Requirements.** 
-
-
-
+>   **Agile DevSecOps = Swiftly adapting to evolving Business Requirements.**
 </br>
 
 
-## _ ➡️ Infra-Setup & Tool Configuration_
+##  ➡️ Jenkins Setup & Tool Configuration_
 
 ### **_Which plugins & global tool configurations have we used?_**   
 
@@ -84,7 +78,7 @@ _Simple Answer:-_
 </br>
 
 
-> Please check out these files:- `updated_main.tf` & `install.sh`
+ Please check out these files:- `updated_main.tf` & `install.sh`
 
 </br>
 
@@ -110,23 +104,41 @@ _Simple Answer:-_
 
 ### _CI/CD Pipeline - Key Stages_
 
-</br>
 
 Cumulating the steps ⤵️
 
-1. **Workspace Preparation** → 2. **Fetch the Latest Code** → 3. **Static Code Analysis** → 4. **Quality Gate Checkpoint** → 5. **Installing Dependencies** → 6. **Scanning File System & Docker Images** → 7. **Containerization** → 8. **Detecting Unwanted Secrets** → 9. **IaC Analysis for Security**
-   
-</br>
+          Workspace Preparation                           
+                    |                  
+                    v                  
+          Fetch the Latest Code          
+                    |                  
+                    v         
+          Static Code Analysis            
+                    |            
+                    v            
+          Quality Gate Checkpoint         
+                    |         
+                    v         
+          Installing Dependencies      
+                    |            
+                    v            
+          Scanning File System & Docker Images         
+                    |         
+                    v            
+          Containerization            
+                    |         
+                    v            
+          Detecting Unwanted Secrets      
+                    |            
+                    v            
+          IaC Analysis for Security            
+         
 
-You can find my application code here :- https://github.com/TanishkaMarrott/Reddit-Clone-App
+You can find the Reddit Application code here :- https://github.com/TanishkaMarrott/Reddit-Clone-App
 
-</br>
 
---
 
 _Snapshots:-_
-
-</br>
 
 _**Dependency-Check Results**_ –->  Distribution & severity of vulnerabilities in the Reddit Clone App.
 ![image](https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/0e9a27ca-158a-4fa4-bfd7-4f82c5f6d30e)
@@ -149,71 +161,55 @@ _**SonarQube Dashboard**_ --> Successful Quality Gate with an overview of code a
 
 </br>
 
-_**Docker Hub Repository: 'tanishkamarrott/reddit'**_ – 'reddit' image &rarr; ready for pushes
+_**Docker Hub Repo: 'tanishkamarrott/reddit'**_ – 'reddit' image &rarr; ready for pushes
 ![image](https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/395f374d-9dbd-4436-9f73-c18848d40ccf)
 
 </br>
 
+## The Continuous Deployment Part
 
-Now that we're done with the CI part, let's move to the deployment aspect
-
-</br>
-
----
+_**Intent:-**_ Automating the deployment of code from dev to prod, post a successful build ▶️                
+> **Continuous Deployment** ➡️ Means a faster deployment velocity = Accelerated releases = Faster Time-to-market 👍
 
 </br>
 
-_**Key intent:-**_ Automating the deployment of code from dev to prod, post a successful build ▶️
-
-</br>
-
-> ➡️ Means a faster deployment velocity = Accelerated releases = Faster Time-to-market 👍
-
-</br>
-
-### _Is Testing a part of both CI and CD?_
+### _On a side note :- Is testing a part of both CI and CD?_
 
          
-True.
+True.                
 But the kind and the emphasis of testing differs...
 
 </br>
 
-What does this mean? 🤔               
+What does this mean?                   
 ➡️ Testing in CI is primarily about running tests against the code to ensure the codebase is stable and functional throughout.
 
+<ins>**Crucial:-**</ins>        
+Integrating multiple code changes into the main-stream, shouldn't break production. --> **_Unit testing_** & **_Integration testing_**.
+
 </br>
 
-> Integrating multiple code changes into the main-stream, shouldn't break production. --> **Unit testing** & **Integration testing**.   ☑️
-
-</br>
-
-> My goal here is frequent, incremental updates - (**Immediate feedback** = **Quicker Iterative loops**) 👍
+>  🎯 My goal here is frequent, incremental updates - (Immediate feedback** = Quicker Iterative loops) 
 
 </br>
 
 --
 
-When I talk about CD, it's not only about a "bug-free" code...        
+When I talk about CD, it's not only about a "bug-free" code...   
+
 We need some other types of testing too, **Security testing**, **Performance Testing**, **UAT testing**. Making my software production-ready, considering the non-functional aspects as well. 
 
 </br>
 
-> #### *Is my software production ready? Can this be delivered to my users? Does it meet the overall quality standards?* CD answers such questions.
+> #### 👉 *Is my software production ready? Can this be delivered to my users? Does it meet the overall quality standards?* CD answers such questions.
 
 </br>
 
-Let's start with the Terraform Configurations...
 
-</br>
+## Non-functional aspects of the the application infrastructure:-
 
-Please check out my code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/main'
 
-</br>
-
----
-
-## _TF Configurations - Non functional Aspects:-_
+Please check out my TF code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/main'
 
 ### _Multi-AZ NAT Gateway Setup + Multi-AZ Worker node deployments:-_ 
 
@@ -304,12 +300,11 @@ One for critical workloads (on-demand) and second, Spot for cost optimization.**
 
 ## _Why ArgoCD?_
 
-👉 Brilliant "declarative, GitOps Tool." 
+👉 A Brilliant "declarative, GitOps CD Tool." 
 
 </br>
 
-So, that's something I like.... ArgoCD automatically checks for differences between your current state of K8s cluster and what's in the manifest files, means that my changes are **automatically deployed** and reflected in the live environment, as soon as they're pushed.
-
+So, that's something I like.... So, what Argo does is , it **automatically reconciles differences** between the cluster's current state and what's in the manifest files, means that my changes are automatically **deployed and reflected in the live environment, as soon as they're pushed.**
 </br>
 
 >  **Every change's versioned**, just in case changes don't go as planned, you can always **rollback to a previous state**
@@ -339,11 +334,13 @@ _**How did I improvise the deployment to be available and fault tolerant?**_
 
 ☑ I've also **specified the CPU and Memory Requests and Limits for the container**. Requests would be guranteed by the kuberenetes scheduler, while limits would ensure that none of our pods is inadvertently consuming excessive resources
 
-▶️ **Efficient resource Utilisation** and **High Availability** 🏁 👍
+</br>
+
+▶️ **_Efficient resource Utilisation + High Availability_** 🏁 👍
 
 </br>
 
-> I'd been observing that there was an uneven scheduling of pods across the nodes. Hence, I had to utilise the `topologySpreadConstraint` parameter, to ensure we're utilising our resources evenly. And a `maxSkew` parameter, this means resilient scheduling of pods across Nodes.
+> **IMP:-** I'd been observing that there was an uneven scheduling of pods across the nodes. Hence, I had to utilise the `topologySpreadConstraint` parameter, to ensure we're utilising our resources evenly. And a `maxSkew` parameter, this means resilient scheduling of pods across Nodes.
 
 
 </br>
@@ -358,12 +355,12 @@ We're exposing the set of pods running the containerised application through the
 
 </br>
 
-_The non-functional aspects I've included:-_
+_**The non-functional aspects I've included:-**_
 
-☑ I've made use of K8s annotations for Cross-Zone Load Balancing = High Availability - Distributes Traffic evenly across pods in multiple Availability Zones 
-Network Load Balancer naturally does ensure scalability - ➡️ NLB means Super-low Latency + Super High Performance 👍
+☑ **I've made use of K8s annotations for Cross-Zone Load Balancing = HA Configuration** - Distributes Traffic evenly across pods in multiple AZs                
+Network Load Balancer naturally does ensure scalability - ➡️**NLBs = Reducing latency + Improving performance 👍**
 
-☑ Also, client source ips are preserved to ensure a better security, --> this will later help us in implementing WAF NACls that could be associated with the API Gateway fronting the LB --> Enhanced Security ☑️ 
+☑ Also, **we'll be preserving client source ips are preserved** to ensure a better security, --> this will later help us in implementing WAF NACls that could be associated with the API Gateway fronting the LB --> Enhanced Security ☑️ 
 
 </br>
 
@@ -373,17 +370,17 @@ Network Load Balancer naturally does ensure scalability - ➡️ NLB means Super
 
 #### 3- **`Ingress.yaml`**
 
-I'm using this alongside the service object. In general, an Ingress would be used for its path-routing capabilities, -- you could actually host multiple applications on just a single IP, and route traffic to different backend service based on the path.
+I'm using this alongside the service object. 
 
 </br>
 
-> ➡️ At times, when you're having multiple services, I'd not advise creating multiple services of type `LoadBalancer` , That wouldn't be a wise decision, Use an Ingress Controller to distribute / route the traffic based on the path in the URL. You'll simplify your network setup, while saving on extra infra costs.
+> ➡️ At times, when you're having multiple services, **I'd not advise creating multiple services of type `LoadBalancer`** , That wouldn't be a wise decision, Use an Ingress Controller to distribute / route the traffic based on the path in the URL. **You'll simplify your network setup, while saving on extra infra costs.**
 
 </br>
 
-In my case, I'd be utilising an ingress controller for its advanced traffic management + SSL termination capabilities. A standard way for exposing Services with a single external access point Provides scope, to maybe use some ACLs for IP Whitelisting, Geo-restrictions in conjunction with an AWS API Gateway/ WAF for an eve better security posture. 👍
+In my case, **I'd be utilising an ingress controller for its advanced traffic management + SSL termination capabilities.** A standard way for exposing Services with a single external access point Provides scope, to maybe use some ACLs for IP Whitelisting, Geo-restrictions in conjunction with an AWS API Gateway/ WAF for an eve better security posture. 👍
 
-☑️ I've limited the connections and requests per second, helps prevent resource exhaustion and overwhelming of backend services 🏁 ✔
+☑️ **I've limited the connections and requests per second, helps prevent resource exhaustion and overwhelming** of backend services 🏁 ✔
 
 </br>
 
@@ -397,13 +394,15 @@ _Scaling via Cluster Auto-Scaler and Horizontal Pod Scaler_
 
 </br>
 
-> We wanted something that could adapt both at the pod and the node level. Something that can help us scale effectively in Kubernetes and manage workload fluctuations as well. Hence we added `cluster-autoscaler.yaml` and `hpa-manifest.yaml`
+> 💡 **We wanted something that could adapt at both at the pod and the node level... Something that can help us scale effectively in Kubernetes and manage workload fluctuations as well.** And, hence we've added `cluster-autoscaler.yaml` and `hpa-manifest.yaml`
 
 </br>
+        
+Cluster auto-scaler. 👉 Scales the nodes up and down when there's a lack of sufficient resources to schedule pods or due to node utilization.              
+Horizontal Pod Autoscaler 👉 Adjusting the number of pod replicas in a deployment, based on current demand,                
 
-Hence, I've used both **Cluster Auto-scaler** and **Horizontal Pod Autoscaler**,                
-And how're they different? **Cluster auto-scaler** scales the nodes up and down in the event of a lack of sufficient resources to schedule pods or due to node utilization.              
-**Horizontal Pod Autoscaler** is about adjusting the number of pod replicas in a deployment, based on current demand, (We're considering **CPU Utilization** as our target metric here). This helps maintain an optimal application performance level as the workload changes.
+
+> **We're considering **CPU Utilization** as our target metric here**. This helps us maintain an optimal Application performance irrespective of the fluctuations
 
 
 </br>
@@ -433,13 +432,16 @@ In our case, I've created a specific SA -> `app-service-account` and attached th
 
 #### 7. **K8s Network Policies** - A side note
 
-I haven't created a manifest specifically for network-policies, my current use-case doesn't require a policy restricting communication between pods running multiple applications.
+
+--> How you could implement it?
+
+Option 1 - You can have a `deny-all` policy`, restricting any ingress to all the pods (as specified by the selector) within a namespace. 
+
+Option 2 - Or maybe have a specific Network Policy allowing inbound traffic from pods of a certain application within the same namespace. = This is what is predominantly done when you've got multiple applications --> **We're controlling Ingress/Egress , but at the pod level!**
 
 </br>
 
-> Basically, we make use of Network Policies in K8s for controlling the ingress, and egress at a pod level. You can have a `deny-all` policy`, restricting any ingress to all the pods (as specified by the selector) within a namespace. Or maybe have a specific Network Policy allowing inbound traffic from pods of a certain application within the same namespace. = Controlling Ingress/Egress , but at the pod level!
-
-</br>
+> My current use-case doesn't require a policy restricting communication between pods running multiple applications. And hence, I haven't created a manifest specifically for network-policies 
 
 ---
 
@@ -490,17 +492,17 @@ _My Application's frontend:-_
 
 ## Helm, Prometheus & Grafana - Monitoring + Visualisation combined
 
-Helm - It's a package manager for kubernetes. 🟩
+</br>
+
+> 🤔 I'll give an acronym here, heard about Docker? What does it actually do? It packages the application code, libraries, necessary dependencies, and runtime environments into a single package (that's called an artifact). In the same way, Helm would package all K8s resources, like deployments, services. This means it more like a directory structure, packaging all K8s manifests, templates and config values.
 
 </br>
 
-> 🤔 I'll give a quick acronym here, Heard about Docker? What does it actually do? It packages the application code, libraries, necessary dependencies, and runtime environments into a single package (that's called an artifact). In the same way, Helm would package all K8s resources, like deployments, services. This means it more like a directory structure, packaging all K8s manifests, templates and config values.
+### **Is Helm ~ GitOps. How?**
 
-</br>
+--> Helm lets you manage complex K8s applications
 
-**Helm ~ GitOps. How?**
-
-Helm lets you manage complex K8s applications, It lets you template charts as well, That means it'll enable us to inject values and configurations at runtime.
+--> It lets you template charts as well, That means it'll enable us to inject values and configurations at runtime.
 
 ▶ _**Reproducibility and Reusability of K8 manifests**_
 
@@ -524,14 +526,16 @@ We've added the Helm Repo `Prometheus-kube-stack.` This repo is a collection of 
 
 </br>
 
-> Prometheus, it's actually a time- series database.... It's like a multi-dimensional model, with metric and some key-value pairs. It collects data from a wide array of sources, be it, infra-components, applications or  services..... That's through Exporters. Exporters expose metrics in a way that can be easily consumed by Prom. You can then make use of PromQl, to query the data, or have an Alerting manager setup / integrated with it, to trigger off notifications for anomalies.
+> Prometheus, it's actually a time- series database....  It collects data from a wide array of sources, be it, infra-components, applications or  services..... That's through Exporters. --> Expose metrics in a way that can be easily consumed by Prom.
+
+> Next step --> You can then make use of PromQL, to query the data, or have an Alerting manager setup / integrated with it, to trigger off notifications for anomalies.
 
 
 </br>
 
 A quick flow diagram to help you ingest this idea better:-
 
-            Application/Service/
+            
            Infrastructure Component
                    |
                    v
@@ -540,7 +544,6 @@ A quick flow diagram to help you ingest this idea better:-
                    |
                    v
                Prometheus
-           (Time-Series Database)
                    |
                    v
          Querying with  PromQL /
@@ -569,7 +572,8 @@ We've exposed these via a LoadBalancer Endpoint, not NodePort or ClusterIP
 
 </br>
 
-> Why? To make Prometheus and Grafana accessible from outside the Kubernetes cluster, you should opt for NodePort or LoadBalancer services. NodePort can be suitable for smaller setups or environments where specific port access is manageable. Also, I wouldn't recommend it from a Security perspective. However, LoadBalancer offers a more scalable and user-friendly way to expose services, --> It distributes traffic and ensures service reliability and availability. ClusterIP is more suited for internal communications within the cluster and does not facilitate external access directly.
+> Why? To make Prometheus and Grafana accessible from outside the Kubernetes cluster, **In my opinion, you should opt for LoadBalancer services.** NodePort can be suitable for smaller setups or environments where specific port access is manageable. Also, **I wouldn't recommend NodePort from a Security perspective.** However, LoadBalancer offers a more scalable and user-friendly way to expose services, --> It distributes traffic and ensures **service reliability and availability.** 👍
+
 
 </br>
 
@@ -918,6 +922,8 @@ FluentD is a log forwarder. It doesn't need to be stateful. Moreover, we need to
 2- Had it been a StatefulSet we would have been restrained to use stable network ids or maybe a persistent storage, which is out of context, for the use-case at hand.                      
 FluentD needs to collect logs from node-specific paths like `/var/log`. DS will ensure it has got access to such paths on all nodes 
 
+---
+
 #### `Kibana_Deployment.yaml`
 
 Kibana will be our visualisation component in our stack. Will be used for searchung, viewing and interacting with the data 📊
@@ -981,32 +987,24 @@ A big thank you for accompanying me on this journey. It was an absolutely amazin
 
 --
 
-This project,  was more around the paradigm shift... towards a much secure, scalable and I'd say, a _transparent_ software development process in the cloud
+In my humble opinion, by integrating tools like Jenkins & ArgoCD + Security Tool integrations and our logging/monitoring suite --> Prometheus, Grafana and the EFK stack within the k8s eco,       
+
+**We have essentially built something, that:-               
+1- Holds a good potential to streamline development and deployment processes**      
+2- **Very well aligned with, I'd say, with the fast-paced business requirements**
+
+Also, I've done my best in **improvising this architectural workflow from a non-functional standpoint** ➡️ Security, Scalability, Performance and Fault tolerance &rarr; all have been taken into account while creating this workflow 👍
 
 </br>
 
-> And yes, there's definitely a scope of potential improvement here, improving the efficiency of existing components, or integrating newer / more optimised components to enhance it even further.
+**Key takeaway:-**
+> #### **From an agility and security standpoint, if you actually wish to "_create value_", it is absolutely important to ingrain DevSecOps principles from the very beginning** 💡
 
 </br>
 
-However in my humble opinion, by integrating tools like Jenkins, ArgoCD, SAST Tools, OWASPand our logging/monitroing suite -- Prometheus, Grafana and the EFK stack within the k8s eco, we have essentially built something, that holds a good potential to streamline development and deployment processes
+--
 
-▶ In way that's very well aligned with, I'd say, with the fast-paced business requirements
-
-</br>
-
---> From an agility and security standpoint, if you actually wish to "create value", it is absolutely important to ingrain DevSecOps principles from the very beginning 💡
-
-</br>
-
-And hence, I've done my best in improvising this architectural workflow from a non-functional standpoint ➡️ security, scalability, cost-optimization and fault tolerance &rarr; all have been taken into account while creating this workflow 👍
-
-> It's my passion to set a robust foundation that not only meets the current business needs but also anticipates future challenges.
-
-Post continuous integration and deployment, the frameworks we've used for logging and monitoring are "lenses"          
-Lenses for us to observe and understand our application's behaviour and performance - real-time.
-
-I've just scratched the surface, there's a long way to go,  while crafting even better, resilent cloud solutions! 😊  
+I've just scratched the surface, there's a long way to go,  while refining and creating even better, resilent cloud solutions! 😊  
 
 
 ### Suggestions for Potential Improvements:-
