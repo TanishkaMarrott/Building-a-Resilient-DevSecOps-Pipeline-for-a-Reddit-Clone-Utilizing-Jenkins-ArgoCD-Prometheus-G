@@ -84,7 +84,7 @@ _Simple Answer:-_
 </br>
 
 
-> Please check out thses files:- `updated_main.tf` & `install.sh`
+> Please check out these files:- `updated_main.tf` & `install.sh`
 
 </br>
 
@@ -95,11 +95,10 @@ _Simple Answer:-_
 | Runtime & Environment   | **Eclipse Temurin Installer** | ➡️ Means a specific JDK version is available for all jobs. |
 |                         | **Nodejs**                 | Once setup, the necessary runtime is available for JS applications. 👍 |
 
----
+</br>
 
 ## &rarr; _Pipeline Configuration_
      
-
 </br>
 
 <img width="946" alt="Reddit-Clone-App-Jenkins-Pipeline" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/430d0863-09e9-4064-bfc6-4ec2d101d5b0">
@@ -123,15 +122,13 @@ You can find my application code here :- https://github.com/TanishkaMarrott/Redd
 
 </br>
 
----
+--
 
 _Snapshots:-_
 
 </br>
 
 _**Dependency-Check Results**_ –->  Distribution & severity of vulnerabilities in the Reddit Clone App.
-
-
 ![image](https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/0e9a27ca-158a-4fa4-bfd7-4f82c5f6d30e)
 
 --
@@ -139,9 +136,6 @@ _**Dependency-Check Results**_ –->  Distribution & severity of vulnerabilities
 </br>
 
 _**Console Output**_ -  --> Logs for execution of the pipeline stages
-
-</br>
-
 ![image](https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/cc0a6fbd-245c-49c4-9144-b0a6c41e7c80)
 
 --
@@ -149,9 +143,6 @@ _**Console Output**_ -  --> Logs for execution of the pipeline stages
 </br>
 
 _**SonarQube Dashboard**_ --> Successful Quality Gate with an overview of code analysis
-
-</br>
-
 <img width="958" alt="Reddit-Clone-App-SonarQubeServer" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/698eaff4-1db7-4938-b711-2a3141543b88">
 
 --
@@ -159,9 +150,6 @@ _**SonarQube Dashboard**_ --> Successful Quality Gate with an overview of code a
 </br>
 
 _**Docker Hub Repository: 'tanishkamarrott/reddit'**_ – 'reddit' image &rarr; ready for pushes
-
-</br>
-
 ![image](https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/395f374d-9dbd-4436-9f73-c18848d40ccf)
 
 </br>
