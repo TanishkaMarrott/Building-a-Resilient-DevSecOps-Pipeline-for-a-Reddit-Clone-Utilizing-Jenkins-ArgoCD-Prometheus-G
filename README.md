@@ -75,7 +75,7 @@ _Simple Answer:-_
 | The ones for code quality & analysis | **SonarQube Scanner**       | SQ + Jenkins --> SAST|
 |                         | **Sonar Quality Gates**     | It breaks the build based on the quality thresholds |
 |                         | **OWASP Dependency Check**  | --> Vulnerabilities in project dependencies.                                |
-| IaC Scanning | **TfSec**  | Scans the IaC for security misconfigurations. |
+| IaC Scanning | **TfSec**  | Scans the IaC from a security standpoint |
 | Secrets Detection  | **truffleHog**              |  Helps detect accidentally committed secrets |
 
 </br>
@@ -110,13 +110,12 @@ _Simple Answer:-_
 
 Cumulating the steps ⤵️
 
-Workspace Preparation → Fetch the Latest Code → Static Code Analysis →
-Quality Gate Checkpoint → Installing Dependencies → Scanning File System & Docker Images →
-Containerization → Detecting Unwanted Secrets → IaC Analysis for Security
-
-You can find the Reddit Application code here :- https://github.com/TanishkaMarrott/Reddit-Clone-App
+Workspace Preparation → **Fetch** the Latest Code → **Static Code Analysis** →
+**Quality Gate** Checkpoint → Installing **Dependencies** → **Scanning File System & Docker Images** →
+**Containerization** → **Detecting Unwanted Secrets** → **IaC Analysis** for Security
 
 
+</br>
 
 _Snapshots:-_
 
@@ -189,7 +188,8 @@ We need some other types of testing too, **Security testing**, **Performance Tes
 ## Non-functional aspects of the the application infrastructure:-
 
 
-Please check out my TF code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/main'
+Check out my TF code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/main'   <-- IMP
+You can find the Reddit Clone Application code here :- https://github.com/TanishkaMarrott/Reddit-Clone-App
 
 ### _Multi-AZ NAT Gateway Setup + Multi-AZ Worker node deployments:-_ 
 
@@ -209,11 +209,14 @@ In this architecture, I've deployed **three NATs each with its own Elastic IP**,
 
 </br>   
 
->  I didn't want any SPOFs or performance bottlenecks in my architecture. **Multi -NAT ensures that traffic from the instances do not necessarily need to cross inter-AZ for reaching the internet, = reducing Latency** 👍. It does help me in the scalability aspect as well since resources in each AZ can scale out independently. We can add new subnets, add new instances in each AZ, without worrying NAT Gateway being a potential bottleneck. 💡
+>  I didn't want any SPOFs or performance bottlenecks in my architecture. **Multi -NAT ensures that traffic from the instances do not necessarily need to cross inter-AZ for reaching the internet, = reducing Latency** 👍.
+>  It does help me in the scalability aspect as well since resources in each AZ can scale out independently. We can add new subnets, add new instances in each AZ, without worrying NAT Gateway being a potential bottleneck. 💡
 
 </br>
 
-➡ However, this is a **cost vs. fault tolerance trade-off**. My decision here was prioritizing availability and performance over the cost considerations.
+➡ However, this is a **cost vs. fault tolerance trade-off**. 
+
+➡️ My decision here was prioritizing availability and performance over the cost considerations.
 
 </br>
 
@@ -392,16 +395,25 @@ Horizontal Pod Autoscaler 👉 Adjusting the number of pod replicas in a deploym
 </br>
 
 
-#### 6. **`rbac-config.yaml`**
+#### 6. **`RBAC-config.yaml`**
 
-I've also included a template for `rbac-config.yaml`. Why? That's Kubernetes native way of Role Based Access Control. Finetuning Access Control to Kubernetes resources, either through User Accounts or Service Accounts
+I've also included a template for `RBAC-config.yaml`.
 
-> Usually, pods make use of a Default Service Account, for performing all Kuberenetes API Operation. But, that's way too broad. If we're looking for a much more auditable, and secure K8s environment wherein permissions are scoped, we must create a specific SA, bind necessary permissions to the role -- (the one's I need for the application's proper functioning). This Role would then be attached to the SA... 
+Why? 
 
-There's one more advantage to it. I'm not only adhering to the principle of Least privilege, We can also _scope_ permissions to a specific namespace, if we're looking for granular access control. User Accounts too can be granted specific permissions for the resources they need to access (pods etc.)
+&rarr; **We need to finetune Access Control to Kubernetes resources**, either through User Accounts or Service Accounts
+
+> **Rationale for RBAC:-** Usually, pods make use of a Default Service Account, for performing all Kuberenetes API Operation. But, that's way too broad.
+
+>  If we're looking for a **much more auditable, and secure K8s environment wherein permissions are scoped, we must create a specific SA**, bind necessary permissions to the role 👍 -- (the one's I need for the application's proper functioning  ). This Role would then be attached to the SA... 
+
+Advantage A --> I'm not only adhering to the **principle of Least privilege,**
+
+Advantage B --> **We can also _scope_ permissions to a specific namespace,** if we're looking for granular access control. User Accounts too can be granted specific permissions for the resources they need to access (pods etc.)
 
 > Even in case of a compromise, chances of Privilege Escalation are minimized greatly
 
+**_What we've done?_**
 In our case, I've created a specific SA -> `app-service-account` and attached the `app-role` to it, comprising the `get` , `watch` , and `list` permissions inherited the pods running the application.
 
 </br>
@@ -488,7 +500,7 @@ _My Application's frontend:-_
 
 </br>
 
-> 💡 Helm shares some similarity from a conceptual standpoint with GitOps Practices. Each time I install a new chart, it creates a new "release". So, this is a versioned snapshot, Helm keeps track of changes to your deployments. Just in case, the release isn't as well as it had been planned, you can rollback to a previous stable version. GitOps could extend this to a more broader sense, with both infrastructure provisioning / configuration plus the application deployment aspect...
+> 💡 **Helm shares some similarity from a conceptual standpoint with GitOps Practices.** Each time I install a new chart, it creates a new "release". So, this is a versioned snapshot, Helm keeps track of changes to your deployments. Just in case, the release isn't as well as it had been planned, you can rollback to a previous stable version. GitOps could extend this to a more broader sense, with both infrastructure provisioning / configuration plus the application deployment aspect...
 
 </br>
 
