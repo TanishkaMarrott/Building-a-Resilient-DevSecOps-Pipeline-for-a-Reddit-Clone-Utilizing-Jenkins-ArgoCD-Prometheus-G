@@ -2,7 +2,7 @@
 
 </br>
 
-## _Quick Introduction:-_
+## Quick Introduction:-
 
 Our project today is all about the specifics involved while setting up an automated  **_DevSecOps Pipeline._**   
 --> we're not only speeding up releases, but also being security-compliant, from the get-go. 💡
@@ -37,7 +37,7 @@ Our project today is all about the specifics involved while setting up an automa
 
 </br>
 
-## _How does DevSecOps align with my Business Goals?_
+## How does DevSecOps align with my Business Goals?
 
 </br>
 
@@ -46,50 +46,51 @@ _Simple Answer:-_
 
 </br>
 
-_It's more like a ***Strategic Enabler,***_ to boost efficiency & streamline processes.    
+> _It's more like a ***Strategic Enabler,*** to boost efficiency & streamline processes._    
 
-▶️ _Quicker product iterations & feedback loops_
- means we're **_market-agile._**     👍👍
+</br>
+
+▶ Quicker product iterations & feedback loops
+ --> means we're **_market-agile._**     👍👍
 
 
-▶️ _Quality Assurance_ + _Reducing post-deployment fixes' costs_   
+▶ Quality Assurance + Reducing post-deployment fixes' costs   
 
 = **_Averting Data Security Incidents / lapses_**
 
 </br>
 
->  ### **<ins>Agile DevSecOps = Swiftly adapting to evolving Business Requirements.** 
+>  #### **<ins>Agile DevSecOps = Swiftly adapting to evolving Business Requirements.** 
+
 
 
 </br>
 
----
 
+## _ ➡️ Infra-Setup & Tool Configuration_
 
-## _&rarr; Infra-Setup & Tool Configuration_
-
-### **_What plugins & global tool configurations have we used:-_**   
+### **_Which plugins & global tool configurations have we used?_**   
 
 
 
-|      The Plugins we've used &rarr;     |                 |                                                                                   |
+|     **The plugins we've used &rarr;**    |                 |                                                                                   |
 |-------------------------|-----------------------------|-------------------------------------------------------------------------------------------|
 | Code Quality & Analysis | **SonarQube Scanner**       | SQ + Jenkins --> SAST|
-|                         | **Sonar Quality Gates**     | Breaks the build based on the quality thresholds we've set  |
+|                         | **Sonar Quality Gates**     | It breaks the build based on the quality thresholds |
 |                         | **OWASP Dependency Check**  | --> Vulnerabilities in project dependencies.                                |
 | IaC Scanning | **TfSec**  | Scans the IaC for security misconfigurations. |
-| Secrets Detection  | **truffleHog**              |  detects accidentally committed secrets |
+| Secrets Detection  | **truffleHog**              |  Helps detect accidentally committed secrets |
 
 </br>
 
 
-> Please check `updated_main.tf` & `install.sh`
+> Please check out thses files:- `updated_main.tf` & `install.sh`
 
 </br>
 
  
 
-|   Global Tools  to standardise environments all across &rarr;      | |                                                                                   |
+|   Global tools  to standardise environments all across &rarr;      | |                                                                                   |
 |-------------------------|------------------------|-------------------------------------------------------------------------------------------|
 | Runtime & Environment   | **Eclipse Temurin Installer** | ➡️ Means a specific JDK version is available for all jobs. |
 |                         | **Nodejs**                 | Once setup, the necessary runtime is available for JS applications. 👍 |
@@ -165,17 +166,16 @@ _**Docker Hub Repository: 'tanishkamarrott/reddit'**_ – 'reddit' image &rarr; 
 
 </br>
 
----
 
-Now that we're done with the CI part,let's move to the deployment aspect
-
-</br>
-
----
+Now that we're done with the CI part, let's move to the deployment aspect
 
 </br>
 
-_**Key intent:-**_ automating the deployment of code from dev to prod, post a successful build ▶️
+---
+
+</br>
+
+_**Key intent:-**_ Automating the deployment of code from dev to prod, post a successful build ▶️
 
 </br>
 
@@ -257,9 +257,7 @@ In this architecture, I've deployed **three NATs each with its own Elastic IP**,
 
 </br>
 
-> My public subnets host the Load Balancers and NAT Gateways (the resources which are actually intended to be public), so, they'll distribute incoming internet traffic to the pods running the application. ➡️ This setup simplifies and centralizes traffic management while keeping our backend pods secure.
-
-> Also, in case the applications in the private subnet wish to connect to the internet, for example for updates, APIs etc., it will be done via the NAT deployed in each public subnet
+> My public subnets host the Load Balancers and NAT Gateways (the resources which are actually intended to be public), so, they'll distribute incoming internet traffic to the pods running the application. ➡️ This setup will help us simplify and centralize traffic management while keeping our backend pods secure. Also, in case the applications in the private subnet wish to connect to the internet, for example :- for updates, APIs etc., it will be done via the NAT deployed in each public subnet
 
 **Secure outbound-only internet access** 👍.
 
