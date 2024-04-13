@@ -51,25 +51,28 @@ _Simple Answer:-_
 
 </br>
 
-▶ Quicker product iterations & feedback loops --> means we're **_market-agile._** 👍👍
+➡️ Quicker product iterations & feedback loops             
+--> means we're **_market-agile._** 👍👍
 
-▶ Quality Assurance + Reducing post-deployment fixes' costs
+➡️ Quality Assurance + reducing post-deployment fixes' costs
+= Averting Data Security Incidents
 
 </br>
 
 >   **Agile DevSecOps = Swiftly adapting to evolving Business Requirements.**
+
 </br>
 
 
-##  ➡️ Jenkins Setup & Tool Configuration_
+##  &rarr; Jenkins Setup & Tool Configuration_
 
-### **_Which plugins & global tool configurations have we used?_**   
+### **_What sort of plugins & global tool configurations have we used?_**   
 
-
+</br>
 
 |     **The plugins we've used &rarr;**    |                 |                                                                                   |
 |-------------------------|-----------------------------|-------------------------------------------------------------------------------------------|
-| Code Quality & Analysis | **SonarQube Scanner**       | SQ + Jenkins --> SAST|
+| The ones for code quality & analysis | **SonarQube Scanner**       | SQ + Jenkins --> SAST|
 |                         | **Sonar Quality Gates**     | It breaks the build based on the quality thresholds |
 |                         | **OWASP Dependency Check**  | --> Vulnerabilities in project dependencies.                                |
 | IaC Scanning | **TfSec**  | Scans the IaC for security misconfigurations. |
@@ -107,32 +110,9 @@ _Simple Answer:-_
 
 Cumulating the steps ⤵️
 
-          Workspace Preparation                           
-                    |                  
-                    v                  
-          Fetch the Latest Code          
-                    |                  
-                    v         
-          Static Code Analysis            
-                    |            
-                    v            
-          Quality Gate Checkpoint         
-                    |         
-                    v         
-          Installing Dependencies      
-                    |            
-                    v            
-          Scanning File System & Docker Images         
-                    |         
-                    v            
-          Containerization            
-                    |         
-                    v            
-          Detecting Unwanted Secrets      
-                    |            
-                    v            
-          IaC Analysis for Security            
-         
+Workspace Preparation → Fetch the Latest Code → Static Code Analysis →
+Quality Gate Checkpoint → Installing Dependencies → Scanning File System & Docker Images →
+Containerization → Detecting Unwanted Secrets → IaC Analysis for Security
 
 You can find the Reddit Application code here :- https://github.com/TanishkaMarrott/Reddit-Clone-App
 
