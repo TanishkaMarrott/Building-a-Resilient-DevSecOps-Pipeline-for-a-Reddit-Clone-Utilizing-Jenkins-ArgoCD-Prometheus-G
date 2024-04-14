@@ -619,29 +619,47 @@ _Attached - Grafana snaps:-_
 
 </br>
 
-We've imported three dashboards here:-
-&rarr; 💠 Pod Monitoring dashboard            
-&rarr; 💠 Cluster Node Monitoring dashboard               
-&rarr; 💠 Complete Monitoring dashboard               
+We've imported three dashboards here:-               
+ 💠 Pod Monitoring dashboard            
+ 💠 Cluster Node Monitoring dashboard               
+ 💠 Complete Monitoring dashboard               
 
 </br>
 
-### What do these dashboards represent? ⚛️               
+### What kind of insights do we get from these dashboards? ⚛️               
 
-1-> _**The Pod monitoring dashboard**_ provides us with metrics + data specifically for individual pods. 
-➡️ Meaning Pod Status, the CPU Memory Usage, the network usage, the volume of logs produced, the number of restarts etc,
+1 -->  <ins>_Pod monitoring dashboard:-_</ins>             
 
-> _So these are indicative of underlying issues with the pods_
-
-</br>
-
-2-> _**The Cluster Monitoring dashboard**_ indicate the overall health of a cluster with all its components, whether they're nodes, deployments, services etc. 
-
-> It more like a comprehensive dashboard, covering the workload distribution, the number of deployments, nodes etc, Resource Utilisation, the health and status of nodes + alerting and monitoring notifications etc
+**Metrics + data --> specifically for individual pods.**          
+➡️ This will include pod status, CPU / memory usage, network usage, the volume of logs produced, the number of restarts etc
 
 </br>
 
-3-> _**The Node Monitoring dashboard**_ is around pod allocation to the nodes, checks for Memory pressure, out of Disk or any such conditions for the nodes, the node utilisation metrics (over-utilised and underutilised), the health and status of the nodes, etc
+> _These metrics are indicative of underlying issues with the pods👍_
+
+</br>
+
+--
+
+2 --> <ins>_Cluster Monitoring dashboard ☸️ :-_</ins>      
+
+&rarr; **Overall health of the k8s cluster with all its components -  nodes, services and deployments**
+
+</br>
+
+>  Covers the following:-
+> -  number of deployments & nodes,
+> - resource utilisation,
+> - health and status of nodes
+> -  alerting and monitoring notifications.
+
+</br>
+
+--
+
+3 -->  <ins>_Node Monitoring dashboard:-_</ins>     
+
+It's around **pod allocation to the nodes**, checks for Memory pressure, out of Disk or any such conditions for the nodes, **the node utilisation metrics** (over-utilised and underutilised), the health and **status of the nodes**, etc
 
 ---
 
