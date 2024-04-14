@@ -742,17 +742,21 @@ K --> Kibana --> Data Viz Tool
 
 ### _More on the EFK Manifests:-_
 
-#### 1 - **`namespace.yaml`** :- Applying this manifest would create a namespace `efklog` for the EFK stack components. 
+#### 1 - **`Namespace.yaml`** :- 
+
+Applying this manifest would create a namespace `efklog` for the EFK stack components. 
 
 </br>
 
-> I haven't spoken much on namespaces. I'd like to give a quick brief with regards to this. Namespaces are an amazing way to enforce resource isolation, divide the cluster in a logical separation, meaning we can have multiple environments segregated within a cluster. And that's awesome. I can have multiple users across multiple teams working on a single cluster, and I can make use of RBAC - that's namespace scoped, That means users can access resources they're intended to.
+> _**I could have users across multiple teams working on a single cluster**, and **I can make use of RBAC - that's namespace scoped**, That means users can access resources they're intended to._
 
 </br>
 
-#### 2 - **`ElasticSearch_Service.yaml`** :- We've configred the service to listen fro requests at port 9200, TCP Protocol, And forward these requests to `db` named port on the target pods selected by th `k8s-app: elasticsearch-logging` label. This creates a Service Object to expose the set of pods running the ElasticSearch application.
+#### 2 - **`ElasticSearch_Service.yaml`** :- 
 
-**_Purpose?_** It actually facilitates access to the underlying pods for sending the logs (as determined by the network policy), --> Centralised Log Aggregation to the ElasticSearch application 
+We've configured the service to **listen for requests at port 9200**, TCP Protocol, **And forward these requests to `db` named port on the target pods** selected by the `k8s-app: elasticsearch-logging` label. This creates a Service Object to **expose the set of pods running the ElasticSearch application.**
+
+**_Purpose?_** Helps sending logs to the underlying pods --> Aggregation of logs to the ElasticSearch application 
 
 </br>
 
@@ -765,7 +769,7 @@ This is where we make ElasticSearch secure, scalable and resilent. I've deployed
 
 ### _Security + Performance + Data Durability - How?_
 
-> I'll quickly recapitulate the pointers/ non-functional enhancements we've done. First, a service account that'll be assumed, we'll bind a ClusteRole comprising the `get` permissions. So, I'm being very specific in the permissions attached to the SA , to be assumed for the ElasticSearch operations within the cluster -- with permissions to `get` resources like `endpoints` , `services` and `namespaces`. Chances of things being escalated are minimal, in case of compromise. As we've limited the operations ElasticSearch service can perform.
+> I'll quickly recapitulate the pointers / non-functional enhancements we've done. First, a service account that'll be assumed, we'll bind a ClusteRole comprising the `get` permissions. So, **_I'm being very specific in the permissions attached to the SA , to be assumed for the ElasticSearch operations within the cluster -- with permissions to `get` resources like `endpoints` , `services` and `namespaces`._** We've limited the operations ElasticSearch service can perform.
 
 </br>
 
@@ -926,71 +930,73 @@ The logs are now "processed"
 4- Sensitive data has been filtered out before loga aggregation, this ensures none of the sensitive info/secrets lie exposed in the cluster logs.           
 5 - Though I've covered buffer configuration management separately, it does partially fall in this context as well. There've been multiple measures implemented to ensure that resource usage is bounded, and thus preventing a DDoS Attack.         
 
-
----
+</br>
 
 #### 5. **`Fluentd_DaemonSet.yaml`** :-
 
 Tasks we performed here:- 
 
-1- Created an SA that will be assumed by the FluentD application pods to communicate with the K8s API Server            
-2- A Cluster Role consisting fo the permissions that'll be needed by FluentD for collecting cluster-wide logs         
-3- A role binding that'll be binding this ClusterRole to the SA . This means these pods will be able to inherit these permissions.         
-
+1- **Created an SA that will be assumed by the FluentD application pods** to communicate with the K8s API Server            
+2- A **Cluster Role consisting fo the permissions that'll be needed by FluentD** for collecting cluster-wide logs         
+3- A **role binding that'll be binding this ClusterRole to the SA .** This means these pods will be able to inherit these permissions.         
 4 - DaemonSet for FluentD
 
-Why?
-
-FluentD is a log forwarder. It doesn't need to be stateful. Moreover, we need to ensure that a fluentD pod runs across all the nodes of the cluster. Daemonset is necessary for ensuring that a copy of a specific pod, runs across all the nodes of a cluster including the ones that'll be added in future. 
-
-> Running FluentD as a DaemonSet means I'm comprehensively covering node all across the cluster, uniform cluster-wide log collection + forwarding 👍
+#### Why did we deploy FluentD as a DaemonSet in this stack?
 
 </br>
 
-🏁 Quickly recapitulating why a daemonSet was used for Fluentd:-
+_Reason 1_ --> FluentD is a log forwarder. It doesn't need to be stateful. 
 
-1- As I discussed previously with you, FluentD is deployed as a DaemonSet because of its _guarantees_ the fact that the pod will be deployed on each and every node of the K8s cluster, ensuring we've got a reliable and robust, centralized logging solution, for the cluster all across...
+_Reason 2_ --> Moreover, we need to ensure that a FluentD pod runs across all the nodes of the cluster. 
 
-2- Had it been a StatefulSet we would have been restrained to use stable network ids or maybe a persistent storage, which is out of context, for the use-case at hand.                      
-FluentD needs to collect logs from node-specific paths like `/var/log`. DS will ensure it has got access to such paths on all nodes 
+_Reason 3_ --> FluentD needs to collect logs from node-specific paths like `/var/log`. Had it been a StatefulSet we would have been restrained to use stable network ids or maybe a persistent storage, which is out of context, for the use-case at hand.  
 
----
 
-#### `Kibana_Deployment.yaml`
-
-Kibana will be our visualisation component in our stack. Will be used for searchung, viewing and interacting with the data 📊
-
-Okay, so let's focus on what are the non-functional aspects we've tried to incorporate in this deployment
-
-💠-  Multiple replicas of Kibana pods, ▶ Higher availability. Even if one goes down, we've got another to serve requests, minimized downtime 👍
-
-💠- These containers will be running as a non-root user (`runAsUser: 1000`). We have made it a point to explicitly set `runAsNonRoot: true` 
- ➡️ Strong SecurityContext reduces the risk of privilege escalation attacks. 
-
-💠- Seccomp profile ...
 
 </br>
 
-> What's a seccomp profile? 🤔 This was new to me as well when I just started out... It's a feature, a kernel feature. that enables administrators to limit the system calls a container/ process can make. This has wide application in protecting against kernel-level exploits. It helps in reducing the attack-surface area by filtering the system calls it can make
+> Running FluentD as a DaemonSet means **I'm comprehensively covering nodes all across the cluster, thus ensuring cluster-wide log collection + forwarding** 👍
 
 </br>
 
-💠- Having specified CPU and memory requests and limits, helps me in a dual manner. One, we've got sufficient resources for Kibana Containers for maintaining a stable operation, while still preventing them from over-consuming resources, affecting my other services ▶️ Efficient Resource Management
+#### 6. `Kibana_Deployment.yaml`
 
- 💠- Liveness + Readiness Probes.                        
+Okay, so let's focus on what are the **non-functional aspects we've tried to incorporate in this deployment**
+
+</br>
+
+💠- **Multiple replicas of Kibana pods,** ▶ **Higher availability.** Minimized downtime 👍
+
+💠- These containers will be running as a non-root user (`runAsUser: 1000`).            
+**We have made it a point to explicitly set `runAsNonRoot: true`** 
+ ---> Low PrivEsc Risks 
+
+💠- **We used a seccomp profile to enable admins limit the system calls a container can make.**
+
+</br>
+
+> Seccomps profile has wide applications **in protecting against kernel-level exploits.**
+
+</br>
+
+💠- **Having specified CPU and memory requests and limits, helps me in a dual manner.** One, we've got sufficient resources for Kibana Containers for maintaining a stable operation, while still preventing them from over-consuming resources, affecting my other services ▶️ Efficient Resource Management
+
+ 💠- **Liveness + Readiness Probes.**                        
  Readiness = When a Kibana pod is ready to start accepting traffic, Liveliness = Checks if the pod requires a restart
 
-💠- Plus a PVC - Persistent volume claim to preserve the application's state and configuration across restarts.
+💠- **Plus a PVC - persistent volume claim to preserve the application's state** across restarts.
  
----
 
-#### `Kibana_Service.yaml`
 
-What're we essentially doing? Setting up a way to access the Kibana dashboard from outside the Kubernetes cluster... ☑️                
+</br>
+
+#### 7. `Kibana_Service.yaml`
+
+What're we essentially doing? **We're defining a Service for users to access the Kibana dashboard from outside the k8s cluster**... ☑️                
 
 The LoadBalancer type automatically provisions an external load balancer (supported by the cloud provider) & assigns it a public IP that routes to Kibana (port 5601)
 
-> ➡️ This means users can interact with Kibana’s UI by visiting `http://<External-IP>:5601`, where `<External-IP>` is the IP address allocated by the CP's load balancer.
+> ➡️ **This means users can interact with Kibana’s UI by visiting `http://<External-IP>:5601`, where `<External-IP>` is the LB's IP Address**
 
 </br>
 
