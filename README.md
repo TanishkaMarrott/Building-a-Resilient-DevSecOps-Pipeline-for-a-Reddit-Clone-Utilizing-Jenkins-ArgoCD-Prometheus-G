@@ -628,19 +628,18 @@ We've imported three dashboards here:-
 
 ### What kind of insights do we get from these dashboards? ⚛️               
 
-1 -->  <ins>_Pod monitoring dashboard:-_</ins>             
+ <ins>_Pod monitoring dashboard:-_</ins>             
 
 **Metrics + data --> specifically for individual pods.**          
-➡️ This will include pod status, CPU / memory usage, network usage, the volume of logs produced, the number of restarts etc
 
 </br>
 
-> _We'll then be aware about underlying issues with the pods👍_
+> _We'll then be able to gauge underlying issues with the pods👍 ➡️ This will include pod status, CPU / memory usage, network usage, the volume of logs produced, the number of restarts etc._
 
 </br>
 
 
-2 --> <ins>_Cluster Monitoring dashboard ☸️ :-_</ins>      
+ <ins>_Cluster Monitoring dashboard ☸️ :-_</ins>      
 
 &rarr; **Overall health of the k8s cluster with all its components -  nodes, services and deployments**
 
@@ -655,7 +654,7 @@ We've imported three dashboards here:-
 </br>
 
 
-3 -->  <ins>_Node Monitoring dashboard:-_</ins>     
+  <ins>_Node Monitoring dashboard:-_</ins>     
 
 It's around **pod allocation to the nodes**, checks for `MemoryPressure` , `OutOfDisk` or any such conditions, **node utilisation metrics** (over-utilised / underutilised), **health and status of the nodes**
 
@@ -665,7 +664,7 @@ It's around **pod allocation to the nodes**, checks for `MemoryPressure` , `OutO
 
 ## _The Logging Suite - EFK Stack_
 
-- Since we're done with the monitoring and alerting aspect, let's turn to collecting, aggregating and analysing &  visualising our logs
+- Since we're done with the monitoring and alerting aspect, let's turn to collecting, analysing &  visualising our logs
 
 You can check out my EFK manifests here:- https://github.com/TanishkaMarrott/EFK-Stack ☑️ 
 
@@ -673,7 +672,9 @@ You can check out my EFK manifests here:- https://github.com/TanishkaMarrott/EFK
 
 ### _Quick dive into what's EFK, and into its workflow_
 
-_Intent:-_ Log collection, aggregation and visualisation.
+_**Intent:-**_ Log collection, aggregation and visualisation.
+
+</br>
 
 E --> ElasticSearch --> Search & Analytics Engine + Storing, indexing and querying capabilities
 
@@ -712,17 +713,28 @@ K --> Kibana --> Data Viz Tool
 
 </br>
 
->  💡 I'd like to clarify a few points here. Why did we create an EFK Stack, when we had Prometheus and Grafana deployed already? 🤔 Prometheus and Grafana help you with the "what" factor, the 'metrics'. that is what is happening in your system, what is the state of the health of your application at this point of time. EFK is more of a logging suite, It is used for collecting, aggregating and analysing log data, they provide context and detail into why something happened in your system, More like a narrative, providing insights into your system's behaviour
+>  💡 Let's clarify a few points here.
 
 </br>
 
-Both are complementary --> a powerful combination of comprehensive logging and monitoring suite 🏁 ✔️
+### Why did we implement the EFK Stack when Prometheus and Grafana were already in place?
 
-Through Metrics, you'll get to know about "what" the problem is, in the system. Details and Context around the "root-cause" of the problem can be known through detailed logs, -- Specific error message, status codes etc
+> Our Rationale :-
+>            
+>  **Prometheus and Grafana help you with the "what" factor, the 'metrics'.** What's exactly happening in your system, status of your application at this point of time.
+>                  
+>  **EFK is more of a logging suite,**                      
+> We could get into the details and context around the "root-cause" of the problem through detailed logs, --> specific error message, status codes
+   
 
 </br>
 
-> --> a holistic observability = enhanced troubleshooting, and a better incident response post occurence of an event 👍 👍
+🏁 Both are complementary --> a powerful combination of comprehensive logging and monitoring suite 🏁 ✔️
+
+
+</br>
+
+>  Holistic observability =  Enhanced troubleshooting & Incident Response 👍 👍
 
 </br>
 
