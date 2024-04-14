@@ -635,11 +635,10 @@ We've imported three dashboards here:-
 
 </br>
 
-> _These metrics are indicative of underlying issues with the pods👍_
+> _We'll then be aware about underlying issues with the pods👍_
 
 </br>
 
---
 
 2 --> <ins>_Cluster Monitoring dashboard ☸️ :-_</ins>      
 
@@ -647,7 +646,7 @@ We've imported three dashboards here:-
 
 </br>
 
->  Covers the following:-
+>  Helps us cover the following:-
 > -  number of deployments & nodes,
 > - resource utilisation,
 > - health and status of nodes
@@ -655,15 +654,14 @@ We've imported three dashboards here:-
 
 </br>
 
---
 
 3 -->  <ins>_Node Monitoring dashboard:-_</ins>     
 
-It's around **pod allocation to the nodes**, checks for Memory pressure, out of Disk or any such conditions for the nodes, **the node utilisation metrics** (over-utilised and underutilised), the health and **status of the nodes**, etc
-
----
+It's around **pod allocation to the nodes**, checks for `MemoryPressure` , `OutOfDisk` or any such conditions, **node utilisation metrics** (over-utilised / underutilised), **health and status of the nodes**
 
 </br>
+
+---
 
 ## _The Logging Suite - EFK Stack_
 
@@ -671,23 +669,19 @@ It's around **pod allocation to the nodes**, checks for Memory pressure, out of 
 
 You can check out my EFK manifests here:- https://github.com/TanishkaMarrott/EFK-Stack ☑️ 
 
+--
 
 ### _Quick dive into what's EFK, and into its workflow_
 
-EFK is a popular option for Log Collection, Aggregation and Visualisation.
+_Intent:-_ Log collection, aggregation and visualisation.
 
-#### _ElasticSearch_
+E --> ElasticSearch --> Search & Analytics Engine + Storing, indexing and querying capabilities
 
-> ElasticSearch is a very typical option when we're talking about a search and analytics engine , Not only does it store data collected from various data sources, it also has indexing, querying and searching capabilities, over a huge volume of loga data. Filtering and aggregating the logs as well
+F --> FluentD --> Data collector & shipper
 
-#### _FluentD_
+K --> Kibana --> Data Viz Tool
 
-It's our _**Data Collector and Shipper,**_
-open source data collector + aggregator, for unified logging layers, it fetches, collects data from various sources, and them transforms into a unified format, forwards to elasticsearch.
 
-#### _Kibana_
-
-Role:- Data Visualisation and UI
 
 **_Expore + Analyse + Visualise Log Data = Making sense of the collected log data in real-time_** 🙂
 
@@ -696,15 +690,18 @@ Role:- Data Visualisation and UI
 ## _The EFK Workflow_
 
                  
-                   Data Sources - (They could be log files, shippers, etc)                           
-                              |                           
-                              v                           
-                   Fluentd (Data Aggregation and Transformation - Enriching it with metadata, transforming the data into a format suitable for ElasticSerach)               
-                             |                           
-                             v                           
-                   Elasticsearch (Storage/Index - Storing, indicing the data, --> Search and alaytics engine)                     
-                             |                           
-                             v                           
+                   Data Sources (They could be log files, shippers, etc)                           
+                              
+                              ⏬                           
+                                                         
+                   Fluentd (Enriching it with metadata, transforming the data into a format suitable for ElasticSearch)               
+                   
+                               ⏬                           
+                                                       
+                   Elasticsearch (Storing, indicing the data)                     
+                              
+                               ⏬                           
+                                                        
                    Kibana (Visualization - gaining insights into patterns & trends)                  
 
                   
