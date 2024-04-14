@@ -307,7 +307,7 @@ Here's the link to my K8s manifest files:- https://github.com/TanishkaMarrott/Re
 ## _Quick Dive into the k8 manifests + Key Design Considerations_
 
 
-#### 1- **`Deployment.yaml`** 
+### 1- **`Deployment.yaml`** 
 
 Blueprint for the Reddit-Clone pods we'll be creating
 
@@ -334,7 +334,7 @@ _**How did I improvise the deployment to be available and fault tolerant?**_
 
 </br>
 
-#### 2- **`Service.yaml`** 
+### 2- **`Service.yaml`** 
 
 We're exposing the set of pods running the containerised application through the Service of type loadBalancer.             
 **It listens for traffic on port 80 and forwards it to port 3000** - the port the application listens on within the container.
@@ -354,7 +354,7 @@ Network Load Balancer naturally does ensure scalability - ➡️**NLBs = Reducin
 
 </br>
 
-#### 3- **`Ingress.yaml`**
+### 3- **`Ingress.yaml`**
 
 I'm using this alongside the service object. 
 
@@ -374,7 +374,7 @@ In my case, **we will be utilising an ingress controller for its advanced traffi
 
 </br>
 
-#### 4 - **`Cluster-autoscaler.yaml`** & 5. **`HPA-manifest.yaml`** 
+### 4 - **`Cluster-autoscaler.yaml`** & 5. **`HPA-manifest.yaml`** 
 
 _Scaling via Cluster Auto-Scaler and Horizontal Pod Scaler_
 
@@ -398,7 +398,7 @@ Horizontal Pod Autoscaler 👉 Adjusting the number of pod replicas in a deploym
 </br>
 
 
-#### 6. **`RBAC-config.yaml`**
+### 6. **`RBAC-config.yaml`**
 
 I've also included a template for `RBAC-config.yaml`.
 
@@ -425,7 +425,7 @@ In our case, I've created a specific SA -> `app-service-account` and attached th
 
 </br>
 
-#### 7. **K8s Network Policies** - A side note
+### 7. **K8s Network Policies** - A side note
 
 
 --> How you could implement it?
@@ -493,7 +493,7 @@ _My Application's frontend:-_
 
 </br>
 
-### **Is Helm ~ GitOps. How?**
+## **Is Helm ~ GitOps. How?**
 
 --> Helm lets you manage complex K8s applications
 
@@ -719,82 +719,83 @@ K --> Kibana --> Data Viz Tool
 
 ### Why did we implement the EFK Stack when Prometheus and Grafana were already in place?
 
-> Our Rationale :-
->            
->  **Prometheus and Grafana help you with the "what" factor, the 'metrics'.** What's exactly happening in your system, status of your application at this point of time.
->                  
->  **EFK is more of a logging suite,**                      
-> We could get into the details and context around the "root-cause" of the problem through detailed logs, --> specific error message, status codes
-   
-
-</br>
-
-🏁 Both are complementary --> a powerful combination of comprehensive logging and monitoring suite 🏁 ✔️
+ Our Rationale :-
+            
+  **Prometheus and Grafana help you with the "what" factor, the 'metrics'.** What's exactly happening in your system, status of your application at this point of time.
+                  
+  **EFK is more of a logging suite,**                      
+ We could get into the details and context around the "root-cause" of the problem through detailed logs, --> specific error message, status codes
 
 
-</br>
-
->  Holistic observability =  Enhanced troubleshooting & Incident Response 👍 👍
+➡️ enhanced troubleshooting & incident response 👍 👍
 
 </br>
 
 ---
 
-### _More on the EFK Manifests:-_
 
-#### 1 - **`Namespace.yaml`** :- 
+
+## _Deep-dive into the EFK Manifests:-_
+
+### 1 - **`Namespace.yaml`** :- 
 
 Applying this manifest would create a namespace `efklog` for the EFK stack components. 
 
-</br>
 
 > _**I could have users across multiple teams working on a single cluster**, and **I can make use of RBAC - that's namespace scoped**, That means users can access resources they're intended to._
 
 </br>
 
-#### 2 - **`ElasticSearch_Service.yaml`** :- 
+--
 
-We've configured the service to **listen for requests at port 9200**, TCP Protocol, **And forward these requests to `db` named port on the target pods** selected by the `k8s-app: elasticsearch-logging` label. This creates a Service Object to **expose the set of pods running the ElasticSearch application.**
+### 2 - **`ElasticSearch_Service.yaml`** :- 
 
-**_Purpose?_** Helps sending logs to the underlying pods --> Aggregation of logs to the ElasticSearch application 
-
-</br>
+**We've configured the service to listen for requests at port 9200**, TCP Protocol, **And forward these requests to `db` port on the - `elastic-search-logging` pods**
 
 
-#### 3 - **`ElasticSearch_StatefulSet.yaml`** :- 
+> 🔎 **_Purpose?_** Helps data sources send logs to the underlying pods --> Aggregation of logs to the ElasticSearch application 
 
-This is where we make ElasticSearch secure, scalable and resilent. I've deployed multiple components here.
-
----
-
-### _Security + Performance + Data Durability - How?_
-
-> I'll quickly recapitulate the pointers / non-functional enhancements we've done. First, a service account that'll be assumed, we'll bind a ClusteRole comprising the `get` permissions. So, **_I'm being very specific in the permissions attached to the SA , to be assumed for the ElasticSearch operations within the cluster -- with permissions to `get` resources like `endpoints` , `services` and `namespaces`._** We've limited the operations ElasticSearch service can perform.
 
 </br>
-
-> Next, I wanted things to scale while still being cognizant of the maintained state, that's crucial here -- (Remember, ElasticSearch is a distributed database). So, we've increased the number of replicas. I had to optimise performance as well, so had to define resource requests and limits. This enabled me to ensure we've got sufficient resources for ElasticSearch, while not overwhelming / overconsuming system resources.
-
-> Simultaneusly, I had to focus on Data Persistence to improve durability, I had to ensure that data is persistently stored across pod restarts and deployments. hence, we utilised `PersistentVolumeClaim` Plus, a rolling update strategy for minimal downtime
 
 --
 
-### _The Lacuna in this StatefulSet_
+### 3 - **`ElasticSearch_StatefulSet.yaml`** :- 
 
-Okay, so this means there's a lacuna in this StatefulSet configuration❗
+
+#### <ins> Security + Performance + Data Durability - How? </ins>
+
+I'll quickly recapitulate the pointers / non-functional enhancements we've done.     
 
 </br>
 
-Not going too deep, but this is important. The `vm_max_map_count` is a system-level parameter in linux that defines the maximum number of memory-map areas a process may have. And it's crucial for such databases like ElasticSearch. We need to set a higher `vm.max_map_count` value (at least 262144) than the usual default.
+> **We're being very specific in the permissions attached to the SA , to be assumed by the ElasticSearch Application pods -- with permissions to `get` resources like `endpoints` , `services` and `namespaces`.**
+>     
+> --> limiting the operations ElasticSearch can perform.
 
-In a k8s environment, adjusting system-level settings for the nodes, that too from within the pods isn't possible. 🤔 However, for the application to function optimally, I need to have this modified.
+</br>
+
+> Next, **I wanted things to scale while still being cognizant of the maintained state** -- Remember, ElasticSearch is a distributed database.
+>       
+> So, **we've increased the number of replicas.** I had to optimise performance as well, **had to define resource requests and limits**. This enabled me to ensure we've got sufficient resources for ElasticSearch, while not overwhelming / overconsuming system resources.
+
+> Simultaneusly, **I had to focus on Data Persistence to improve durability**. Despite pod restarts. Hence, we utilised **`PersistentVolumeClaim`**            
+> **Plus, a rolling update strategy for minimal downtime**
+
+</br>
+
+##  The challenge we faced from a security standpoint
+
+Not going too deep, but this is important. The `vm_max_map_count` defines the maximum number of memory-map areas a process may have. And it's crucial for such databases like ElasticSearch. We need to set a higher `vm.max_map_count` value (at least 262144) than the usual default.
+
+**In a k8s environment, we cannot adjust system-level settings for the nodes from within the pods, by default. 🤔 However, for the application to function optimally, I need to have this modified.**
 
 --
 
-▶️ So, we've used an `initContainer` . `InitContainer`  runs to completion before other subsequent ElasticSearch Containers (In this eay, they'll have an environment set up and running.)
-It must run in Privileged Mode, --> a container running in privileged mode, makes it nearly equivalent to being a root on the node machine
+▶️  Interim Solution:- So, we had used an `initContainer` . `InitContainer`  runs to completion before other subsequent ElasticSearch Containers (In this eay, they'll have an environment set up and running.)
 
-But containers running in priv mode is not recommended. High risk of Privilege Escalation in case of a VM Compromise.
+It must run in Privileged Mode, nearly equivalent to a root user
+**Not Recommended. High risk of Privilege Escalation in case of a VM Compromise. We had to change our approach**
 
 --
 
@@ -802,7 +803,7 @@ But containers running in priv mode is not recommended. High risk of Privilege E
 
 </br>
 
-### _How did we enhance security while solving this pain-point?_
+## _How did we enhance security while solving this pain-point?_
 
 By using DaemonSet. 💡
 
@@ -866,7 +867,7 @@ We'll configure fluentd to "tail" container logs, With a position file to keep t
 
 </br>
 
-> We had to ensure there's no data loss during high-volume periods, or in cases when the downstream system (ES in this case) is temporarily unavailable
+> **We had to ensure there's no data loss during high-volume periods,** or in cases when the downstream system (ES in this case) is temporarily unavailable
 
 </br>
 
@@ -916,19 +917,29 @@ The logs are now "processed"
 
 ### _How did we accelerate query and retrieval times in ES?_
 
-</br>
+Through customising ElasticSearch indexing names - based on:-
 
-> Why did we customise ES Indexing Names?  Being populated dynamically with the name of the originating namespace and its respective date, means a quicker query performance. Time-based Segmentation helps in implementing certain Stoarge Lifecycle Configuration. namespace Segragation also helps in an organised storage of logs and subsequently a faster retrieval. So, in future, if we'd wish to carry out historical data analysis, we'll be able to clearly delineate logs from different time periods and carry out Trend Analysis / Anomaly Detection
+- Name of the namespace it originates from.
+- Timestamp (Dates in our case)
+ 
+
+✅ Time-based segmentation helps in implementing lifecycle configurations for storing these logs.
+
+✅ Namespace segragation --> organised storage of logs and subsequently a faster retrieval. 
+
+<ins> **_Use-case?_** </ins> 
+
+So, in future, **if we'd wish to carry out historical data analysis, we'll be able to clearly delineate logs from different time periods and carry out Trend Analysis / Anomaly Detection
 
 </br>
 
 ### _Security Enhancements we've primarily focused upon_:-
 
-1- All communications between FluentD and other components, like K8s API and ElasticSearch are secured by TLS/SSL            
-2- Interactions between FluentD instances for centralising the collected logs to a fluentD aggregator, are preceded by a mutual authentication via the `shared_key` . --> verifying the integrity and authenticity of the connection         
-3- Hostname Verifications prevents traffic from being intercepted, prevents MITM - Man in the Middle Attacks            
-4- Sensitive data has been filtered out before loga aggregation, this ensures none of the sensitive info/secrets lie exposed in the cluster logs.           
-5 - Though I've covered buffer configuration management separately, it does partially fall in this context as well. There've been multiple measures implemented to ensure that resource usage is bounded, and thus preventing a DDoS Attack.         
+1- **All communications between FluentD and other components**, like K8s API and ElasticSearch **are secured by TLS/SSL**            
+2- **Interactions between FluentD instances** for centralising the collected logs to a fluentD aggregator, a**re preceded by a mutual authentication via the `shared_key`** . --> verifying the integrity and authenticity of the connection         
+3- **Hostname Verifications** prevents traffic from being intercepted, **prevents MITM - Man in the Middle Attacks**            
+4- **Sensitive data has been filtered out before logs aggregation**, this ensures none of the sensitive info/secrets lie exposed in the cluster logs.           
+5 - Though I've covered buffer configuration management separately, it does partially fall in this context as well. **There've been multiple measures implemented to ensure that resource usage is bounded, and thus preventing a DDoS Attack.**         
 
 </br>
 
