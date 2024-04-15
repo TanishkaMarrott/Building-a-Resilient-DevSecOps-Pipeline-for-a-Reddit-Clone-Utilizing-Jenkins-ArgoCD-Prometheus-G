@@ -829,7 +829,7 @@ Advantage 3 &rarr; We're **reducing the overhead that'll be incurred by the appl
 
 #### 4 - **`Fluentd_Config_Map.yaml`** :-
 
-We'll be defining something called a ConfigMap. So, what's a configmap? It's used to store non-confidential data, in a key-value format. In our case, we'll be using a configMap to configure FluentD, our log collector and shipper
+We'll be using a ConfigMap to configure FluentD.
 
 Let's make a deep-dive into this ⤵️
 
@@ -853,27 +853,14 @@ We'll configure fluentd to "tail" container logs, With a position file to keep t
 
 </br>
 
-> **We had to ensure there's no data loss during high-volume periods,** or in cases when the downstream system (ES in this case) is temporarily unavailable
+🎯 **We had to ensure there's no data loss during high-volume periods,** or in cases when the downstream system (ES in this case) is temporarily unavailable
 
 </br>
 
-What did we do? 
+- **Mixing both memory and file based buffers :-** 💡
 
-- **Mixing both memory and file based buffers :-** :bu
-
-  Memory based buffers are suitable for faster data access. It's almost instantaneous. Which is brilliant for faster data ingestion and subsequent processing.
-  
-</br>
-
-== This ends up reducing ovreall latency in the data ingestion and processing cycle. 💡
-
-We couldn't ignore the data persistence capability as well. File based buffers store data on the disk, ---> Data can persist irrespective of system crashes, or when restarted. Also during spikes, or periods when there're high log volume, or when the downstream service is temporairly unreachable, File-based buffers are used to sustain such backpressure scenarios. It provides us with larger capacity when compared to memory buffers.
-</br>
-
-> 👍This means you don't only speed up the data ingestion process but still ensure that we've handled logs reliably in case of any system outages ☑ 
-
-</br>
-
+  Memory based buffers --> Instant data access 🟰 Faster data ingestion and subsequent processing.         
+  File based buffers --> Can Persist Data + Higher Disk Capacity  🟰 Can sustain backpressure scenarios / system outages
 
 - Having some **limits on the total buffer size, and the max chunk size** ⤵️
 
