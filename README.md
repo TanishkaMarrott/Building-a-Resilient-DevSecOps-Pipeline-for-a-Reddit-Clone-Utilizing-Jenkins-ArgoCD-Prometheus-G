@@ -361,7 +361,9 @@ I'm using this alongside the service object.
 
 </br>
 
-In my case, **we will be utilising an ingress controller for its advanced traffic management + SSL termination capabilities.** A standard way for exposing Services with a single external access point Provides scope, to maybe use some ACLs for IP Whitelisting, Geo-restrictions in conjunction with an AWS API Gateway/ WAF for an eve better security posture. 👍
+☑️ In my case, **we will be utilising an ingress controller for its advanced traffic management + SSL termination capabilities.** 
+
+> ***Why?*** I will extrapolate this conecpt to use some ACLs for IP Whitelisting, Geo-restrictions in conjunction with an AWS API Gateway/ WAF for an eve better security posture. 👍
 
 ☑️ **We've limited the connections and requests per second, helps prevent resource exhaustion and overwhelming** of backend services 🏁 ✔
 
@@ -381,11 +383,11 @@ _Scaling via Cluster Auto-Scaler and Horizontal Pod Scaler_
 
 </br>
         
-Cluster auto-scaler. 👉 Scales the nodes up and down when there's a lack of sufficient resources to schedule pods or due to node utilization.              
-Horizontal Pod Autoscaler 👉 Adjusting the number of pod replicas in a deployment, based on current demand,                
+--> Cluster auto-scaler. 👉 Scales the nodes up and down when there's a lack of sufficient resources to schedule pods or due to node utilization.              
+--> Horizontal Pod Autoscaler 👉 Adjusting the number of pod replicas in a deployment, based on current demand,                
 
 
- **We're considering **CPU Utilization** as our target metric here**. This helps us maintain an optimal Application performance irrespective of the fluctuations
+ ☑️ **We're considering **CPU Utilization** as our target metric here**. This helps us maintain an optimal Application performance irrespective of the fluctuations
 
 
 </br>
@@ -489,7 +491,11 @@ _My Application's frontend:-_
 
 </br>
 
-> 💡 **Helm shares some similarity from a conceptual standpoint with GitOps Practices.** Each time I install a new chart, it creates a new "release". So, this is a versioned snapshot, Helm keeps track of changes to your deployments. Just in case, the release isn't as well as it had been planned, you can rollback to a previous stable version. GitOps could extend this to a more broader sense, with both infrastructure provisioning / configuration plus the application deployment aspect...
+> 💡 **Helm shares some similarity from a conceptual standpoint with GitOps Practices.**
+>
+> Each time I install a new chart, it creates a new "release". So, this is a versioned snapshot, Helm keeps track of changes to your deployments.
+>
+>  Just in case, the release isn't as well as it had been planned, you can rollback to a previous stable version. GitOps could extend this to a more broader sense, with both infrastructure provisioning / configuration plus the application deployment aspect...
 
 </br>
 
@@ -507,14 +513,14 @@ We've added the Helm Repo `Prometheus-kube-stack.` This repo is a collection of 
 
 </br>
 
-> Prometheus, it's actually a time- series database....  **It collects data from a wide array of sources,** be it, infra-components, applications or  services..... That's through Exporters. **--> Expose metrics in a way that can be easily consumed by Prom.**
+Prometheus is actually a time- series database....  
 
-> **Next step -->** You can then make use of **PromQL, to query the data,** or have an **Alerting manager setup / integrated with it,** to trigger off notifications for anomalies.
+✅ Step 1 --> **It collects data from a wide array of sources,** be it, infra-components, applications or  services..... 
 
+✅ Step 2 --> Exporters  **--> Expose metrics in a way that can be easily consumed by Prom.**
 
-</br>
+✅ Step 3 -->** You can then make use of **PromQL, to query the data,** or have an **Alerting manager setup / integrated with it,** to trigger off notifications for anomalies.
 
-A quick flow diagram to help you ingest this idea better:-
 
             
            Infrastructure Component
@@ -531,7 +537,7 @@ A quick flow diagram to help you ingest this idea better:-
       Alerting with Alert Manager
 
 
-The prometheus stack, we installed using Helm, comes with the Grafana Deployment embedded.
+--> The prometheus stack, we installed using Helm, comes with the Grafana Deployment embedded.
 
 
 So, what's Grafana? ⏬
@@ -541,7 +547,7 @@ Grafana is more of a Data Visualisation tool 📊
 
 </br>
 
-> I've seen folks utilising it's ingrained alerting mechanism, it gels well with notification and reporting tools like email, slack, etc.
+> **I've seen folks utilising it's ingrained alerting mechanism, it gels well with notification and reporting tools like email, slack, etc.**
 
 
 </br>
@@ -554,7 +560,11 @@ We've exposed these via a LoadBalancer Endpoint, not NodePort or ClusterIP
 
 </br>
 
-> Why? To make Prometheus and Grafana accessible from outside the Kubernetes cluster, **In my opinion, you should opt for LoadBalancer services.** NodePort can be suitable for smaller setups or environments where specific port access is manageable. Also, **I wouldn't recommend NodePort from a Security perspective.** However, LoadBalancer offers a more scalable and user-friendly way to expose services, --> It distributes traffic and ensures **service reliability and availability.** 👍
+> Why? To make Prometheus and Grafana accessible from outside the Kubernetes cluster,
+>
+>  **In my opinion, you should opt for LoadBalancer services.** NodePort can be suitable for smaller setups or environments where specific port access is manageable.
+>
+>  Also, **I wouldn't recommend NodePort from a Security perspective.** However, LoadBalancer offers a more scalable and user-friendly way to expose services, --> It distributes traffic and ensures **service reliability and availability.** 👍
 
 
 </br>
