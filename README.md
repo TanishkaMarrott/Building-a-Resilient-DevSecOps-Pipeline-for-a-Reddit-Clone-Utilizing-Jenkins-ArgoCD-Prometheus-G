@@ -240,13 +240,10 @@ In this architecture, I've deployed **three NATs each with its own Elastic IP**,
 
 > **I'd advise to tighten up security to the Corporate IP Address Range** as an ingress rule for the node group, that's something we might need for troubleshooting or administrative access
 
-</br>
-
-**I've made sure the IAM Policies attached to the cluster and the node group are tied down.** Chances of privilege escalation will be low.
-
 Plus
 
-**We've  got endpoint access restrictions, and secured SSH Access** - to the worker nodes by specifying source security group IDs and SSH keys.
+**We've  got endpoint access restrictions, and secured SSH Access** - to the worker nodes by specifying source security group IDs and SSH keys; made sure the **IAM Policies** attached to the cluster and the node group are tied down. Chances of privilege escalation will be low.
+
 
 </br>
 
@@ -380,7 +377,7 @@ _Scaling via Cluster Auto-Scaler and Horizontal Pod Scaler_
 
 </br>
 
-> 💡 **We wanted something that could adapt at both at the pod and the node level... Something that can help us scale effectively in Kubernetes and manage workload fluctuations as well.** And, hence we've added `cluster-autoscaler.yaml` and `hpa-manifest.yaml`
+ 💡 **We wanted something that could adapt at both at the pod and the node level... Something that can help us scale effectively in Kubernetes and manage workload fluctuations as well.** And, hence we've added `cluster-autoscaler.yaml` and `hpa-manifest.yaml`
 
 </br>
         
@@ -388,7 +385,7 @@ Cluster auto-scaler. 👉 Scales the nodes up and down when there's a lack of su
 Horizontal Pod Autoscaler 👉 Adjusting the number of pod replicas in a deployment, based on current demand,                
 
 
-> **We're considering **CPU Utilization** as our target metric here**. This helps us maintain an optimal Application performance irrespective of the fluctuations
+ **We're considering **CPU Utilization** as our target metric here**. This helps us maintain an optimal Application performance irrespective of the fluctuations
 
 
 </br>
@@ -400,43 +397,32 @@ Horizontal Pod Autoscaler 👉 Adjusting the number of pod replicas in a deploym
 
 ### 6. **`RBAC-config.yaml`**
 
-I've also included a template for `RBAC-config.yaml`.
+Why? &rarr; **We need to finetune Access Control to Kubernetes resources**, either through User Accounts or Service Accounts
 
-Why? 
+--
 
-&rarr; **We need to finetune Access Control to Kubernetes resources**, either through User Accounts or Service Accounts
+ ### **_Rationale for RBAC:-_**            
 
-> **Rationale for RBAC:-** Usually, pods make use of a Default Service Account, for performing all Kuberenetes API Operation. But, that's way too broad.
+  **If we're looking for a much more auditable, and secure K8s environment wherein permissions are scoped, we must create a specific SA**, bind necessary permissions to the role 👍 -- (the one's I need for the application's proper functioning  ). This Role would then be attached to the SA... 
 
->  **If we're looking for a much more auditable, and secure K8s environment wherein permissions are scoped, we must create a specific SA**, bind necessary permissions to the role 👍 -- (the one's I need for the application's proper functioning  ). This Role would then be attached to the SA... 
+✔ Advantage A --> We're adhering to the **principle of Least privilege,**
 
-Advantage A --> We're adhering to the **principle of Least privilege,**
-
-Advantage B --> **We can also _scope_ permissions to a specific namespace,** if we're looking for granular access control. User Accounts too can be granted specific permissions for the resources they need to access (pods etc.)
-
-> Even in case of a compromise, chances of Privilege Escalation are minimized greatly
-
-**_What we've done?_**
-In our case, I've created a specific SA -> `app-service-account` and attached the `app-role` to it, comprising the `get` , `watch` , and `list` permissions inherited the pods running the application.
+✔ Advantage B --> **We can also _scope_ permissions to a specific namespace,** if we're looking for granular access control. User Accounts too can be granted specific permissions for the resources they need to access (pods etc.)
 
 </br>
 
----
-
-</br>
-
-### 7. **K8s Network Policies** - A side note
+### 7. _**K8s Network Policies** - A side note_
 
 
---> How you could implement it?
+➡️ How you could implement it?
 
-_Option 1_ - You can have a `deny-all` policy`, restricting any ingress to all the pods (as specified by the selector) within a namespace. 
+_Option 1_ - **You can have a `deny-all` policy`, restricting any ingress to all the pods** (as specified by the selector) within a namespace. 
 
 _Option 2_ - Or maybe have a specific Network Policy allowing inbound traffic from pods of a certain application within the same namespace. = This is what is predominantly done when you've got multiple applications --> **We're controlling Ingress/Egress , but at the pod level!**
 
 </br>
 
-> My current use-case doesn't require a policy restricting communication between pods running multiple applications. And hence, I haven't created a manifest specifically for network-policies 
+**My current use-case doesn't require a policy restricting communication between pods running multiple applications.** And hence, I haven't created a manifest specifically for network-policies 
 
 ---
 
@@ -863,7 +849,7 @@ We'll configure fluentd to "tail" container logs, With a position file to keep t
 
 4 -
 
-### _Specifics into Buffer configuration and overflow management_
+## _Specifics into Buffer configuration and overflow management_
 
 </br>
 
@@ -915,9 +901,9 @@ The logs are now "processed"
 
 5 - We'll now direct these processed logs to the ElasticSearch instance port 9200, protocol https. It configures auth with ES, Also setups up buffering for outoutting the logs (file-based buffering here), I've also customised the naming pattern of ElasticSearch indexing, The indexing would be based on the orginating namespace and the current date.
 
-### _How did we accelerate query and retrieval times in ES?_
+## _How did we accelerate query and retrieval times in ES?_
 
-Through customising ElasticSearch indexing names - based on:-
+We'll be customising ElasticSearch indexing names - being dynamically populated based on:-
 
 - Name of the namespace it originates from.
 - Timestamp (Dates in our case)
@@ -925,21 +911,29 @@ Through customising ElasticSearch indexing names - based on:-
 
 ✅ Time-based segmentation helps in implementing lifecycle configurations for storing these logs.
 
-✅ Namespace segragation --> organised storage of logs and subsequently a faster retrieval. 
+✅ Namespace segragation --> Organised storage of logs and subsequently a faster retrieval. 
 
 <ins> **_Use-case?_** </ins> 
 
-So, in future, **if we'd wish to carry out historical data analysis, we'll be able to clearly delineate logs from different time periods and carry out Trend Analysis / Anomaly Detection
+So, in future, **if we'd wish to carry out historical data analysis, we'll be able to clearly delineate logs from different time periods and carry out Trend Analysis / Anomaly Detection**
 
 </br>
 
-### _Security Enhancements we've primarily focused upon_:-
+## _Security Enhancements we've primarily focused on_:-
 
-1- **All communications between FluentD and other components**, like K8s API and ElasticSearch **are secured by TLS/SSL**            
-2- **Interactions between FluentD instances** for centralising the collected logs to a fluentD aggregator, a**re preceded by a mutual authentication via the `shared_key`** . --> verifying the integrity and authenticity of the connection         
-3- **Hostname Verifications** prevents traffic from being intercepted, **prevents MITM - Man in the Middle Attacks**            
-4- **Sensitive data has been filtered out before logs aggregation**, this ensures none of the sensitive info/secrets lie exposed in the cluster logs.           
-5 - Though I've covered buffer configuration management separately, it does partially fall in this context as well. **There've been multiple measures implemented to ensure that resource usage is bounded, and thus preventing a DDoS Attack.**         
+-  (FluentD ━ K8s API Server) & (FluentD ━ ElastiSearch) **--> Secured with TLS/SSL**
+
+- (FluentD ━ FluentD) **--> Authentication via the `shared_key`** .
+
+   >  _Why? Because FluentD instances interact with the FluentD log aggregator instance, in such case, we need to verify the authenticity of the connection._
+
+- **Hostname Verifications** :- Prevent man-in-the-middle attacks       
+
+- **Filtering out Sensitive data** before logs aggregation               
+
+  > ➡️ None of the sensitive secrets lie exposed in the cluster logs. 
+
+ -  There've been multiple measures implemented to ensure that **resource usage is bounded, and thus preventing a DDoS Attack.**         
 
 </br>
 
@@ -947,14 +941,19 @@ So, in future, **if we'd wish to carry out historical data analysis, we'll be ab
 
 Tasks we performed here:- 
 
-1- **Created an SA that will be assumed by the FluentD application pods** to communicate with the K8s API Server            
-2- A **Cluster Role consisting fo the permissions that'll be needed by FluentD** for collecting cluster-wide logs         
-3- A **role binding that'll be binding this ClusterRole to the SA .** This means these pods will be able to inherit these permissions.         
+1- **Created an SA that will be assumed by the FluentD application pods** to communicate with the K8s API Server         
+
+2- A **Cluster Role consisting fo the permissions that'll be needed by FluentD** for collecting cluster-wide logs     
+
+3- A **role binding that'll be binding this ClusterRole to the SA .** for the pods to inherit these permissions.    
+
 4 - DaemonSet for FluentD
 
-#### Why did we deploy FluentD as a DaemonSet in this stack?
-
 </br>
+
+### Why did we deploy FluentD as a DaemonSet in this stack?
+
+
 
 _Reason 1_ --> FluentD is a log forwarder. It doesn't need to be stateful. 
 
@@ -978,17 +977,15 @@ Okay, so let's focus on what are the **non-functional aspects we've tried to inc
 
 💠- **Multiple replicas of Kibana pods,** ▶ **Higher availability.** Minimized downtime 👍
 
-💠- These containers will be running as a non-root user (`runAsUser: 1000`).            
-**We have made it a point to explicitly set `runAsNonRoot: true`** 
- ---> Low PrivEsc Risks 
+💠- These containers will be running as a non-root user (`runAsUser: 1000`).     
+
+   **We've made it a point to explicitly set `runAsNonRoot: true`** 
+    ---> _Low PrivEsc Risks_ 
 
 💠- **We used a seccomp profile to enable admins limit the system calls a container can make.**
 
-</br>
-
 > Seccomps profile has wide applications **in protecting against kernel-level exploits.**
 
-</br>
 
 💠- **Having specified CPU and memory requests and limits, helps me in a dual manner.** One, we've got sufficient resources for Kibana Containers for maintaining a stable operation, while still preventing them from over-consuming resources, affecting my other services ▶️ Efficient Resource Management
 
@@ -998,7 +995,6 @@ Okay, so let's focus on what are the **non-functional aspects we've tried to inc
 💠- **Plus a PVC - persistent volume claim to preserve the application's state** across restarts.
  
 
-
 </br>
 
 #### 7. `Kibana_Service.yaml`
@@ -1006,6 +1002,8 @@ Okay, so let's focus on what are the **non-functional aspects we've tried to inc
 What're we essentially doing? **We're defining a Service for users to access the Kibana dashboard from outside the k8s cluster**... ☑️                
 
 The LoadBalancer type automatically provisions an external load balancer (supported by the cloud provider) & assigns it a public IP that routes to Kibana (port 5601)
+
+</br>
 
 > ➡️ **This means users can interact with Kibana’s UI by visiting `http://<External-IP>:5601`, where `<External-IP>` is the LB's IP Address**
 
@@ -1046,7 +1044,7 @@ Also, I've done my best in **improvising this architectural workflow from a non-
 
 </br>
 
-**Key takeaway:-**
+<ins> **Key takeaway:-** </ins>
 > #### **From an agility and security standpoint, if you actually wish to "_create value_", it is absolutely important to ingrain DevSecOps principles from the very beginning** 💡
 
 </br>
@@ -1059,11 +1057,11 @@ I've just scratched the surface, there's a long way to go,  while refining and c
 ### Suggestions for Potential Improvements:-
 
 Absolutely!!         
-You're warmly invited to contribute via a pull request or reach out directly at tanishka.marrott@gmail.com for any inquiries or collaboration opportunities. Additionally, connect with me on LinkedIn - https://www.linkedin.com/in/tanishka-marrott/ to stay updated on my latest projects and professional endeavors.
+**You're warmly invited to contribute via a pull request or reach out directly at tanishka.marrott@gmail.com for any inquiries** or collaboration opportunities. Additionally, **connect with me on LinkedIn - https://www.linkedin.com/in/tanishka-marrott/** to stay updated on my latest projects and professional endeavors.
 
 
 ### Acknowledgments:
-Grateful to Mudit Mathur and to Sridhar Modalavalasa for their insightful blogs on DevSecOps. A special thank you to the AWS Well-Architected documentation for serving as my de-facto guide throughout this journey. 🙏
+Grateful to Mudit Mathur and to Sridhar Modalavalasa for their insightful blogs on DevSecOps. A special thank you to the **AWS Well-Architected documentation** for serving as my de-facto guide throughout this journey. 🙏
 
 
 
