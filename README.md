@@ -191,9 +191,12 @@ We need some other types of testing too, **Security testing**, **Performance Tes
 
 
 Check out my TF code here:- https://github.com/TanishkaMarrott/AWS-EKS-TF/tree/main'   <-- IMP
+
 You can find the Reddit Clone Application code here :- https://github.com/TanishkaMarrott/Reddit-Clone-App
 
-### _Multi-AZ NAT Gateway Setup + Multi-AZ Worker node deployments:-_ 
+### Multi-AZ NAT gateway setup 
+### 
+### Multi-AZ worker node deployments:- 
 
 In this architecture, I've deployed **three NATs each with its own Elastic IP**, for **high availability** and **fault tolerance**.
 
@@ -212,12 +215,12 @@ In this architecture, I've deployed **three NATs each with its own Elastic IP**,
 </br>   
 
 >  I didn't want any SPOFs or performance bottlenecks in my architecture. **Multi -NAT ensures that traffic from the instances do not necessarily need to cross inter-AZ for reaching the internet, = reducing Latency** 👍.
+> 
 >  It does help me in the scalability aspect as well since resources in each AZ can scale out independently. We can add new subnets, add new instances in each AZ, without worrying NAT Gateway being a potential bottleneck. 💡
 
 </br>
 
-➡ However, this is a **cost vs. fault tolerance trade-off**. 
-
+ However, this is a **cost vs. fault tolerance trade-off**.             
 ➡️ My decision here was prioritizing availability and performance over the cost considerations.
 
 </br>
@@ -226,7 +229,11 @@ In this architecture, I've deployed **three NATs each with its own Elastic IP**,
 
 </br>
 
-> My public subnets host the Load Balancers and NAT Gateways (the resources which are actually intended to be public), so, they'll distribute incoming internet traffic to the pods running the application. ➡️ This setup will **help us simplify and centralize traffic management** while keeping our backend pods secure. Also, **in case the applications in the private subnet wish to connect to the internet, for example :- for updates, APIs etc., it will be done via the NAT deployed in each public subnet**
+> My public subnets host the Load Balancers and NAT Gateways (the resources which are actually intended to be public), so, they'll distribute incoming internet traffic to the pods running the application.
+>
+>  ➡️ This setup will **help us simplify and centralize traffic management** while keeping our backend pods secure.
+>
+>  Also, **in case the applications in the private subnet wish to connect to the internet, for example :- for updates, APIs etc., it will be done via the NAT deployed in each public subnet**
 
 **Secure outbound-only internet access** 👍.
 
@@ -234,10 +241,8 @@ In this architecture, I've deployed **three NATs each with its own Elastic IP**,
 
 ### _Granular Access controls for EKS_
 
-**I've pruned down the public access CIDR** allowed to access the Kubernetes API Server. Having centralized control over access and management.
-
-</br>
-
+**I've pruned down the public access CIDR** --> Allowed to access the Kubernetes API Server 🟰 Centralized control over access and management.
+👇🏼
 > **I'd advise to tighten up security to the Corporate IP Address Range** as an ingress rule for the node group, that's something we might need for troubleshooting or administrative access
 
 Plus
@@ -249,15 +254,11 @@ Plus
 
 ### _Terraform State Backend - S3 + DynamoDB --> State Locking_
 
-</br>
 
-> **I wanted to eliminate potential chances of State Corruption that might happen during multiple Terraform applies**. + DynamoDB will be used as a durable data-store for State Locking.
+**I wanted to eliminate potential chances of State Corruption that might happen during multiple Terraform applies**. + DynamoDB will be used as a durable data-store for State Locking.
 
-</br>
+Topping it up with **S3 Versioning** on our backend S3 bucket to keep a history of our state files,▶️ for recovery from unintended changes. + **S3 Encryption** 👍
 
-> Topping it up with **S3 Versioning** on our backend S3 bucket to keep a history of our state files,▶️ for recovery from unintended changes. + **S3 Encryption** 👍
-
-</br>
 
 ### _How did I optimise on costs while still maintaining a level of fault-tolerance?_
 
@@ -523,17 +524,14 @@ Prometheus is actually a time- series database....
 
 
             
-           Infrastructure Component
-                   |
-                   v
+           Infrastructure Component         
+                   ↓             
                  Exporter
-            (Exposes Metrics)
-                   |
-                   v
+            (Exposes Metrics)   
+                   ↓            
                Prometheus
-                   |
-                   v
-         Querying with  PromQL /
+                   ↓         
+         Querying with  PromQL /         
       Alerting with Alert Manager
 
 
@@ -611,14 +609,7 @@ _Attached - Grafana snaps:-_
 
 <img width="960" alt="reddit-clone-grafana-completemonitoring-dashboard" src="https://github.com/TanishkaMarrott/Orchestrating-DevSecOps-Pipeline-for-a-Cloud-Native-Architecture/assets/78227704/98b3cf79-001a-4ae0-883e-a713acc54c9e">
 
---
-
-</br>
-
-We've imported three dashboards here:-               
- 💠 Pod Monitoring dashboard            
- 💠 Cluster Node Monitoring dashboard               
- 💠 Complete Monitoring dashboard               
+--             
 
 </br>
 
@@ -687,19 +678,19 @@ K --> Kibana --> Data Viz Tool
 ## _The EFK Workflow_
 
                  
-                   Data Sources (They could be log files, shippers, etc)                           
+                   Data Sources --> They could be log files, shippers, etc                           
                               
                               ⏬                           
                                                          
-                   Fluentd (Enriching it with metadata, transforming the data into a format suitable for ElasticSearch)               
+                   Fluentd --> Enriching it with metadata, transforming the data into a format suitable for ElasticSearch              
                    
                                ⏬                           
                                                        
-                   Elasticsearch (Storing, indicing the data)                     
+                   Elasticsearch --> Storing, indicing the data                     
                               
                                ⏬                           
                                                         
-                   Kibana (Visualization - gaining insights into patterns & trends)                  
+                   Kibana  --> Visualization - gaining insights into patterns & trends)                  
 
                   
 
@@ -765,18 +756,15 @@ I'll quickly recapitulate the pointers / non-functional enhancements we've done.
 
 </br>
 
-> **We're being very specific in the permissions attached to the SA , to be assumed by the ElasticSearch Application pods -- with permissions to `get` resources like `endpoints` , `services` and `namespaces`.**
->     
-> --> limiting the operations ElasticSearch can perform.
+ ✅ We're being very specific in the permissions attached to the SA , to be assumed by the ElasticSearch Application pods -- with permissions to `get` resources like `endpoints` , `services` and `namespaces`.**               
+ --> **limiting the operations ElasticSearch can perform.**
 
-</br>
+ ✅ Next, **I wanted things to scale while still being cognizant of the maintained state** -- Remember, ElasticSearch is a distributed database.               
+--> So, **we've increased the number of replicas.**
 
-> Next, **I wanted things to scale while still being cognizant of the maintained state** -- Remember, ElasticSearch is a distributed database.
->       
-> So, **we've increased the number of replicas.** I had to optimise performance as well, **had to define resource requests and limits**. This enabled me to ensure we've got sufficient resources for ElasticSearch, while not overwhelming / overconsuming system resources.
+➡️ Had to optimise performance as well, **had to define resource requests and limits**. This enabled me to ensure we've got sufficient resources for ElasticSearch, while not overwhelming / overconsuming system resources.
 
-> Simultaneusly, **I had to focus on Data Persistence to improve durability**. Despite pod restarts. Hence, we utilised **`PersistentVolumeClaim`**            
-> **Plus, a rolling update strategy for minimal downtime**
+✅ Simultaneusly, **I had to focus on Data Persistence to improve durability**. Despite pod restarts. Hence, we utilised **`PersistentVolumeClaim`** **Plus, a rolling update strategy for minimal downtime**
 
 </br>
 
@@ -801,63 +789,70 @@ It must run in Privileged Mode, nearly equivalent to a root user
 
 ## _How did we enhance security while solving this pain-point?_
 
-By using DaemonSet. 💡
 
-I'll explain how.
+### Approach 1 - Why it didn't work out?
 
-Consider I'm using the `initContainer` Approach. What does it do? Each time a pod restarts or is redeployed, the initContainer checks if this system-level Configuration `vm-max-map-count` , is 262144 in our case. Once this node-level configuration has been verified or applied if , subsequent ElasticSearch containers would run. 
+-->Each time a pod restarts or is redeployed, the initContainer checks if this system-level Configuration `vm-max-map-count` , is 262144 in our case.       
+-->Once this node-level configuration has been verified or applied if , subsequent ElasticSearch containers would run. 
 
-> This means 1) Multiple `initContainers` in multiple pods = Multiple Containers running in privileged mode = High Risk in terms of security exposure
+> This means
+>
+>  1) Multiple `initContainers` in multiple pods 🟰 **Multiple Containers running in privileged mode** 🟰 High Risk in terms of security exposure
+>     
+> 2) Besides a higher attack surface area, **it also means a lag in pod startup times,** 🟰 **Operationally inefficient ➕ a performance bottleneck**
 
-> 2) Besides a higher attack surface area, it also means a lag in pod startup times, = Operationally inefficient + a performance bottleneck
-
-> This means I'm propagating changes from 'pod-level'. Not an ideal approach.
+This means I'm propagating changes from 'pod-level'. Not an ideal approach.
 
 --
 
-Now, let's shift to approach 2
+### Approach -2 
 
-I'm using a DaemonSet for this purpose. DaemonSet is a K8s object which is responsible for creating a copy of a specific pod across some / all nodes, as the case maybe.
+**I'm using a DaemonSet for this purpose.**
 
-How would it work? The DaemonSet would create a pod in each node, As new nodes are added to the cluster, it'll automatically deploy this pod to the new nodes as well.
+-->The DaemonSet would create a pod in each node. Current + New.
 
-There'll be a container within this pod, that'll be responsible for modifying the host kernel parameter - It's the `vm-max-map` count in our scenario. 
-So, it's a one-time execution, this container executes once during the startup time, and this change is made once and persists beyond the lifecycle of the pod
+-->There'll be a container within this pod, that'll be responsible for modifying the parameter
+
+&nbsp; &nbsp;**So, it's a **one-time execution,** this container executes once during the startup time, and persists beyond it's lifecycle**
+
+</br>
 
 > _So, how does it actually help us?_
 
-Advantage 1 &rarr; There's a **consistent application of required system-level settings** across all nodes in a cluster
+</br>
 
-Advantage 2 &rarr; **Automatic application to new nodes in future**
+✅ **We've got a consistent application of the required system-level settings** across all nodes in a cluster
 
-Advantage 3 &rarr; We're **reducing the overhead that'll be incurred by the application pods,** due to checking or applying system-level settings, as these settings are pre-applied at the node level, reducing startup times and complexity.
+✅ **Automatic application to new nodes in future**
+
+✅ We're **reducing the overhead that'll be incurred by the application pods,** due to checking or applying system-level settings, as these settings are pre-applied at the node level --> reducing startup times and complexity.
 
  👍🙂
 
+</br>
 
----
+--
 
 #### 4 - **`Fluentd_Config_Map.yaml`** :-
 
 We'll be using a ConfigMap to configure FluentD.
 
-Let's make a deep-dive into this ⤵️
+
+</br>
 
 Cluster Logs --> Fluentd - Collection & Enrichment -->  Forwarded to ElasticSearch for Storage
 
-1 - First things first, &rarr; system configurations. We'll specify the root directory for our fluentD buffers. Logging level set to info, configured the security settings like shared keys, including hostname verification
+</br>
 
-2- Next is the input configuration -- configuration for inputting the container logs.
+System Configurations:- Specifications around security settings, like shared keys, and root directory to be used
 
-What does this comprise?
+Input configurations:- Position File to keep track of the logs that've been read. FluentD "tails" logs from all containers across all nodes
 
-We'll configure fluentd to "tail" container logs, With a position file to keep track of the logs that've already been read. 
+Some Data Enrichment --> Added JSON Parsing of logs - For the Non_JSOn - `regexp` parsing. 
+It also adds some metadata - k8s specific info to the log records 
+--> All misc processes, like filtering + graying out the data go in here
 
-3- Next up, some Data Enrichment as well. 📇
-
->  It not only parses JSON logs, but also enriches the logs by adding some context to it - k8s-specific info.  Implementing some sort of filters to transform the log records, and remove sensitive data (like passwords and secret keys). 👍
-
-4 -
+Buffer Configuration below 👇
 
 ## _Specifics into Buffer configuration and overflow management_
 
