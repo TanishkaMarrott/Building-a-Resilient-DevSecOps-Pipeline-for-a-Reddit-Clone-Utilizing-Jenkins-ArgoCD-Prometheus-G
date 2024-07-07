@@ -63,6 +63,13 @@ _Simple Answer:-_
 
 </br>
 
+[UPDATE]
+### Just a Brief before we dive in full-fledged
+
+We'll start off with provisioning a fully managed EKS cluster, using Terraform. Jenkins would be deployed on top of this cluster, as a containerised application. 
+This means we're leveraging Kuberenetes ability to ensure Jenkins a highly available + scalable environment to run on. 
+--> AWS would manage the control plane, 
+
 
 ##  &rarr; Jenkins Setup & Tool Configuration_
 
