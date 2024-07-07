@@ -1,4 +1,4 @@
-# Orchestrating a DevSecOps Pipeline using Jenkins & ArgoCD +  </br>  Logging & monitoring solutions incorporated
+# Orchestrating a DevSecOps Pipeline using Jenkins & ArgoCD +  </br>  Logging & monitoring using Prometheus, Grafana and Kibana
 
 </br>
 
