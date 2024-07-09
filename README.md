@@ -64,11 +64,35 @@ _Simple Answer:-_
 </br>
 
 [UPDATE]
-### Just a Brief before we dive in full-fledged
+### Getting the fundamentals right, before we dive in:-
 
-We'll start off with provisioning a fully managed EKS cluster, using Terraform. Jenkins would be deployed on top of this cluster, as a containerised application. 
-This means we're leveraging Kuberenetes ability to ensure Jenkins a highly available + scalable environment to run on. 
---> AWS would manage the control plane, 
+--> We'd start with provisioning a fully managed EKS cluster --> using terraform . This means we've got some predictability and consistency in our deployments --> We can bring up and tear down the stacks as and when needed
+
+--> Next, deploy Jenkins as a containerised application on top of the cluster
+
+#### Why did we deploy Jenkins on top of the EKS cluster, and not on a VM?
+
+--> We deployed Jenkins as a containerised application on top of the cluster, this simplifies deployment and management to a great extent. We wouldn't have to manage individual VMs, ther dependencies, the configurations, etc. Reducing the operational overhead , streamlining efficiency
+
+--> This makes our CI/CD pipeline resilient in the true sense of the term, How? We're ensuing Jenkins a fully scalable, highly available envrionment for continuous integration and deployment processes. We're leveraging K8s capabilities here:-
+
+A --> Kuberenetes scales Jenkins pods based on the the workload fluctuations
+
+B --> Kuberenetes automatically detects and replaces unhealthy Jenkins Pods --> This is the "self-healing" capabilities we had been talking about.
+
+C --> K8s ensures our application is always running by automatically restarting failed pods.
+
+D --> Container Orchestration. An implicit pointer. It would manage and schedule Jenkins containers
+
+Enumerating these all over again, --> K8s scales Jenkins Pods based on the load + K8s automatically detects and replaces unhealthy pods (self-healing) + Restarts failed pods (Ensuring high availability throughout). Thus, we're super-sure of a robust , highly available CI/CD pipeline.
+
+
+#### Why did we use Helm to deploy Jenkins on top of the cluster?
+
+Helm is a package manager  
+
+
+
 
 
 ##  &rarr; Jenkins Setup & Tool Configuration_
