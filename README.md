@@ -66,8 +66,7 @@ _Simple Answer:-_
 
 </br>
 
-[UPDATE]
-### Getting the fundamentals right, before we dive in:-
+### [UPDATE] Getting the fundamentals right, before we dive in:-
 
 --> We'd start with provisioning a fully managed EKS cluster --> using terraform . This means we've got some predictability and consistency in our deployments --> We can bring up and tear down the stacks as and when needed
 
@@ -79,20 +78,23 @@ _Simple Answer:-_
 
 --> This makes our CI/CD pipeline resilient in the true sense of the term, How? We're ensuing Jenkins a fully scalable, highly available envrionment for continuous integration and deployment processes. We're leveraging K8s capabilities here:-
 
-A --> Kuberenetes scales Jenkins pods based on the the workload fluctuations
+   A --> Kubernetes scales Jenkins pods based on the the workload fluctuations
 
-B --> Kuberenetes automatically detects and replaces unhealthy Jenkins Pods --> This is the "self-healing" capabilities we had been talking about.
+B --> Kubernetes automatically detects and replaces unhealthy Jenkins Pods --> This is the "self-healing" capabilities we had been talking about.
 
 C --> K8s ensures our application is always running by automatically restarting failed pods.
 
 D --> Container Orchestration. An implicit pointer. It would manage and schedule Jenkins containers
 
-Enumerating these all over again, --> K8s scales Jenkins Pods based on the load + K8s automatically detects and replaces unhealthy pods (self-healing) + Restarts failed pods (Ensuring high availability throughout). Thus, we're super-sure of a robust , highly available CI/CD pipeline.
+</br>
 
+> Enumerating these all over again, --> K8s scales Jenkins Pods based on the fluctauating load + K8s automatically detects and replaces unhealthy jenkins pods (self-healing) + Restarts failed pods (Ensuring high availability throughout) = A super-robust , highly available CI/CD pipeline.
+
+</br>
 
 #### Why did we use Helm to deploy Jenkins on top of the cluster?
 
-Helm is a package manager  
+Helm is a package manager used to deploy containerised applications 
 
 
 
