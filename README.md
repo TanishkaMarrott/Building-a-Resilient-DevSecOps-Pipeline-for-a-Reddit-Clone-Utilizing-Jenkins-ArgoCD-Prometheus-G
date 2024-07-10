@@ -22,7 +22,7 @@ This means **we're leveraging DevSecOps to deliver a reliable, efficient and sec
 
 &nbsp;
 
-### Workflow
+### Workflow :-
 
 **Infrastructure Provisioning** with **Terraform**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&darr;  
@@ -68,11 +68,14 @@ _Simple Answer:-_
 
 </br>
 
-### [UPDATE] Getting the fundamentals right, before we dive in:-
+### Detailed project workflow
 
---> We'd start with provisioning a fully managed EKS cluster --> using terraform . This means we've got some predictability and consistency in our deployments --> We can bring up and tear down the stacks as and when needed
+1. Started off with provisioning an IAM user, creating an EC2 instance, installing `terraform` and `aws-cli` on top of it --> Initial setup
+Named this instance `my-cli`
 
---> Next, deploy Jenkins as a containerised application on top of the cluster
+2. Provisioned the application infrastructure using Terraform. This means we provisioned an EC2 instance using terraform, configured security groups as needed + an `install.sh` script, to install necessary tools, like Jenkins, Docker, Sonarqube and trivy
+
+#### [UPDATE] Why was this approach not optimal, Why did 
 
 #### Why did we deploy Jenkins on top of the EKS cluster, and not on a VM?
 
