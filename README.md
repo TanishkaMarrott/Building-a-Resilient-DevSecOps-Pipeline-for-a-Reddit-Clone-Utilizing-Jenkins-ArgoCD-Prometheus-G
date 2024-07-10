@@ -6,8 +6,13 @@
 
 ### Quick Introduction:-
 
-Our project today is all about the specifics involved while setting up an automated  **_DevSecOps Pipeline._**   
---> we're not only speeding up releases, but also being security-compliant, from the get-go. 💡
+--> This project involves **orchestrating a resilient DevSecOps pipeline** to **build a Reddit clone application**. 
+
+--> It **automates, streamlines & secures infrastructure provisioning** and **application deployment cycles** using **Jenkins and ArgoCD**. 
+
+--> The pipeline **integrates robust logging and monitoring** solutions with **Prometheus, Grafana and Kibana**, ensuring high availability, scalability, and security. 
+
+This means **we're leveraging DevSecOps to deliver a reliable, efficient and secure deployment environment** for continuous integration and continuous delivery.
 
 </br>
 
@@ -17,30 +22,28 @@ Our project today is all about the specifics involved while setting up an automa
 
 &nbsp;
 
-## So, how does the workflow actually look like?
+### Workflow
 
-</br>
-
-**_Infrastructure Provisioning_** (Terraform)            
-   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;     ⬇        
-**_Container Orchestration_** (Elastic Kubernetes Service)       
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;    ⬇️       
-**_CI/CD_**  (Jenkins & ArgoCD)      
-     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;    ⬇️      
-**_Security Integrations_** (SonarQube, OWASP & Trivy)      
-      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;  ⬇️        
-**_Logging, Monitoring & Data Visualization_** (Prometheus, Grafana & EFK Stack)      
-      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;      =   
-**_Real-time Insights_** into application health & performance  
+**Infrastructure Provisioning** with **Terraform**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&darr;  
+**Container Orchestration** using **Elastic Kubernetes Service (EKS)**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&darr;  
+**Continuous Integration/Continuous Deployment (CI/CD)** with **Jenkins & ArgoCD**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&darr;  
+**Security Integrations** via **SonarQube, OWASP, & Trivy**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&darr;  
+**Logging, Monitoring & Data Visualization** through **Prometheus, Grafana, & EFK Stack (Elasticsearch, Fluentd, Kibana)**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=  
+**Real-time Insights** into **application health and performance**
 
 
 </br>
 
->  **Okay, so how does DevSecOps augment Business Processes?**
+>  **On a side note, how does DevSecOps actually augment Business Processes?**
 
 </br>
 
-## How does DevSecOps align with my Business Goals?
+### How does DevSecOps align with my Business Goals?
 
 </br>
 
