@@ -1,0 +1,70 @@
+provider "aws" {
+    region = "us-east-1"
+  }
+  
+  module "eks" {
+    source          = "terraform-aws-modules/eks/aws"
+    cluster_name    = "my-cluster"
+    cluster_version = "1.21"
+    subnets         = ["subnet-abc123", "subnet-def456"]
+    vpc_id          = "vpc-xyz789"
+    node_security_group_additional_rules = [
+      {
+        description = "Allow all traffic within VPC"
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_blocks = ["10.0.0.0/16"]
+      },
+      {
+        description = "Allow HTTPS traffic"
+        from_port   = 443
+        to_port     = 443
+        protocol    = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+      }
+    ]
+  }
+  
+  resource "aws_security_group" "eks_cluster" {
+    name        = "eks-cluster-sg"
+    description = "Security group for EKS cluster"
+    vpc_id      = "vpc-xyz789"
+  
+    ingress {
+      description      = "Allow all traffic within VPC"
+      from_port        = 0
+      to_port          = 0
+      protocol         = "-1"
+      cidr_blocks      = ["10.0.0.0/16"]
+    }
+  
+    ingress {
+      description      = "Allow HTTPS traffic"
+      from_port        = 443
+      to_port          = 443
+      protocol         = "tcp"
+      cidr_blocks      = ["0.0.0.0/0"]
+    }
+  
+    egress {
+      description      = "Allow all outbound traffic"
+      from_port        = 0
+      to_port          = 0
+      protocol         = "-1"
+      cidr_blocks      = ["0.0.0.0/0"]
+    }
+  
+    tags = {
+      Name = "eks-cluster-sg"
+    }
+  }
+  
+  output "kubeconfig" {
+    value = module.eks.kubeconfig
+  }
+  
+  output "cluster_id" {
+    value = module.eks.cluster_id
+  }
+  
