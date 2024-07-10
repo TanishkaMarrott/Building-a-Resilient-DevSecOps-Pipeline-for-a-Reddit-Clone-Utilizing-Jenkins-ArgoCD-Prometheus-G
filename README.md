@@ -1,6 +1,4 @@
-# Orchestrating a resilient DevSecOps Pipeline using Jenkins & ArgoCD with logging & Monitoring using Prometheus, Grafana and Kibana
-
-</br>
+# Building a Resilient DevSecOps Pipeline for a Reddit Clone: Utilizing Jenkins, ArgoCD, Prometheus, Grafana, and Kibana
 
 <img src="https://github.com/TanishkaMarrott/Orchestrating-a-DevSecOps-Pipeline-with-integrated-Logging-and-Monitoring-Frameworks/assets/78227704/6cf2bfcc-d748-487a-9888-66c8ed929b67" width="700">
 
