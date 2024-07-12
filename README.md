@@ -6,7 +6,7 @@
 
 </br>
 
-### Quick Introduction:-
+## Quick Introduction:-
 
 --> This project involves **orchestrating a resilient DevSecOps pipeline** to **build a Reddit clone application**. 
 
@@ -24,7 +24,7 @@ This means **we're leveraging DevSecOps to deliver a reliable, efficient and sec
 
 &nbsp;
 
-### Workflow :-
+## Workflow :-
 
 **Infrastructure Provisioning** with **Terraform**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&darr;  
@@ -38,74 +38,61 @@ This means **we're leveraging DevSecOps to deliver a reliable, efficient and sec
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=  
 **Real-time Insights** into **application health and performance**
 
+</br>
+
+## Deep-Dive:-
+
+1. **Provisioning Application Infrastructure with Terraform:**
+
+- We started off with provisioning the necessary infrastructure using Terraform.
+- Provisioned an EC2 instance: Configured security groups and used an `install.sh` script to install essential tools including Jenkins, Docker, Sonarqube, and Trivy.
+
+**[UPDATE (11/07/2024)]**
+### Why did we deploy Jenkins on top of the EKS cluster & not on a VM?
 
 </br>
 
->  **On a side note, how does DevSecOps actually augment Business Processes?**
+> #### Cons of an EC2 deployment 🚩 :-
+> - **Limited Scalability:-** The original setup won't be scalable. It would require manual intervention
+> - **SPOF (Single Point of Failure):-** Deploying all the three tools on a single VM. Means we're making the system all the more vulnerable to failures
+> - **Resource contention:-** Heavy resource contention. Tools competing for resources = Creating potential performance bottlenecks
+> - **Manual maintanence:-** A operational overhead in terms of the updates, maintainence & monitoring 
 
 </br>
 
-### How does DevSecOps align with my Business Goals?
+### 💡 Moving to an EKS Deployment. 
+
+- Deploying Jenkins on an EKS cluster means **Kubernetes would automatically scale your Jenkins pods, in response to fluctuating workload requirements.** Resource Utilisation & Performance ++ 👍
+  
+- EKS would take care of :-
+   - **Self-Healing:-** Detecting and replacing unhealthy pods automatically
+   - **Availability:-** Restarting failed Jenkins pods
+   - **Load Balancing:-** Fair distribution of the workload amongst the pods
+   - Plus, **rolling updates** :- You can then deploy new vrsion of Jenkins, without any downtime = Service Continuity 👍
+- **Resource Management :-** K8s bears the capabilities of dynamic alocation/ de-allocation of resources (Something that a traditional VM setup won't support)
+- Strong security. Kubernetes provides for **RBAC - Role-Based Access Control, network policies, secrets management**. This means K8s makes our CI?CD Pipeline secure and compliant with best practices.
 
 </br>
 
-_Simple Answer:-_   
-**Solid Foundation to quickly realign with changing business requirements**
+>  **The declarative nature that kubernetes supports means you're essentially simplifying the automation** of the deployment of the pipeline, You could *version-control* these files too = **You're bringing in *consistency* and *reliability* across different deployments**
 
 </br>
 
-> _It's more like a ***Strategic Enabler,*** to boost efficiency & streamline processes._    
 
-</br>
+### What exactly is "Helm"? Is it "Yum" for Kubernetes?
 
-➡️ Quicker product iterations & feedback loops             
---> means we're **_market-agile._** 👍👍
+Helm -- Package Manager for Kubernetes
 
-➡️ Quality Assurance + reducing post-deployment fixes' costs
-= Averting Data Security Incidents
+--> Enables us to deploy + manage containerised applications on top of an EKS cluster
 
-</br>
+--> Helm offers something called helm charts, that're a collection of files --> This means k8s resource + application defintions.
 
->   **Agile DevSecOps = Swiftly adapting to evolving Business Requirements.**
+They're reusable templates, that means they comprise the kubernetes manifest templates plus a values.yaml. 
 
-</br>
-
-### Detailed project workflow
-
-1. Started off with provisioning an IAM user, creating an EC2 instance, installing `terraform` and `aws-cli` on top of it --> Initial setup
-Named this instance `my-cli`
-
-2. Provisioned the application infrastructure using Terraform. This means we provisioned an EC2 instance using terraform, configured security groups as needed + an `install.sh` script, to install necessary tools, like Jenkins, Docker, Sonarqube and trivy
-
-#### [UPDATE] Why was this approach not optimal, Why did 
-
-#### Why did we deploy Jenkins on top of the EKS cluster, and not on a VM?
-
---> We deployed Jenkins as a containerised application on top of the cluster, this simplifies deployment and management to a great extent. We wouldn't have to manage individual VMs, ther dependencies, the configurations, etc. Reducing the operational overhead , streamlining efficiency
-
---> This makes our CI/CD pipeline resilient in the true sense of the term, How? We're ensuing Jenkins a fully scalable, highly available envrionment for continuous integration and deployment processes. We're leveraging K8s capabilities here:-
-
-   A --> Kubernetes scales Jenkins pods based on the the workload fluctuations
-
-B --> Kubernetes automatically detects and replaces unhealthy Jenkins Pods --> This is the "self-healing" capabilities we had been talking about.
-
-C --> K8s ensures our application is always running by automatically restarting failed pods.
-
-D --> Container Orchestration. An implicit pointer. It would manage and schedule Jenkins containers
-
-</br>
-
-> Enumerating these all over again, --> K8s scales Jenkins Pods based on the fluctauating load + K8s automatically detects and replaces unhealthy jenkins pods (self-healing) + Restarts failed pods (Ensuring high availability throughout) = A super-robust , highly available CI/CD pipeline.
-
-</br>
-
-#### Why did we use Helm to deploy Jenkins on top of the cluster?
-
-Helm is a package manager used to deploy containerised applications 
+#### This means --> Re-usable Kubernetes Templates = `templates/deployment.yaml` + `values.yaml` (default values for the variables (You could even customise deployments by over-riding the default values )) = Final Kubernetes Manifests (Generated by Helm post injecting these values)
 
 
-
-
+Injecting these values from the YAML file --> `variables.yaml` , Helm can then generate the final K8s manifest files, based on the values that've been provided 
 
 ##  &rarr; Jenkins Setup & Tool Configuration_
 
