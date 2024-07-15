@@ -97,6 +97,11 @@ They're reusable templates, that means they comprise the kubernetes manifest tem
 
 </br>
 
+So, we'd be provisioning two EKS clusters --> 
+
+1 --> CI Tools (Jenkins, Trivy & SonarQube)
+2 --> CD (ArgoCD) + the Reddit Application Clone to be deployed
+
 ##  &rarr; Jenkins Setup & Tool Configuration_
 
 ### **What sort of plugins & global tool configurations have we used?**   
