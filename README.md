@@ -64,7 +64,22 @@ It's primary task is **automating various aspects of a software development cycl
 
 </br>
 
+Let's walk through the key components:-
+
 A --> It has a **Master-Slave Architecture**
+
+This means we've got a **Jenkins Master** :-
+  - Would be responsible for "managing the overall Jenkins Environment" --> This means it would schedule the builds + dispatch the build to the agents - The worker nodes
+  - Would also monitor the status of the build, present the build results, and serve the Jenkins UI
+  - Plus, it would be responsible for managing the plugins & configurations
+
+Second, we've got the worker nodes - the jenkin agents
+
+"The worker nodes are *actually* responsible for running the builds, that've been assigned by the jenkins master"
+
+1- They're responsible for executing the actual builds
+2- They're dynamically provisioned/ deprovisioned to handle the load
+3- The master would distribute the tasks amongst multiple agents, --> This way it's incorporating parallelism and reducing build time
 
 1. **Provisioning Application Infrastructure with Terraform:**
 
