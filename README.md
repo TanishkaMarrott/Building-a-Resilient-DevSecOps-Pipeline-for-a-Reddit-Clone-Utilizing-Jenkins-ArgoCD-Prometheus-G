@@ -10,7 +10,7 @@
 
 --> This project involves **orchestrating a resilient DevSecOps pipeline** to **build a Reddit clone application**. 
 
---> It **automates, streamlines & secures infrastructure provisioning** and **application deployment cycles** using **Jenkins and ArgoCD**. 
+--> It **automates, streamlines & secures infrastructure provisioning** & **application deployment cycles** using **Jenkins and ArgoCD**. 
 
 --> The pipeline **integrates robust logging and monitoring** solutions with **Prometheus, Grafana and Kibana**, ensuring high availability, scalability, and security. 
 
@@ -27,13 +27,13 @@ This means **we're leveraging DevSecOps to deliver a reliable, efficient and sec
 ## Workflow :-
 
 **Infrastructure Provisioning** with **Terraform**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&darr;  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️  
 **Container Orchestration** using **Elastic Kubernetes Service (EKS)**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&darr;  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️  
 **Continuous Integration/Continuous Deployment (CI/CD)** with **Jenkins & ArgoCD**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&darr;  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️  
 **Security Integrations** via **SonarQube, OWASP, & Trivy**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&darr;  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️  
 **Logging, Monitoring & Data Visualization** through **Prometheus, Grafana, & EFK Stack (Elasticsearch, Fluentd, Kibana)**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=  
 **Real-time Insights** into **application health and performance**
@@ -42,12 +42,36 @@ This means **we're leveraging DevSecOps to deliver a reliable, efficient and sec
 
 ## Deep-Dive:-
 
+</br>
+
+> As we delve deeper into the questions, I'll provide answers and share insights as they come to mind. 🙂
+
+</br>
+
+### 1 --> Why Jenkins ? What value does it bring in ?
+
+A --> Jenkins is fundamentally an open source "automation server". 
+
+It's primary task is **automating various aspects of a software development cycle,** --> Building, testing, deploying the application. This means --> **we're essentially speeding up builds, making build times quicker** 👍
+
+--
+
+### 2 -->What about Jenkin's architectural design ?
+ 
+</br>
+
+> Or I'll reframe this another way : _What makes Jenkins a popular choice? How does Jenkin actually provide a truly robust and scalable platform?_
+
+</br>
+
+A --> It has a **Master-Slave Architecture**
+
 1. **Provisioning Application Infrastructure with Terraform:**
 
 - We started off with provisioning the necessary infrastructure using Terraform.
 - Provisioned an EC2 instance: Configured security groups and used an `install.sh` script to install essential tools including Jenkins, Docker, Sonarqube, and Trivy.
 
-**[UPDATE (11/07/2024)]**
+**[UPDATE (11/07/2024)]** 
 ### Why did we deploy Jenkins on top of the EKS cluster & not on a VM?
 
 </br>
